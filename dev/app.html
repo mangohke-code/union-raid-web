@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <script>window.APP_BUILD = '261021-0428';</script>
+  <script>window.APP_BUILD = '261021-0429';</script>
   <script>window.CURRENT_SHEET_VERSION = '{{SHEET_VERSION}}';</script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
@@ -6344,7 +6344,7 @@
       const go = () => _onFullData(res);
       if (window.google && google.script && google.script.url) {
         google.script.url.getLocation(loc => {
-          if (loc && loc.parameter && loc.parameter.demo === '1') _anonymizeMembers(res);
+          if (loc && loc.parameter && loc.parameter.demo === '1') { _DEMO_MODE = true; _anonymizeMembers(res); }
           go();
         });
       } else go();
@@ -6386,11 +6386,15 @@
       switchTab('raid');
 
       document.getElementById('loading-overlay').classList.add('hidden');
-      spawnEasterEgg();
-      checkSheetVersion();
+      // 데모 모드는 캡처용이라 이스터에그 · 버전 알림을 띄우지 않음
+      if (!_DEMO_MODE) {
+        spawnEasterEgg();
+        checkSheetVersion();
+      }
   }
 
   // ── 데모 모드 (?demo=1) — 멤버 닉네임만 가명으로 (가입 순서대로 같은 가명이 모든 화면에 일관되게) ──
+  let _DEMO_MODE = false;
   const _DEMO_NAMES = ['해파리', '진주알', '달빛조개', '노을빛', '물방울', '산호초', '파도소리', '모래성', '등대지기', '고래밥',
     '불가사리', '윤슬', '물안개', '소라', '바다별', '수평선', '갈매기', '부표', '썰물', '밀물',
     '조약돌', '산들바람', '돌고래', '해달', '꽃게', '전복', '멍게', '성게', '바지락', '조개껍질',
