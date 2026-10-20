@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <script>window.APP_BUILD = '261021-0446';</script>
+  <script>window.APP_BUILD = '261021-0500';</script>
   <script>window.CURRENT_SHEET_VERSION = '{{SHEET_VERSION}}';</script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
@@ -6205,7 +6205,7 @@
   </button>
 </div>
 
-<!-- 261021 공용 — 레벨 차트 좌우 폭 가득 · 캡처 시 유니온명 그라데이션 글자 · 줄바꿈 보정 · 최신 버전 읽는 칸 사용법!E10 → E8 · 테마 메뉴 구버전에 "삭제 예정" 표시 · 회차 선택(최신 5개 + 전체 회차 패널) · 세이렌/구버전 스킨 -->
+<!-- 261021 공용 — 캡처 시 세이렌 그림자 제거(얼룩 방지) · 레벨 차트 좌우 폭 가득 · 캡처 시 유니온명 그라데이션 글자 · 줄바꿈 보정 · 최신 버전 읽는 칸 사용법!E10 → E8 · 테마 메뉴 구버전에 "삭제 예정" 표시 · 회차 선택(최신 5개 + 전체 회차 패널) · 세이렌/구버전 스킨 -->
 <script>
   google.charts.load('current', {'packages':['corechart', 'scatter']});
 
@@ -7589,6 +7589,11 @@
               try { after = origEm ? getComputedStyle(origEm, '::after').content || '' : ''; } catch (_) {}
               if (/\\a|\n/i.test(after)) el.insertAdjacentElement('afterend', clonedDoc.createElement('br'));
             });
+            // 세이렌의 넓게 번지는 그림자는 html2canvas 가 흐림 없이 네모 덩어리로 그려 얼룩처럼 보임 → 캡처에선 그림자 제거
+            const capStyle = clonedDoc.createElement('style');
+            capStyle.textContent =
+              'body[data-skin="siren"] *, body[data-skin="siren"] *::before, body[data-skin="siren"] *::after { box-shadow: none !important; }';
+            clonedDoc.head.appendChild(capStyle);
 
             // 1) 아이콘류 (nf-opt-icon / nikke-icon / ni-primary / ni-secondary) → img 원본 유지
             //    src 를 사전 fetch dataURL 로 교체 (CORS-taint 회피), 라이트모드에서 invert 필요하면 반전 dataURL
