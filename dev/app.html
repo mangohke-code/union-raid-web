@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <script>window.APP_BUILD = '261021-0434';</script>
+  <script>window.APP_BUILD = '261021-0446';</script>
   <script>window.CURRENT_SHEET_VERSION = '{{SHEET_VERSION}}';</script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
@@ -6205,7 +6205,7 @@
   </button>
 </div>
 
-<!-- 261021 공용 — 캡처 시 유니온명 그라데이션 글자 · 줄바꿈 보정 · 데모 모드(?demo=1, 멤버 닉네임 가명 처리) · 최신 버전 읽는 칸 사용법!E10 → E8 · 테마 메뉴 구버전에 "삭제 예정" 표시 · 회차 선택(최신 5개 + 전체 회차 패널) · 세이렌/구버전 스킨 -->
+<!-- 261021 공용 — 레벨 차트 좌우 폭 가득 · 캡처 시 유니온명 그라데이션 글자 · 줄바꿈 보정 · 최신 버전 읽는 칸 사용법!E10 → E8 · 테마 메뉴 구버전에 "삭제 예정" 표시 · 회차 선택(최신 5개 + 전체 회차 패널) · 세이렌/구버전 스킨 -->
 <script>
   google.charts.load('current', {'packages':['corechart', 'scatter']});
 
@@ -6340,18 +6340,6 @@
     });
 
     google.script.run.withSuccessHandler(function(res) {
-      // 주소에 demo=1 이 있으면 멤버 닉네임을 가명으로 바꿔서 띄움 (홍보용 캡처 · 시트는 그대로)
-      const go = () => _onFullData(res);
-      if (window.google && google.script && google.script.url) {
-        google.script.url.getLocation(loc => {
-          if (loc && loc.parameter && loc.parameter.demo === '1') { _DEMO_MODE = true; _anonymizeMembers(res); }
-          go();
-        });
-      } else go();
-    }).getFullData();
-  }
-
-  function _onFullData(res) {
       db = res;
       applySkinPalette();
       _syncSirenSea();
@@ -6386,47 +6374,11 @@
       switchTab('raid');
 
       document.getElementById('loading-overlay').classList.add('hidden');
-      // 데모 모드는 캡처용이라 이스터에그 · 버전 알림을 띄우지 않음
-      if (!_DEMO_MODE) {
-        spawnEasterEgg();
-        checkSheetVersion();
-      }
+      spawnEasterEgg();
+      checkSheetVersion();
+    }).getFullData();
   }
 
-  // ── 데모 모드 (?demo=1) — 멤버 닉네임만 가명으로 (가입 순서대로 같은 가명이 모든 화면에 일관되게) ──
-  let _DEMO_MODE = false;
-  const _DEMO_NAMES = ['해파리', '진주알', '달빛조개', '노을빛', '물방울', '산호초', '파도소리', '모래성', '등대지기', '고래밥',
-    '불가사리', '윤슬', '물안개', '소라', '바다별', '수평선', '갈매기', '부표', '썰물', '밀물',
-    '조약돌', '산들바람', '돌고래', '해달', '꽃게', '전복', '멍게', '성게', '바지락', '조개껍질',
-    '물결', '은하수', '파랑새', '해무', '모래알', '바닷바람', '등불', '바다유리', '고동', '해마',
-    '펭귄', '물개', '청새치', '산갈치', '날치', '쏠배감펭', '흰동가리', '개복치', '앵무조개', '방파제'];
-  function _anonymizeMembers(res) {
-    const colOf = (rows, header) => (rows && rows[0]) ? rows[0].findIndex(h => String(h).trim() === header) : -1;
-    const names = [];
-    const add = n => { n = String(n == null ? '' : n).trim(); if (n && names.indexOf(n) === -1) names.push(n); };
-    [[res.members, '닉네임'], [res.quitMembers, '닉네임'], [res.raidStats, '닉네임']].forEach(([rows, h]) => {
-      const c = colOf(rows, h);
-      if (c >= 0) rows.slice(1).forEach(r => add(r[c]));
-    });
-    const map = {};
-    names.forEach((n, i) => { map[n] = _DEMO_NAMES[i] || ('멤버' + (i + 1)); });
-    // 긴 이름부터 — 코멘트 같은 문장 속 이름 치환 시 부분 겹침 방지
-    const byLen = names.filter(n => n.length >= 2).sort((a, b) => b.length - a.length);
-    // 닉네임 열은 통째로, 머장 한줄평 열은 문장 속 이름만 — 니케/보스 이름 칸은 건드리지 않음
-    const exact = v => { const t = String(v == null ? '' : v).trim(); return map[t] || v; };
-    const inText = v => {
-      if (typeof v !== 'string') return v;
-      let out = v;
-      byLen.forEach(n => { if (out.indexOf(n) !== -1) out = out.split(n).join(map[n]); });
-      return out;
-    };
-    [[res.members, '닉네임', exact], [res.quitMembers, '닉네임', exact], [res.raidStats, '닉네임', exact],
-     [res.raidResults, '머장 한줄평', inText]].forEach(([rows, h, fn]) => {
-      const c = colOf(rows, h);
-      if (c < 0) return;
-      for (let i = 1; i < rows.length; i++) rows[i][c] = fn(rows[i][c]);
-    });
-  }
 
   // 이스터에그 — 지정된 이모티콘 2종만 랜덤 팝업으로 등장, 클릭 시 사라짐 / 확률로 도로 홀로그램 트리거
   // 테스트 종료 후 EASTER_EGG_CHANCE = 0.01, DORO_HOLO_CHANCE = 0.01 로 낮출 것
@@ -6628,7 +6580,7 @@
         textStyle: {color: themeVar('--chart-text', isD?'#888':'#666')}, 
         gridlines: {color: themeVar('--chart-grid', isD?'#333':'#eee')}
       },
-      chartArea:{width:'90%', height:'80%', top:30, bottom:50}, 
+      chartArea:{left:56, right:24, top:30, bottom:50}, // 좌우 여백 최소 — 구역 폭에 가득 
       lineWidth:isF?1:4,
       pointsVisible:true,
       pointSize:isF?2:6,
