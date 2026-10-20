@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <script>window.APP_BUILD = '261021-0429';</script>
+  <script>window.APP_BUILD = '261021-0434';</script>
   <script>window.CURRENT_SHEET_VERSION = '{{SHEET_VERSION}}';</script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
@@ -6205,7 +6205,7 @@
   </button>
 </div>
 
-<!-- 261021 공용 — 데모 모드(?demo=1, 멤버 닉네임 가명 처리) · 최신 버전 읽는 칸 사용법!E10 → E8 · 테마 메뉴 구버전에 "삭제 예정" 표시 · 회차 선택(최신 5개 + 전체 회차 패널) · 세이렌/구버전 스킨 -->
+<!-- 261021 공용 — 캡처 시 유니온명 그라데이션 글자 · 줄바꿈 보정 · 데모 모드(?demo=1, 멤버 닉네임 가명 처리) · 최신 버전 읽는 칸 사용법!E10 → E8 · 테마 메뉴 구버전에 "삭제 예정" 표시 · 회차 선택(최신 5개 + 전체 회차 패널) · 세이렌/구버전 스킨 -->
 <script>
   google.charts.load('current', {'packages':['corechart', 'scatter']});
 
@@ -7604,6 +7604,39 @@
           backgroundColor: isPopUpOpen ? getComputedStyle(document.documentElement).getPropertyValue('--bg').trim() : null,
           onclone: (clonedDoc) => {
             const view = clonedDoc.defaultView || window;
+
+            // 0) 그라데이션 글자(background-clip:text, 제목 유니온명) — html2canvas 미지원이라 그라데이션 상자로 그려짐
+            //    → 글자마다 그라데이션 위치에 맞는 단색을 나눠 칠함
+            clonedDoc.querySelectorAll('.union-name-em').forEach(el => {
+              let cs = null;
+              try { cs = view.getComputedStyle(el); } catch (_) {}
+              if (!cs || (cs.webkitBackgroundClip || cs.backgroundClip) !== 'text') return;
+              const stops = (cs.backgroundImage.match(/rgba?\([^)]+\)/g) || [])
+                .map(c => c.match(/[\d.]+/g).slice(0, 3).map(Number));
+              if (!stops.length) return;
+              const chars = Array.from(el.textContent);
+              el.textContent = '';
+              chars.forEach((ch, i) => {
+                const pos = ((i + 0.5) / chars.length) * (stops.length - 1);
+                const k = Math.min(Math.floor(pos), Math.max(stops.length - 2, 0));
+                const f = pos - k;
+                const b = stops[k + 1] || stops[k];
+                const rgb = stops[k].map((v, j) => Math.round(v + (b[j] - v) * f));
+                const s = clonedDoc.createElement('span');
+                s.textContent = ch;
+                s.style.color = 'rgb(' + rgb.join(',') + ')';
+                el.appendChild(s);
+              });
+              el.style.background = 'none';
+              el.style.webkitBackgroundClip = 'border-box';
+              el.style.backgroundClip = 'border-box';
+              // 세이렌 제목은 유니온명 뒤 줄바꿈을 ::after("\A")로 넣는데 html2canvas 가 무시함 → 실제 <br> 로
+              //   (복제본에선 html2canvas 가 이미 ::after 를 꺼두므로 원본 문서에서 확인)
+              let after = '';
+              const origEm = document.querySelector('.union-name-em');
+              try { after = origEm ? getComputedStyle(origEm, '::after').content || '' : ''; } catch (_) {}
+              if (/\\a|\n/i.test(after)) el.insertAdjacentElement('afterend', clonedDoc.createElement('br'));
+            });
 
             // 1) 아이콘류 (nf-opt-icon / nikke-icon / ni-primary / ni-secondary) → img 원본 유지
             //    src 를 사전 fetch dataURL 로 교체 (CORS-taint 회피), 라이트모드에서 invert 필요하면 반전 dataURL
