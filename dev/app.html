@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <script>window.APP_BUILD = '261023-2211';</script>
+  <script>window.APP_BUILD = '261023-2214';</script>
   <script>window.CURRENT_SHEET_VERSION = '{{SHEET_VERSION}}'; window.__perf = { appStart: performance.now() };</script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
@@ -6211,7 +6211,7 @@
   </button>
 </div>
 
-<!-- 261023 공용 — [시험판 전용] 일괄 읽기 비교 테스트 · 정보 창에 빌드 번호 · 로딩 구간별 시간(시트별 서버 읽기 포함) · 캡처 시 세이렌 그림자 제거(얼룩 방지) · 레벨 차트 좌우 폭 가득 · 캡처 시 유니온명 그라데이션 글자 · 줄바꿈 보정 · 최신 버전 읽는 칸 사용법!E10 → E8 · 테마 메뉴 구버전에 "삭제 예정" 표시 · 회차 선택(최신 5개 + 전체 회차 패널) · 세이렌/구버전 스킨 -->
+<!-- 261023 공용 — 데이터 일괄 읽기(getFullDataBatch, 실패 시 기존 방식) · 정보 창에 빌드 번호 · 로딩 구간별 시간(시트별 서버 읽기 포함) · 캡처 시 세이렌 그림자 제거(얼룩 방지) · 레벨 차트 좌우 폭 가득 · 캡처 시 유니온명 그라데이션 글자 · 줄바꿈 보정 · 최신 버전 읽는 칸 사용법!E10 → E8 · 테마 메뉴 구버전에 "삭제 예정" 표시 · 회차 선택(최신 5개 + 전체 회차 패널) · 세이렌/구버전 스킨 -->
 <script>
   google.charts.load('current', {'packages':['corechart', 'scatter']});
 
@@ -6347,7 +6347,7 @@
 
     window.__perf = window.__perf || {};
     __perf.req = performance.now();
-    google.script.run.withSuccessHandler(function(res) {
+    _loadFullData(function(res) {
       __perf.res = performance.now();
       db = res;
       applySkinPalette();
@@ -6386,9 +6386,18 @@
       requestAnimationFrame(() => { __perf.done = performance.now(); });
       spawnEasterEgg();
       checkSheetVersion();
-      // 시험판(?ch=dev)에서만 — 일괄 읽기(getFullDataBatch)를 기존 방식과 비교
-      if (window.BOOT && BOOT.channel === 'dev') setTimeout(_batchReadTest, 500);
-    }).getFullData();
+    });
+  }
+
+  // 시트 데이터 받기 — 일괄 읽기(getFullDataBatch, Sheets API 한 번)가 있으면 그걸로, 없거나 실패하면 기존 getFullData
+  //   (일괄 함수는 새 코드.js 에만 있음 — 옛 사본 · Sheets 고급 서비스가 꺼진 사본은 자동으로 기존 방식)
+  function _loadFullData(onData) {
+    const legacy = () => google.script.run.withSuccessHandler(onData).getFullData();
+    if (typeof google.script.run.getFullDataBatch !== 'function') { legacy(); return; }
+    google.script.run
+      .withSuccessHandler(onData)
+      .withFailureHandler(e => { console.warn('일괄 읽기 실패 → 기존 방식', e); __perf.batchFailed = true; legacy(); })
+      .getFullDataBatch();
   }
 
 
@@ -7040,42 +7049,6 @@
     return m ? m[1] : '';
   }
 
-  // [시험] 기존 getFullData 와 일괄 읽기 getFullDataBatch 를 차례로 불러 결과 · 시간 비교 (정보 창에 표시)
-  function _batchReadTest() {
-    const r = window.__batchTest = { status: '진행 중' };
-    const keys = ['raidResults', 'raidStats', 'members', 'quitMembers', 'bossData', 'nikkeData', 'dataIMG'];
-    const fail = label => e => { r.status = label + ' 오류: ' + ((e && e.message) || e); };
-    const t1 = performance.now();
-    google.script.run.withSuccessHandler(a => {
-      r.oldMs = performance.now() - t1;
-      r.oldServer = a._perf && a._perf.serverMs;
-      const t2 = performance.now();
-      google.script.run.withSuccessHandler(b => {
-        r.newMs = performance.now() - t2;
-        r.newServer = b._perf && b._perf.serverMs;
-        r.diffs = [];
-        // 셀 안 이미지(=IMAGE 등)는 기존 방식이 객체로, 일괄 방식이 빈칸으로 줌 — 화면은 안 쓰는 칸이라 같은 것으로 봄
-        const same = (x, y) => JSON.stringify(x) === JSON.stringify(y) ||
-          (x && typeof x === 'object' && !Array.isArray(x) && (y === '' || y == null));
-        keys.forEach(k => {
-          const A = a[k] || [], B = b[k] || [];
-          if (JSON.stringify(A) === JSON.stringify(B)) return;
-          let cnt = 0, first = '';
-          for (let i = 0; i < Math.max(A.length, B.length); i++) {
-            const ra = A[i] || [], rb = B[i] || [];
-            for (let j = 0; j < Math.max(ra.length, rb.length); j++) {
-              if (same(ra[j], rb[j])) continue;
-              cnt++;
-              if (!first) first = '[' + i + ',' + j + '] ' + JSON.stringify(ra[j]) + ' → ' + JSON.stringify(rb[j]);
-            }
-          }
-          if (cnt || A.length !== B.length) r.diffs.push(k + ' — 행 ' + A.length + '/' + B.length + ', 다른 칸 ' + cnt + '개' + (first ? ', 예: ' + first : ''));
-        });
-        r.status = r.diffs.length ? '차이 있음' : '완전 일치';
-      }).withFailureHandler(fail('새 방식')).getFullDataBatch();
-    }).withFailureHandler(fail('기존 방식')).getFullData();
-  }
-
   // 이번 로딩 구간별 시간 (정보 창 표시 · 속도 비교용)
   function _perfSummary() {
     const p = window.__perf || {};
@@ -7095,13 +7068,7 @@
       lines.push('· 데이터 크기 ' + mb(db) + ' (니케 ' + mb(db && db.nikkeData) + ')');
       if (p.done) lines.push('· 화면 그리기 ' + s(p.done - p.res));
     }
-    const bt = window.__batchTest;
-    if (bt) {
-      lines.push('[일괄 읽기 시험] ' + bt.status);
-      if (bt.oldMs != null) lines.push('· 기존 ' + s(bt.oldMs) + ' (서버 ' + s(bt.oldServer || 0) + ')');
-      if (bt.newMs != null) lines.push('· 일괄 ' + s(bt.newMs) + ' (서버 ' + s(bt.newServer || 0) + ')');
-      (bt.diffs || []).forEach(d => lines.push('· ' + d));
-    }
+    if (p.batchFailed) lines.push('· 일괄 읽기 실패 → 기존 방식으로 받음');
     return lines.join('\n');
   }
 
