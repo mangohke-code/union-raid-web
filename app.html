@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <script>window.APP_BUILD = '261023-2215';</script>
+  <script>window.APP_BUILD = '261023-2302';</script>
   <script>window.CURRENT_SHEET_VERSION = '{{SHEET_VERSION}}'; window.__perf = { appStart: performance.now() };</script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
@@ -5628,7 +5628,7 @@
   <!-- 회차 선택 버튼 (레이드 통계 / 니케 통계 탭 공통 사용) -->
   <div id="raid-btn-group" class="raid-selector"></div>
 
-  <div id="section-raid"><!-- 261020 레이드 통계 탭 — 닉네임 검색 입력을 지연 갱신(onRaidSearchInput)으로 -->
+  <div id="section-raid"><!-- 261023 레이드 통계 탭 — 지표 안내에 보스 상세 표(타격별) 기준 추가 · 닉네임 검색 입력을 지연 갱신(onRaidSearchInput)으로 -->
 <div id="raid-main-content">
   <div id="raid-specific-content">
     <div class="boss-grid" id="boss-container"></div>
@@ -5782,6 +5782,7 @@
         <li><b>막타 제외</b> — 딜컷으로 인한 데이터 오염 방지 및 결과 미출력</li>
         <li><b>레벨 보정</b> — 레벨에 따른 스탯 보정으로 레벨 평준화</li>
         <li><b>난이도 반영</b> — 보스 난이도 반영을 통한 딜량 보정</li>
+        <li><b>보스 상세 표</b> — 타격 1회마다 따로 계산 · 그 보스의 막타 제외 평균 = 100%</li>
       </ul>
     </div>
 
@@ -5794,6 +5795,7 @@
         <li><b>막타 포함</b> — 딜컷 데이터 포함 및 결과 출력</li>
         <li><b>레벨 미보정</b> — 해당 회차 실제 기여도 계산</li>
         <li><b>난이도 반영</b> — 보스 난이도 반영을 통한 딜량 보정</li>
+        <li><b>보스 상세 표</b> — 타격 1회의 실제 딜 ÷ 그 보스의 막타 제외 평균 딜 (막타도 표시)</li>
       </ul>
     </div>
 
@@ -8767,7 +8769,7 @@
     });
   }
 </script>
-<!-- 261021 레이드 통계 — 요약 묶음 · Level 표기 · 코멘트 링크 · 세이렌 도넛 · 산점도 축/격자 테마 색 -->
+<!-- 261023 레이드 통계 — 보스 상세 효율·기여도를 타격별로(막타 제외 평균 기준) · 요약 묶음 · Level 표기 · 코멘트 링크 · 세이렌 도넛 · 산점도 축/격자 테마 색 -->
 <script>
   let currentRaidSort = 'dmg';
   let currentDetailSort = 'dmg';
@@ -9217,61 +9219,31 @@
     return result;
   }
 
-  // 보스 범위 내 효율/기여도
-  // - 효율: 타격당 레벨보정 점수의 멤버 평균 / 보스 전체 평균 × 100 (막타 제외)
-  // - 기여도: 멤버 딜 합계 / 해당 보스에서의 평균 멤버 딜 × 100 (막타 포함)
-  function calcBossScopedStats(logs) {
-    // 이 보스에서 타격한 멤버들의 평균 공격력 산출
+  // 보스 상세 표의 효율/기여도 — 표가 타격 1회씩 보여주므로 타격마다 따로 계산해 각 로그에 넣음
+  //   - 기준선: 이 보스의 막타 제외 타격 평균 (막타는 남은 HP 만큼만 들어가 기준을 끌어내리므로 제외)
+  //   - 효율: 이 타격의 레벨보정 딜 / 막타 제외 레벨보정 딜 평균 × 100 — 막타는 '-'
+  //       레벨보정 = 실제딜 × (이 보스를 친 멤버 평균 공격력 / 내 공격력)
+  //   - 기여도: 이 타격의 실제 딜 / 막타 제외 실제 딜 평균 × 100 — 막타도 실제로 넣은 딜이라 표시
+  function applyBossHitStats(logs) {
     const levels = [];
     logs.forEach(l => { if (l.rawLevel > 0) levels.push(l.rawLevel); });
     const avgLv = levels.length > 0 ? levels.reduce((a,b)=>a+b,0) / levels.length : 1;
     const atkAvg = calcAtk(Math.round(avgLv)) || 1;
-
-    // 효율: 막타 제외 per-hit 점수
-    const memberScores = {};
-    const allScores = [];
-    logs.forEach(l => {
-      if (l.isLast) return;
+    const corrected = l => {
       const atkMember = l.rawLevel > 0 ? calcAtk(l.rawLevel) : atkAvg;
-      const correction = atkMember > 0 ? atkAvg / atkMember : 1;
-      const score = l.dmg * correction;
-      if (!memberScores[l.name]) memberScores[l.name] = [];
-      memberScores[l.name].push(score);
-      allScores.push(score);
-    });
-    const globalMean = allScores.length > 0
-      ? allScores.reduce((a,b)=>a+b,0) / allScores.length
-      : 0;
-    const efficiency = {};
-    Object.keys(memberScores).forEach(n => {
-      const hits = memberScores[n];
-      const memAvg = hits.reduce((a,b)=>a+b,0) / hits.length;
-      efficiency[n] = globalMean > 0
-        ? Math.round((memAvg / globalMean) * 1000) / 10
-        : 0;
-    });
+      return l.dmg * (atkMember > 0 ? atkAvg / atkMember : 1);
+    };
 
-    // 기여도: 멤버별 타격당 평균딜 / 해당 보스 타격당 전체 평균딜
-    // (동일 보스를 여러번 칠 경우 합계 중첩 방지 위해 per-hit 평균 사용)
-    const memberDmgs = {};
-    let allDmgSum = 0, allDmgCount = 0;
+    const full = logs.filter(l => !l.isLast);
+    const mean = arr => arr.length ? arr.reduce((a,b)=>a+b,0) / arr.length : 0;
+    const effBase = mean(full.map(corrected));
+    const conBase = mean(full.map(l => l.dmg));
+    const pct = (v, base) => base > 0 ? Math.round((v / base) * 1000) / 10 : 0;
+
     logs.forEach(l => {
-      if (!memberDmgs[l.name]) memberDmgs[l.name] = [];
-      memberDmgs[l.name].push(l.dmg);
-      allDmgSum += l.dmg;
-      allDmgCount++;
+      l.bossEfficiency = l.isLast ? 0 : pct(corrected(l), effBase);
+      l.bossContribution = pct(l.dmg, conBase);
     });
-    const globalPerHitAvg = allDmgCount > 0 ? allDmgSum / allDmgCount : 0;
-    const contribution = {};
-    Object.keys(memberDmgs).forEach(n => {
-      const hits = memberDmgs[n];
-      const memAvg = hits.reduce((a,b)=>a+b,0) / hits.length;
-      contribution[n] = globalPerHitAvg > 0
-        ? Math.round((memAvg / globalPerHitAvg) * 1000) / 10
-        : 0;
-    });
-
-    return { efficiency, contribution };
   }
 
   // 보스 딜량 편차율 (지수 트렌드 기준선 대비 MAPE)
@@ -10005,12 +9977,8 @@
     detailLogs.sort((a, b) => b.dmg - a.dmg);
     detailLogs.forEach((l, idx) => l.rank = idx + 1);
 
-    // 보스별 효율/기여도 계산 후 각 타격 로그에 주입
-    const bossStats = calcBossScopedStats(detailLogs);
-    detailLogs.forEach(l => {
-      l.bossEfficiency = bossStats.efficiency[l.name] ?? 0;
-      l.bossContribution = bossStats.contribution[l.name] ?? 0;
-    });
+    // 타격별 효율/기여도 계산 후 각 타격 로그에 주입
+    applyBossHitStats(detailLogs);
 
     renderDetailSummary(bossName, bossAttr, colIdx, raidTitle);
     refreshDetailTable();
