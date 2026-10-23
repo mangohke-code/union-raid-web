@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <script>window.APP_BUILD = '261023-2206';</script>
+  <script>window.APP_BUILD = '261023-2211';</script>
   <script>window.CURRENT_SHEET_VERSION = '{{SHEET_VERSION}}'; window.__perf = { appStart: performance.now() };</script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
@@ -7054,6 +7054,9 @@
         r.newMs = performance.now() - t2;
         r.newServer = b._perf && b._perf.serverMs;
         r.diffs = [];
+        // 셀 안 이미지(=IMAGE 등)는 기존 방식이 객체로, 일괄 방식이 빈칸으로 줌 — 화면은 안 쓰는 칸이라 같은 것으로 봄
+        const same = (x, y) => JSON.stringify(x) === JSON.stringify(y) ||
+          (x && typeof x === 'object' && !Array.isArray(x) && (y === '' || y == null));
         keys.forEach(k => {
           const A = a[k] || [], B = b[k] || [];
           if (JSON.stringify(A) === JSON.stringify(B)) return;
@@ -7061,12 +7064,12 @@
           for (let i = 0; i < Math.max(A.length, B.length); i++) {
             const ra = A[i] || [], rb = B[i] || [];
             for (let j = 0; j < Math.max(ra.length, rb.length); j++) {
-              if (JSON.stringify(ra[j]) === JSON.stringify(rb[j])) continue;
+              if (same(ra[j], rb[j])) continue;
               cnt++;
               if (!first) first = '[' + i + ',' + j + '] ' + JSON.stringify(ra[j]) + ' → ' + JSON.stringify(rb[j]);
             }
           }
-          r.diffs.push(k + ' — 행 ' + A.length + '/' + B.length + ', 다른 칸 ' + cnt + '개, 예: ' + first);
+          if (cnt || A.length !== B.length) r.diffs.push(k + ' — 행 ' + A.length + '/' + B.length + ', 다른 칸 ' + cnt + '개' + (first ? ', 예: ' + first : ''));
         });
         r.status = r.diffs.length ? '차이 있음' : '완전 일치';
       }).withFailureHandler(fail('새 방식')).getFullDataBatch();
