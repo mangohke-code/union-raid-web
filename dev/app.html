@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <script>window.APP_BUILD = '261023-2113';</script>
+  <script>window.APP_BUILD = '261023-2201';</script>
   <script>window.CURRENT_SHEET_VERSION = '{{SHEET_VERSION}}'; window.__perf = { appStart: performance.now() };</script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
@@ -6211,7 +6211,7 @@
   </button>
 </div>
 
-<!-- 261023 공용 — 정보 창에 빌드 번호 · 로딩 구간별 시간 · 캡처 시 세이렌 그림자 제거(얼룩 방지) · 레벨 차트 좌우 폭 가득 · 캡처 시 유니온명 그라데이션 글자 · 줄바꿈 보정 · 최신 버전 읽는 칸 사용법!E10 → E8 · 테마 메뉴 구버전에 "삭제 예정" 표시 · 회차 선택(최신 5개 + 전체 회차 패널) · 세이렌/구버전 스킨 -->
+<!-- 261023 공용 — 정보 창에 빌드 번호 · 로딩 구간별 시간(시트별 서버 읽기 포함) · 캡처 시 세이렌 그림자 제거(얼룩 방지) · 레벨 차트 좌우 폭 가득 · 캡처 시 유니온명 그라데이션 글자 · 줄바꿈 보정 · 최신 버전 읽는 칸 사용법!E10 → E8 · 테마 메뉴 구버전에 "삭제 예정" 표시 · 회차 선택(최신 5개 + 전체 회차 패널) · 세이렌/구버전 스킨 -->
 <script>
   google.charts.load('current', {'packages':['corechart', 'scatter']});
 
@@ -7048,7 +7048,12 @@
       const sv = db && db._perf;
       lines.push('이번 로딩 ' + s((p.done || p.res) ) + ' (주소를 연 순간부터)');
       lines.push('· 화면 코드 받기 ' + s(p.appStart || 0));
-      lines.push('· 데이터 ' + s(p.res - p.req) + (sv ? ' — 서버 읽기 ' + s(sv.serverMs) + (sv.readMs && sv.readMs.dataNikke != null ? ' (니케 ' + s(sv.readMs.dataNikke) + ')' : '') : ''));
+      lines.push('· 데이터 ' + s(p.res - p.req) + (sv ? ' — 서버 읽기 ' + s(sv.serverMs) : ''));
+      // 시트별 서버 읽기 시간 (느린 순)
+      if (sv && sv.readMs) {
+        Object.keys(sv.readMs).sort((a, b) => sv.readMs[b] - sv.readMs[a])
+          .forEach(k => lines.push('   ' + k + ' ' + s(sv.readMs[k])));
+      }
       lines.push('· 데이터 크기 ' + mb(db) + ' (니케 ' + mb(db && db.nikkeData) + ')');
       if (p.done) lines.push('· 화면 그리기 ' + s(p.done - p.res));
     }
