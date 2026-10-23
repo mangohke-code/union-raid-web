@@ -1,9 +1,9 @@
-<!-- 261021 화면 원본 (배포.py 로 GitHub Pages 에 올림 · Apps Script 에는 안 올라감) — 제목 구역 우상단 서버 표기('유니온 정보' 탭) · 세이렌 스킨(style_siren) · 저장된 테마/모드 선적용 · 테마 메뉴(라이트/다크 포함) · 상단 패널 틀(hero-wrap) -->
+<!-- 261023 화면 원본 (배포.py 로 GitHub Pages 에 올림 · Apps Script 에는 안 올라감) — 정보 창 로딩 시간 칸 · 제목 구역 우상단 서버 표기('유니온 정보' 탭) · 세이렌 스킨(style_siren) · 저장된 테마/모드 선적용 · 테마 메뉴(라이트/다크 포함) · 상단 패널 틀(hero-wrap) -->
 <!DOCTYPE html>
 <html>
 <head>
-  <script>window.APP_BUILD = '261021-0500';</script>
-  <script>window.CURRENT_SHEET_VERSION = '{{SHEET_VERSION}}';</script>
+  <script>window.APP_BUILD = '261023-2215';</script>
+  <script>window.CURRENT_SHEET_VERSION = '{{SHEET_VERSION}}'; window.__perf = { appStart: performance.now() };</script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
   <script src="https://www.gstatic.com/charts/loader.js"></script>
@@ -11,7 +11,7 @@
 
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Bebas+Neue&family=Rajdhani:wght@600;700&family=Outfit:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,600;1,500;1,600&family=Noto+Serif+KR:wght@600;700&display=swap" rel="stylesheet">
 
-  <!-- 261021 — 제목 우상단 서버 표기 · 회차 선택 전체 회차 버튼/패널 · 폭 1760px · 테마 색 변수 · Most Deployed 배치 · 토스트 · 코멘트 링크 -->
+  <!-- 261023 — 정보 창 로딩 시간 · 제목 우상단 서버 표기 · 회차 선택 전체 회차 버튼/패널 · 폭 1760px · 테마 색 변수 · Most Deployed 배치 · 토스트 · 코멘트 링크 -->
 <style>
   /* ===== CSS 변수 (테마) ===== */
   :root {
@@ -1439,6 +1439,11 @@
     font-size: 14px; font-weight: 700;
     color: var(--accent); letter-spacing: 2px;
     margin-top: 4px;
+  }
+  /* 정보 창 — 빌드 번호 · 이번 로딩 구간별 시간 */
+  .info-modal-perf {
+    margin-top: 8px; font-size: 12px; line-height: 1.6; color: var(--text-dim);
+    font-variant-numeric: tabular-nums; white-space: pre-line;
   }
   .info-modal-section {
     margin-bottom: 18px;
@@ -5571,6 +5576,7 @@
     <div class="info-modal-header">
       <div class="info-modal-title">{{UNION_NAME}} 유니온 레이드 결산</div>
       <div class="info-modal-version" id="info-modal-version"></div>
+      <div class="info-modal-perf" id="info-modal-perf"></div>
     </div>
     <div class="info-modal-section">
       <div class="info-modal-label">버그 제보 및 건의</div>
@@ -6205,7 +6211,7 @@
   </button>
 </div>
 
-<!-- 261021 공용 — 캡처 시 세이렌 그림자 제거(얼룩 방지) · 레벨 차트 좌우 폭 가득 · 캡처 시 유니온명 그라데이션 글자 · 줄바꿈 보정 · 최신 버전 읽는 칸 사용법!E10 → E8 · 테마 메뉴 구버전에 "삭제 예정" 표시 · 회차 선택(최신 5개 + 전체 회차 패널) · 세이렌/구버전 스킨 -->
+<!-- 261023 공용 — 데이터 일괄 읽기(getFullDataBatch, 실패 시 기존 방식) · 정보 창에 빌드 번호 · 로딩 구간별 시간(시트별 서버 읽기 포함) · 캡처 시 세이렌 그림자 제거(얼룩 방지) · 레벨 차트 좌우 폭 가득 · 캡처 시 유니온명 그라데이션 글자 · 줄바꿈 보정 · 최신 버전 읽는 칸 사용법!E10 → E8 · 테마 메뉴 구버전에 "삭제 예정" 표시 · 회차 선택(최신 5개 + 전체 회차 패널) · 세이렌/구버전 스킨 -->
 <script>
   google.charts.load('current', {'packages':['corechart', 'scatter']});
 
@@ -6339,7 +6345,10 @@
       history.pushState({ main: true }, '', '');
     });
 
-    google.script.run.withSuccessHandler(function(res) {
+    window.__perf = window.__perf || {};
+    __perf.req = performance.now();
+    _loadFullData(function(res) {
+      __perf.res = performance.now();
       db = res;
       applySkinPalette();
       _syncSirenSea();
@@ -6374,9 +6383,21 @@
       switchTab('raid');
 
       document.getElementById('loading-overlay').classList.add('hidden');
+      requestAnimationFrame(() => { __perf.done = performance.now(); });
       spawnEasterEgg();
       checkSheetVersion();
-    }).getFullData();
+    });
+  }
+
+  // 시트 데이터 받기 — 일괄 읽기(getFullDataBatch, Sheets API 한 번)가 있으면 그걸로, 없거나 실패하면 기존 getFullData
+  //   (일괄 함수는 새 코드.js 에만 있음 — 옛 사본 · Sheets 고급 서비스가 꺼진 사본은 자동으로 기존 방식)
+  function _loadFullData(onData) {
+    const legacy = () => google.script.run.withSuccessHandler(onData).getFullData();
+    if (typeof google.script.run.getFullDataBatch !== 'function') { legacy(); return; }
+    google.script.run
+      .withSuccessHandler(onData)
+      .withFailureHandler(e => { console.warn('일괄 읽기 실패 → 기존 방식', e); __perf.batchFailed = true; legacy(); })
+      .getFullDataBatch();
   }
 
 
@@ -7028,10 +7049,35 @@
     return m ? m[1] : '';
   }
 
+  // 이번 로딩 구간별 시간 (정보 창 표시 · 속도 비교용)
+  function _perfSummary() {
+    const p = window.__perf || {};
+    const s = ms => (ms / 1000).toFixed(2) + '초';
+    const mb = o => { try { return (JSON.stringify(o || '').length / 1048576).toFixed(2) + 'MB'; } catch (e) { return '?'; } };
+    const lines = ['화면 빌드 ' + (window.APP_BUILD || '로컬')];
+    if (p.res && p.req) {
+      const sv = db && db._perf;
+      lines.push('이번 로딩 ' + s((p.done || p.res) ) + ' (주소를 연 순간부터)');
+      lines.push('· 화면 코드 받기 ' + s(p.appStart || 0));
+      lines.push('· 데이터 ' + s(p.res - p.req) + (sv ? ' — 서버 읽기 ' + s(sv.serverMs) : ''));
+      // 시트별 서버 읽기 시간 (느린 순)
+      if (sv && sv.readMs) {
+        Object.keys(sv.readMs).sort((a, b) => sv.readMs[b] - sv.readMs[a])
+          .forEach(k => lines.push('   ' + k + ' ' + s(sv.readMs[k])));
+      }
+      lines.push('· 데이터 크기 ' + mb(db) + ' (니케 ' + mb(db && db.nikkeData) + ')');
+      if (p.done) lines.push('· 화면 그리기 ' + s(p.done - p.res));
+    }
+    if (p.batchFailed) lines.push('· 일괄 읽기 실패 → 기존 방식으로 받음');
+    return lines.join('\n');
+  }
+
   // ── 정보 모달 ──
   function openInfoModal() {
     const v = document.getElementById('info-modal-version');
     if (v) v.textContent = 'v' + CURRENT_SHEET_VERSION;
+    const pf = document.getElementById('info-modal-perf');
+    if (pf) pf.textContent = _perfSummary();
     const ov = document.getElementById('info-modal-overlay');
     if (ov) {
       ov.style.display = 'flex';
