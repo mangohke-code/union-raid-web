@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <script>window.APP_BUILD = '261023-2201';</script>
+  <script>window.APP_BUILD = '261023-2206';</script>
   <script>window.CURRENT_SHEET_VERSION = '{{SHEET_VERSION}}'; window.__perf = { appStart: performance.now() };</script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
@@ -6211,7 +6211,7 @@
   </button>
 </div>
 
-<!-- 261023 공용 — 정보 창에 빌드 번호 · 로딩 구간별 시간(시트별 서버 읽기 포함) · 캡처 시 세이렌 그림자 제거(얼룩 방지) · 레벨 차트 좌우 폭 가득 · 캡처 시 유니온명 그라데이션 글자 · 줄바꿈 보정 · 최신 버전 읽는 칸 사용법!E10 → E8 · 테마 메뉴 구버전에 "삭제 예정" 표시 · 회차 선택(최신 5개 + 전체 회차 패널) · 세이렌/구버전 스킨 -->
+<!-- 261023 공용 — [시험판 전용] 일괄 읽기 비교 테스트 · 정보 창에 빌드 번호 · 로딩 구간별 시간(시트별 서버 읽기 포함) · 캡처 시 세이렌 그림자 제거(얼룩 방지) · 레벨 차트 좌우 폭 가득 · 캡처 시 유니온명 그라데이션 글자 · 줄바꿈 보정 · 최신 버전 읽는 칸 사용법!E10 → E8 · 테마 메뉴 구버전에 "삭제 예정" 표시 · 회차 선택(최신 5개 + 전체 회차 패널) · 세이렌/구버전 스킨 -->
 <script>
   google.charts.load('current', {'packages':['corechart', 'scatter']});
 
@@ -6386,6 +6386,8 @@
       requestAnimationFrame(() => { __perf.done = performance.now(); });
       spawnEasterEgg();
       checkSheetVersion();
+      // 시험판(?ch=dev)에서만 — 일괄 읽기(getFullDataBatch)를 기존 방식과 비교
+      if (window.BOOT && BOOT.channel === 'dev') setTimeout(_batchReadTest, 500);
     }).getFullData();
   }
 
@@ -7038,6 +7040,39 @@
     return m ? m[1] : '';
   }
 
+  // [시험] 기존 getFullData 와 일괄 읽기 getFullDataBatch 를 차례로 불러 결과 · 시간 비교 (정보 창에 표시)
+  function _batchReadTest() {
+    const r = window.__batchTest = { status: '진행 중' };
+    const keys = ['raidResults', 'raidStats', 'members', 'quitMembers', 'bossData', 'nikkeData', 'dataIMG'];
+    const fail = label => e => { r.status = label + ' 오류: ' + ((e && e.message) || e); };
+    const t1 = performance.now();
+    google.script.run.withSuccessHandler(a => {
+      r.oldMs = performance.now() - t1;
+      r.oldServer = a._perf && a._perf.serverMs;
+      const t2 = performance.now();
+      google.script.run.withSuccessHandler(b => {
+        r.newMs = performance.now() - t2;
+        r.newServer = b._perf && b._perf.serverMs;
+        r.diffs = [];
+        keys.forEach(k => {
+          const A = a[k] || [], B = b[k] || [];
+          if (JSON.stringify(A) === JSON.stringify(B)) return;
+          let cnt = 0, first = '';
+          for (let i = 0; i < Math.max(A.length, B.length); i++) {
+            const ra = A[i] || [], rb = B[i] || [];
+            for (let j = 0; j < Math.max(ra.length, rb.length); j++) {
+              if (JSON.stringify(ra[j]) === JSON.stringify(rb[j])) continue;
+              cnt++;
+              if (!first) first = '[' + i + ',' + j + '] ' + JSON.stringify(ra[j]) + ' → ' + JSON.stringify(rb[j]);
+            }
+          }
+          r.diffs.push(k + ' — 행 ' + A.length + '/' + B.length + ', 다른 칸 ' + cnt + '개, 예: ' + first);
+        });
+        r.status = r.diffs.length ? '차이 있음' : '완전 일치';
+      }).withFailureHandler(fail('새 방식')).getFullDataBatch();
+    }).withFailureHandler(fail('기존 방식')).getFullData();
+  }
+
   // 이번 로딩 구간별 시간 (정보 창 표시 · 속도 비교용)
   function _perfSummary() {
     const p = window.__perf || {};
@@ -7056,6 +7091,13 @@
       }
       lines.push('· 데이터 크기 ' + mb(db) + ' (니케 ' + mb(db && db.nikkeData) + ')');
       if (p.done) lines.push('· 화면 그리기 ' + s(p.done - p.res));
+    }
+    const bt = window.__batchTest;
+    if (bt) {
+      lines.push('[일괄 읽기 시험] ' + bt.status);
+      if (bt.oldMs != null) lines.push('· 기존 ' + s(bt.oldMs) + ' (서버 ' + s(bt.oldServer || 0) + ')');
+      if (bt.newMs != null) lines.push('· 일괄 ' + s(bt.newMs) + ' (서버 ' + s(bt.newServer || 0) + ')');
+      (bt.diffs || []).forEach(d => lines.push('· ' + d));
     }
     return lines.join('\n');
   }
