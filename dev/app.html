@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <script>window.APP_BUILD = '261028-2321';</script>
+  <script>window.APP_BUILD = '261028-2324';</script>
   <script>window.CURRENT_SHEET_VERSION = '{{SHEET_VERSION}}'; window.__perf = { appStart: performance.now() };</script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
@@ -11,7 +11,7 @@
 
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Bebas+Neue&family=Rajdhani:wght@600;700&family=Outfit:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,600;1,500;1,600&family=Noto+Serif+KR:wght@600;700&display=swap" rel="stylesheet">
 
-  <!-- 261023 — 정보 창 로딩 시간 · 제목 우상단 서버 표기 · 회차 선택 전체 회차 버튼/패널 · 폭 1760px · 테마 색 변수 · Most Deployed 배치 · 토스트 · 코멘트 링크 -->
+  <!-- 261028 — 최신 버전 알림 타이머 3초 · 정보 창 로딩 시간 · 제목 우상단 서버 표기 · 회차 선택 전체 회차 버튼/패널 · 폭 1760px · 테마 색 변수 · Most Deployed 배치 · 토스트 · 코멘트 링크 -->
 <style>
   /* ===== CSS 변수 (테마) ===== */
   :root {
@@ -1558,7 +1558,7 @@
     height: 100%;
     width: 100%;
     background: rgba(127, 220, 160, 0.8);
-    transition: width 5s linear;
+    transition: width 3s linear;
   }
 
   /* 로딩 화면 버전 노트 */
@@ -6213,7 +6213,7 @@
   </button>
 </div>
 
-<!-- 261028 공용 — 버전 확인: 마스터 버전 칸이 비면 업데이트 있음으로 표시 · 데이터 일괄 읽기(getFullDataBatch, 실패 시 기존 방식) · 정보 창에 빌드 번호 · 로딩 구간별 시간(시트별 서버 읽기 포함) · 캡처 시 세이렌 그림자 제거(얼룩 방지) · 레벨 차트 좌우 폭 가득 · 캡처 시 유니온명 그라데이션 글자 · 줄바꿈 보정 · 최신 버전 읽는 칸 사용법!E10 → E8 · 테마 메뉴 구버전에 "삭제 예정" 표시 · 회차 선택(최신 5개 + 전체 회차 패널) · 세이렌/구버전 스킨 -->
+<!-- 261028 공용 — 최신 버전 알림 3초 · 버전 확인: 마스터 버전 칸이 비면 업데이트 있음으로 표시 · 데이터 일괄 읽기(getFullDataBatch, 실패 시 기존 방식) · 정보 창에 빌드 번호 · 로딩 구간별 시간(시트별 서버 읽기 포함) · 캡처 시 세이렌 그림자 제거(얼룩 방지) · 레벨 차트 좌우 폭 가득 · 캡처 시 유니온명 그라데이션 글자 · 줄바꿈 보정 · 최신 버전 읽는 칸 사용법!E10 → E8 · 테마 메뉴 구버전에 "삭제 예정" 표시 · 회차 선택(최신 5개 + 전체 회차 패널) · 세이렌/구버전 스킨 -->
 <script>
   google.charts.load('current', {'packages':['corechart', 'scatter']});
 
@@ -7125,7 +7125,7 @@
     const body = isLatest
       ? '현재 v' + CURRENT_SHEET_VERSION
       : '현재 v' + CURRENT_SHEET_VERSION + '  →  ' + (latest ? '최신 v' + latest : '마스터 시트에서 최신 버전 확인');
-    // 타이머 바 — 최신 사용 중일 때만 5초 카운트다운 후 자동 닫힘
+    // 타이머 바 — 최신 사용 중일 때만 3초 카운트다운 후 자동 닫힘
     const timerHtml = isLatest
       ? '<div class="svp-timer"><div class="svp-timer-fill"></div></div>'
       : '';
@@ -7137,14 +7137,14 @@
       timerHtml;
     el.style.display = 'block';
     if (isLatest) {
-      // 프레임 이후에 width 0으로 트리거 → CSS transition 5초 카운트다운
+      // 프레임 이후에 width 0으로 트리거 → CSS transition 3초 카운트다운
       const fill = el.querySelector('.svp-timer-fill');
       if (fill) {
         requestAnimationFrame(function() {
           requestAnimationFrame(function() { fill.style.width = '0%'; });
         });
       }
-      setTimeout(function() { _dismissSheetVersionPopup(true); }, 5000);
+      setTimeout(function() { _dismissSheetVersionPopup(true); }, 3000);
     }
     // 구버전 알림은 사용자가 직접 × 로 닫을 때까지 유지
   }
