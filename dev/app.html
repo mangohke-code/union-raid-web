@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <script>window.APP_BUILD = '261030-0224';</script>
+  <script>window.APP_BUILD = '261030-0229';</script>
   <script>window.CURRENT_SHEET_VERSION = '{{SHEET_VERSION}}'; window.__perf = { appStart: performance.now() };</script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
@@ -6213,7 +6213,7 @@
   </button>
 </div>
 
-<!-- 261028 공용 — 최신 버전 알림 3초 · 버전 확인: 마스터 버전 칸이 비면 업데이트 있음으로 표시 · 데이터 일괄 읽기(getFullDataBatch, 실패 시 기존 방식) · 정보 창에 빌드 번호 · 로딩 구간별 시간(시트별 서버 읽기 포함) · 캡처 시 세이렌 그림자 제거(얼룩 방지) · 레벨 차트 좌우 폭 가득 · 캡처 시 유니온명 그라데이션 글자 · 줄바꿈 보정 · 최신 버전 읽는 칸 사용법!E10 → E8 · 테마 메뉴 구버전에 "삭제 예정" 표시 · 회차 선택(최신 5개 + 전체 회차 패널) · 세이렌/구버전 스킨 -->
+<!-- 261030 공용 — 버전 확인: 마스터 '사용법' 탭 전체에서 버전 형식(v261030) 칸을 찾아 가장 큰 값 사용 / 261028 공용 — 최신 버전 알림 3초 · 버전 확인: 마스터 버전 칸이 비면 업데이트 있음으로 표시 · 데이터 일괄 읽기(getFullDataBatch, 실패 시 기존 방식) · 정보 창에 빌드 번호 · 로딩 구간별 시간(시트별 서버 읽기 포함) · 캡처 시 세이렌 그림자 제거(얼룩 방지) · 레벨 차트 좌우 폭 가득 · 캡처 시 유니온명 그라데이션 글자 · 줄바꿈 보정 · 최신 버전 읽는 칸 사용법!E10 → E8 · 테마 메뉴 구버전에 "삭제 예정" 표시 · 회차 선택(최신 5개 + 전체 회차 패널) · 세이렌/구버전 스킨 -->
 <script>
   google.charts.load('current', {'packages':['corechart', 'scatter']});
 
@@ -7043,12 +7043,13 @@
   const MASTER_SHEET_ID = '1GuV-FywoN0CjeVoY4p3yfzxel15Mt8TsyhfT6b2XonA';
   const SHEET_VERSION_URL =
     'https://docs.google.com/spreadsheets/d/' + MASTER_SHEET_ID +
-    '/gviz/tq?tqx=out:json&sheet=%EC%82%AC%EC%9A%A9%EB%B2%95&range=E8';
+    '/gviz/tq?tqx=out:json&headers=0&sheet=%EC%82%AC%EC%9A%A9%EB%B2%95';
 
-  // "v260812" 같은 문자열에서 6자리 날짜만 추출
+  // 칸 하나가 통째로 "v261030" / "261030" 형식(YYMMDD)이면 그 6자리, 아니면 ''
   function _extractVer(s) {
-    const m = String(s || '').match(/(\d{6})/);
-    return m ? m[1] : '';
+    const m = String(s == null ? '' : s).trim().match(/^v?\s*(\d{2})(\d{2})(\d{2})$/i);
+    if (!m || +m[2] < 1 || +m[2] > 12 || +m[3] < 1 || +m[3] > 31) return '';
+    return m[1] + m[2] + m[3];
   }
 
   // 이번 로딩 구간별 시간 (정보 창 표시 · 속도 비교용)
@@ -7104,10 +7105,14 @@
       const m = text.match(/setResponse\(([\s\S]+)\);?\s*$/);
       if (!m) return;
       const j = JSON.parse(m[1]);
-      const cell = j.table && j.table.rows && j.table.rows[0] && j.table.rows[0].c && j.table.rows[0].c[0];
-      // 마스터는 읽었는데 버전 칸이 비어 있으면(버전 칸 위치를 옮긴 경우 등) 업데이트가 필요한 것으로 봄
+      // '사용법' 탭의 모든 칸에서 버전 형식인 값을 찾아 가장 큰 것 (칸 위치가 바뀌어도 됨)
+      //   마스터는 읽었는데 버전 칸이 없으면 업데이트가 필요한 것으로 봄
       //   (마스터를 못 읽은 경우는 위에서 그냥 return — 일시적인 문제로 알림이 뜨지 않게)
-      const latest = _extractVer(cell && cell.v);
+      let latest = '';
+      const t = j.table || {};
+      const vals = (t.cols || []).map(c => c.label);
+      (t.rows || []).forEach(row => (row.c || []).forEach(c => { if (c) vals.push(c.v, c.f); }));
+      vals.forEach(v => { const x = _extractVer(v); if (x && x > latest) latest = x; });
       const isLatest = !!latest && Number(latest) <= Number(CURRENT_SHEET_VERSION);
       if (note) note.textContent = isLatest
         ? '현재 v' + CURRENT_SHEET_VERSION + ' · 최신'
