@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <script>window.APP_BUILD = '261030-0229';</script>
+  <script>window.APP_BUILD = '261030-0530';</script>
   <script>window.CURRENT_SHEET_VERSION = '{{SHEET_VERSION}}'; window.__perf = { appStart: performance.now() };</script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
@@ -6213,7 +6213,7 @@
   </button>
 </div>
 
-<!-- 261030 공용 — 버전 확인: 마스터 '사용법' 탭 전체에서 버전 형식(v261030) 칸을 찾아 가장 큰 값 사용 / 261028 공용 — 최신 버전 알림 3초 · 버전 확인: 마스터 버전 칸이 비면 업데이트 있음으로 표시 · 데이터 일괄 읽기(getFullDataBatch, 실패 시 기존 방식) · 정보 창에 빌드 번호 · 로딩 구간별 시간(시트별 서버 읽기 포함) · 캡처 시 세이렌 그림자 제거(얼룩 방지) · 레벨 차트 좌우 폭 가득 · 캡처 시 유니온명 그라데이션 글자 · 줄바꿈 보정 · 최신 버전 읽는 칸 사용법!E10 → E8 · 테마 메뉴 구버전에 "삭제 예정" 표시 · 회차 선택(최신 5개 + 전체 회차 패널) · 세이렌/구버전 스킨 -->
+<!-- 261030 공용 — 가이드: 기록 없는 회차(NO RECORD)에서 시작하면 기록 있는 최근 회차로 이동 · 버전 확인: 마스터 '사용법' 탭 전체에서 버전 형식(v261030) 칸을 찾아 가장 큰 값 사용 / 261028 공용 — 최신 버전 알림 3초 · 버전 확인: 마스터 버전 칸이 비면 업데이트 있음으로 표시 · 데이터 일괄 읽기(getFullDataBatch, 실패 시 기존 방식) · 정보 창에 빌드 번호 · 로딩 구간별 시간(시트별 서버 읽기 포함) · 캡처 시 세이렌 그림자 제거(얼룩 방지) · 레벨 차트 좌우 폭 가득 · 캡처 시 유니온명 그라데이션 글자 · 줄바꿈 보정 · 최신 버전 읽는 칸 사용법!E10 → E8 · 테마 메뉴 구버전에 "삭제 예정" 표시 · 회차 선택(최신 5개 + 전체 회차 패널) · 세이렌/구버전 스킨 -->
 <script>
   google.charts.load('current', {'packages':['corechart', 'scatter']});
 
@@ -8383,6 +8383,13 @@
       }
       const raidSearch = document.getElementById('raidSearchInput');
       if (raidSearch) raidSearch.value = '';
+      // 기록 없는 회차(NO RECORD)면 기록 있는 가장 최근 회차로 이동 — 보스 카드 · 멤버 행이 없으면 투어 먹통
+      const hasRec = j => getRaidRows(db.bossData[0][j]).some(r => String(r[RAID_COL.BOSS]).trim() !== '');
+      if (db.bossData && db.bossData[0] && selectedRaidIdx > 0 && !hasRec(selectedRaidIdx)) {
+        for (let j = db.bossData[0].length - 1; j > 0; j--) {
+          if (hasRec(j)) { selectedRaidIdx = j; setupRaidSelector(); break; }
+        }
+      }
       if (typeof refreshRaidView === 'function') try { refreshRaidView(); } catch (_) {}
     } else if (tabKey === 'nikke') {
       // 스쿼드 조합 팝업 닫기
@@ -8775,7 +8782,7 @@
     });
   }
 </script>
-<!-- 261023 레이드 통계 — 보스 상세 효율·기여도를 타격별로(막타 제외 평균 기준) · 요약 묶음 · Level 표기 · 코멘트 링크 · 세이렌 도넛 · 산점도 축/격자 테마 색 -->
+<!-- 261030 레이드 통계 — NO RECORD 덮개가 지표 안내 등 팝업 위로 올라오던 문제(z-index 9000→500) / 261023 레이드 통계 — 보스 상세 효율·기여도를 타격별로(막타 제외 평균 기준) · 요약 묶음 · Level 표기 · 코멘트 링크 · 세이렌 도넛 · 산점도 축/격자 테마 색 -->
 <script>
   let currentRaidSort = 'dmg';
   let currentDetailSort = 'dmg';
@@ -9889,7 +9896,7 @@
         overlay = document.createElement('div');
         overlay.id = 'no-data-overlay';
         overlay.style.cssText = `
-          position:absolute; inset:0; z-index:9000; pointer-events:none;
+          position:absolute; inset:0; z-index:500; pointer-events:none;
           background: rgba(0,0,0,0.55);
         `;
         const label = document.createElement('div');
