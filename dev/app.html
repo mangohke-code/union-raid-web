@@ -1,8 +1,8 @@
-<!-- 261023 화면 원본 (배포.py 로 GitHub Pages 에 올림 · Apps Script 에는 안 올라감) — 정보 창 로딩 시간 칸 · 제목 구역 우상단 서버 표기('유니온 정보' 탭) · 세이렌 스킨(style_siren) · 저장된 테마/모드 선적용 · 테마 메뉴(라이트/다크 포함) · 상단 패널 틀(hero-wrap) -->
+<!-- 261102 화면 원본 (배포.py 로 GitHub Pages 에 올림 · Apps Script 에는 안 올라감) — 보스 통계 탭(레이드 통계와 니케 통계 사이) · 구버전 테마 저장값 무시(세이렌 고정) · 정보 창 로딩 시간 칸 · 제목 구역 우상단 서버 표기('유니온 정보' 탭) · 세이렌 스킨(style_siren) · 저장된 테마/모드 선적용 · 테마 메뉴(라이트/다크 포함) · 상단 패널 틀(hero-wrap) -->
 <!DOCTYPE html>
 <html>
 <head>
-  <script>window.APP_BUILD = '261102-0237'; window.APP_CHANNEL = 'dev';</script>
+  <script>window.APP_BUILD = '261102-0319'; window.APP_CHANNEL = 'dev';</script>
   <script>window.CURRENT_SHEET_VERSION = '{{SHEET_VERSION}}'; window.__perf = { appStart: performance.now() };</script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
@@ -11,7 +11,7 @@
 
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Bebas+Neue&family=Rajdhani:wght@600;700&family=Outfit:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,600;1,500;1,600&family=Noto+Serif+KR:wght@600;700&display=swap" rel="stylesheet">
 
-  <!-- 261102 — 싱크로 분포 막대 툴팁(#uls-tip) · 작은 도로 무리 캔버스(맨 앞) / 261028 — 최신 버전 알림 타이머 3초 · 정보 창 로딩 시간 · 제목 우상단 서버 표기 · 회차 선택 전체 회차 버튼/패널 · 폭 1760px · 테마 색 변수 · Most Deployed 배치 · 토스트 · 코멘트 링크 -->
+  <!-- 261102 — 보스 통계 탭(.bs-*) · 싱크로 분포 막대 툴팁(#uls-tip) · 작은 도로 무리 캔버스(맨 앞) / 261028 — 최신 버전 알림 타이머 3초 · 정보 창 로딩 시간 · 제목 우상단 서버 표기 · 회차 선택 전체 회차 버튼/패널 · 폭 1760px · 테마 색 변수 · Most Deployed 배치 · 토스트 · 코멘트 링크 -->
 <style>
   /* ===== CSS 변수 (테마) ===== */
   :root {
@@ -4704,6 +4704,82 @@
     .uls-dist-bars { height: 140px; gap: 3px; }
   }
 
+
+  /* ===== 보스 통계 탭 ===== */
+  .bs-list { display: flex; flex-direction: column; gap: 8px; position: relative; z-index: 1; }
+  .bs-row {
+    display: grid; grid-template-columns: 22px 44px minmax(0, 1fr) auto;
+    align-items: center; gap: 12px;
+    padding: 8px 10px; background: var(--card2); border: 1px solid var(--border);
+  }
+  .bs-rank { font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: var(--text-dim); text-align: center; }
+  .bs-row:first-child .bs-rank { color: var(--accent); }
+  .bs-thumb {
+    width: 44px; height: 44px; background: var(--card) center/cover no-repeat;
+    border: 1px solid var(--border);
+  }
+  .bs-main { min-width: 0; }
+  .bs-name {
+    font-family: 'Noto Sans KR', sans-serif; font-size: 15px; font-weight: 700; color: var(--text);
+    display: flex; align-items: center; gap: 6px; white-space: nowrap; overflow: hidden;
+  }
+  .bs-sub { font-family: 'Noto Sans KR', sans-serif; font-size: 12px; color: var(--text-dim); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .bs-val { font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: 0.5px; color: var(--text); white-space: nowrap; }
+  .bs-val small { font-family: 'Rajdhani', sans-serif; font-size: 13px; font-weight: 700; color: var(--text-dim); margin-left: 2px; }
+  .bs-attr {
+    display: inline-block; padding: 1px 7px; font-size: 11px; font-weight: 700; line-height: 1.5;
+    color: #fff; background: var(--ac); border-radius: 3px; flex-shrink: 0;
+  }
+  .bs-toggle { display: flex; gap: 4px; margin-left: auto; flex-shrink: 0; align-self: flex-start; }
+  .bs-toggle button {
+    padding: 4px 10px; border: 1px solid var(--border-bright); background: var(--card); color: var(--text-dim);
+    font-family: 'Noto Sans KR', sans-serif; font-size: 12px; font-weight: 600; cursor: pointer;
+  }
+  .bs-toggle button.on { border-color: var(--accent); color: var(--accent); }
+  .bs-boss-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+  .bs-boss-card {
+    background: var(--card2); border: 1px solid var(--border); border-top: 3px solid var(--ac);
+    display: flex; flex-direction: column; overflow: hidden;
+  }
+  .bs-boss-hero {
+    height: 110px; position: relative; background: var(--card) center 25%/cover no-repeat;
+  }
+  .bs-boss-hero::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(180deg, transparent 35%, rgba(0, 0, 0, 0.72) 100%);
+  }
+  .bs-boss-title {
+    position: absolute; left: 12px; right: 12px; bottom: 8px; z-index: 1;
+    display: flex; align-items: center; gap: 8px;
+    font-family: 'Noto Sans KR', sans-serif; font-size: 18px; font-weight: 700; color: #fff;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+  }
+  .bs-boss-stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-bottom: 1px solid var(--border); }
+  .bs-boss-stats > div { padding: 10px 4px; text-align: center; display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+  .bs-boss-stats b { font-family: 'Bebas Neue', sans-serif; font-size: 19px; font-weight: 400; color: var(--text); white-space: nowrap; }
+  .bs-boss-stats span { font-family: 'Noto Sans KR', sans-serif; font-size: 11px; color: var(--text-dim); }
+  .bs-nk-head { padding: 10px 12px 4px; font-family: 'Noto Sans KR', sans-serif; font-size: 12px; font-weight: 700; color: var(--text-dim); }
+  .bs-nk-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; padding: 6px 12px 14px; }
+  .bs-nk { display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 0; }
+  .bs-nk-img {
+    width: 100%; max-width: 72px; aspect-ratio: 1; position: relative;
+    background: var(--card) center top/cover no-repeat; border: 2px solid var(--ac);
+  }
+  .bs-nk-img span {
+    position: absolute; left: 0; top: 0; padding: 0 6px;
+    font-family: 'Bebas Neue', sans-serif; font-size: 16px; color: #fff; background: var(--ac);
+  }
+  .bs-nk-name { font-family: 'Noto Sans KR', sans-serif; font-size: 12px; font-weight: 700; color: var(--text); max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .bs-nk-cnt { font-family: 'Bebas Neue', sans-serif; font-size: 18px; color: var(--text); line-height: 1; }
+  .bs-nk-cnt small { font-family: 'Rajdhani', sans-serif; font-size: 12px; font-weight: 700; color: var(--text-dim); margin-left: 1px; }
+  .bs-nk-empty { grid-column: 1 / -1; padding: 14px 0; text-align: center; font-family: 'Noto Sans KR', sans-serif; font-size: 13px; color: var(--text-dim); }
+  @media (max-width: 600px) {
+    .bs-row { grid-template-columns: 18px 38px minmax(0, 1fr) auto; gap: 8px; padding: 7px 8px; }
+    .bs-thumb { width: 38px; height: 38px; }
+    .bs-val { font-size: 22px; }
+    .bs-boss-grid { grid-template-columns: 1fr; }
+  }
+
   /* ===== 이스터에그 랜덤 이미지 ===== */
   #easter-egg {
     position: fixed;
@@ -4856,7 +4932,7 @@
   }
 
 </style>
-  <!-- 261102 세이렌 스킨 — 싱크로 분포 툴팁(#uls-tip) 모양 / 261021 세이렌 스킨 (서버 표기 · 테마 메뉴 "삭제 예정" 배지) — body[data-skin="siren"] 일 때만 style.html 을 덮어씀 (구버전은 영향 없음)
+  <!-- 261102 세이렌 스킨 — 구버전 테마 견본 색 삭제 · 싱크로 분포 툴팁(#uls-tip) 모양 / 261021 세이렌 스킨 (서버 표기 · 테마 메뉴 "삭제 예정" 배지) — body[data-skin="siren"] 일 때만 style.html 을 덮어씀 (구버전은 영향 없음)
      캡처(html2canvas) 호환: color-mix() · conic-gradient() 사용 금지, 반투명 대신 불투명 카드 -->
 <style>
   /* ───────── 토큰: 진주 (라이트) ───────── */
@@ -5565,7 +5641,6 @@
     font-style: normal; font-size: 10.5px; font-weight: 600; letter-spacing: 0;
     color: var(--coral, #d9465f); border: 1px solid currentColor; opacity: .85;
   }
-  .skin-swatch-classic { background: linear-gradient(135deg, #f8f9fa 0%, #f8f9fa 50%, #0a0c10 51%, #4a9eff 100%); }
 </style>
 
 </head>
@@ -5573,9 +5648,8 @@
 <script>
   // 저장된 테마(스킨)와 라이트/다크를 화면이 그려지기 전에 적용 — 기본은 세이렌 · 라이트
   (function () {
-    var skin = 'siren', mode = 'light';
+    var skin = 'siren', mode = 'light'; // 테마는 세이렌 하나 (예전에 고른 '구버전' 도 세이렌으로)
     try {
-      if (localStorage.getItem('skin') === 'classic') skin = 'classic';
       if (localStorage.getItem('mode') === 'dark') mode = 'dark';
     } catch (e) {}
     document.body.setAttribute('data-skin', skin);
@@ -5648,6 +5722,7 @@
     <div class="tabs">
       <button id="btn-total" class="tab-btn" onclick="switchTab('total')">종합</button>
       <button id="btn-raid" class="tab-btn active" onclick="switchTab('raid')">레이드 통계</button>
+      <button id="btn-boss" class="tab-btn" onclick="switchTab('boss')">보스 통계</button>
       <button id="btn-nikke" class="tab-btn" onclick="switchTab('nikke')">니케 통계</button>
       <button id="btn-personal" class="tab-btn" onclick="switchTab('personal')">개인 기록</button>
     </div>
@@ -5845,6 +5920,27 @@
     </div>
   </div>
 </div></div>
+  <div id="section-boss" style="display:none;"><!-- 261102 보스 통계 탭 — 역대 난이도 순위 · 많이/적게 맞은 보스 · 보스별 기록(약점 속성 니케) -->
+<div id="boss-stats-view">
+  <div class="card" style="margin-bottom:20px;">
+    <div style="display:flex; align-items:center; gap:10px; margin-bottom:16px;">
+      <span style="display:inline-block; width:3px; height:16px; background:var(--accent);"></span>
+      <span style="font-family:'Rajdhani',sans-serif; font-size:16px; font-weight:700; letter-spacing:3px; color:var(--text-dim,#6b7280); text-transform:uppercase;">Boss Ranking</span>
+      <span id="bs-meta" style="font-family:'Rajdhani',sans-serif; font-size:16px; color:var(--text-dim); letter-spacing:1px; margin-left:auto;"></span>
+    </div>
+    <div id="bs-rank-grid" class="td-hof-grid"></div>
+  </div>
+
+  <div class="card">
+    <div style="display:flex; align-items:center; gap:10px; margin-bottom:16px;">
+      <span style="display:inline-block; width:3px; height:16px; background:var(--accent);"></span>
+      <span style="font-family:'Rajdhani',sans-serif; font-size:16px; font-weight:700; letter-spacing:3px; color:var(--text-dim,#6b7280); text-transform:uppercase;">Boss Records</span>
+      <span style="font-family:'Noto Sans KR',sans-serif; font-size:13px; color:var(--text-dim); margin-left:auto;">약점 속성 니케 = 보스 속성과 같은 속성 니케만</span>
+    </div>
+    <div id="bs-boss-grid" class="bs-boss-grid"></div>
+  </div>
+</div>
+</div>
   <div id="section-nikke" style="display:none;"><!-- 260630 니케 통계 탭 -->
 <div id="nikke-stats-view">
   <div class="card">
@@ -6243,7 +6339,7 @@
   </button>
 </div>
 
-<!-- 261102 공용 — 시험판 이스터에그 100% · 작은 도로 맨 앞 · 꼬리 몸의 2배 · 캡처에 작은 도로 합성 · 도로 홀로그램 뒤 작은 도로 무리(별똥별 꼬리 · 무지개) · 딜량 · HP 표기 숫자와 단위 사이 줄바꿈 금지 · 차트 회차 목록 chartRaidTitles(기록 없는 앞뒤 회차 제외) · 캡처 때 분포 툴팁 숨김 / 261030 공용 — dataBoss 시작일 + 1일(하드 오픈) 전 회차는 표시 안 함 · 가이드: 기록 없는 회차(NO RECORD)에서 시작하면 기록 있는 최근 회차로 이동 · 버전 확인: 마스터 '사용법' 탭 전체에서 버전 형식(v261030) 칸을 찾아 가장 큰 값 사용 / 261028 공용 — 최신 버전 알림 3초 · 버전 확인: 마스터 버전 칸이 비면 업데이트 있음으로 표시 · 데이터 일괄 읽기(getFullDataBatch, 실패 시 기존 방식) · 정보 창에 빌드 번호 · 로딩 구간별 시간(시트별 서버 읽기 포함) · 캡처 시 세이렌 그림자 제거(얼룩 방지) · 레벨 차트 좌우 폭 가득 · 캡처 시 유니온명 그라데이션 글자 · 줄바꿈 보정 · 최신 버전 읽는 칸 사용법!E10 → E8 · 테마 메뉴 구버전에 "삭제 예정" 표시 · 회차 선택(최신 5개 + 전체 회차 패널) · 세이렌/구버전 스킨 -->
+<!-- 261102 공용 — 보스 통계 탭 전환 · 가이드 · 테마 전환 다시 그리기 · 날아다니는 도로: 더 크고 빠르게 · 머리를 날아가는 방향으로 · 꼬리는 일정한 굵기 띠 · 무지개 색 간격 넓게 · 구버전 테마 삭제(테마 메뉴는 유지) · 테마 메뉴 자동 닫힘 · 시험판 이스터에그 100% · 작은 도로 맨 앞 · 꼬리 몸의 2배 · 캡처에 작은 도로 합성 · 도로 홀로그램 뒤 작은 도로 무리(별똥별 꼬리 · 무지개) · 딜량 · HP 표기 숫자와 단위 사이 줄바꿈 금지 · 차트 회차 목록 chartRaidTitles(기록 없는 앞뒤 회차 제외) · 캡처 때 분포 툴팁 숨김 / 261030 공용 — dataBoss 시작일 + 1일(하드 오픈) 전 회차는 표시 안 함 · 가이드: 기록 없는 회차(NO RECORD)에서 시작하면 기록 있는 최근 회차로 이동 · 버전 확인: 마스터 '사용법' 탭 전체에서 버전 형식(v261030) 칸을 찾아 가장 큰 값 사용 / 261028 공용 — 최신 버전 알림 3초 · 버전 확인: 마스터 버전 칸이 비면 업데이트 있음으로 표시 · 데이터 일괄 읽기(getFullDataBatch, 실패 시 기존 방식) · 정보 창에 빌드 번호 · 로딩 구간별 시간(시트별 서버 읽기 포함) · 캡처 시 세이렌 그림자 제거(얼룩 방지) · 레벨 차트 좌우 폭 가득 · 캡처 시 유니온명 그라데이션 글자 · 줄바꿈 보정 · 최신 버전 읽는 칸 사용법!E10 → E8 · 테마 메뉴 구버전에 "삭제 예정" 표시 · 회차 선택(최신 5개 + 전체 회차 패널) · 세이렌/구버전 스킨 -->
 <script>
   google.charts.load('current', {'packages':['corechart', 'scatter']});
 
@@ -6616,7 +6712,7 @@
       const MAX = window.innerWidth <= 600 ? 7 : 12;
       const spawn = () => {
         const side = Math.floor(Math.random() * 4);
-        const size = 40 + Math.random() * 36;
+        const size = 44 + Math.random() * 56; // 44~100px
         const m = size;
         let x, y;
         if (side === 0)      { x = -m;    y = Math.random() * H; }
@@ -6626,10 +6722,10 @@
         // 화면 가운데 근처의 아무 점을 향해 날아감
         const tx = W * (0.2 + Math.random() * 0.6), ty = H * (0.2 + Math.random() * 0.6);
         const ang = Math.atan2(ty - y, tx - x);
-        const speed = 160 + Math.random() * 200; // px/초
+        const speed = 300 + Math.random() * 300; // px/초
         doros.push({
           x, y, size, vx: Math.cos(ang) * speed, vy: Math.sin(ang) * speed,
-          rot: Math.random() * Math.PI * 2, spin: (Math.random() - 0.5) * 4,
+          head: ang, // 실제로 움직이는 방향 (흔들림 포함, 부드럽게 따라감)
           wob: Math.random() * Math.PI * 2, isRainbow: Math.random() < 0.4,
           hue: Math.random() * 360, trail: []
         });
@@ -6650,10 +6746,14 @@
           // 진행 방향에 수직으로 살짝 흔들리며 날아감
           const nx = -d.vy, ny = d.vx, nl = Math.hypot(nx, ny) || 1;
           const w = Math.sin(d.wob) * 40 * dt;
-          d.x += d.vx * dt + nx / nl * w;
-          d.y += d.vy * dt + ny / nl * w;
-          d.rot += d.spin * dt;
-          d.hue = (d.hue + dt * 240) % 360;
+          const mx = d.vx * dt + nx / nl * w, my = d.vy * dt + ny / nl * w;
+          d.x += mx; d.y += my;
+          // 머리 방향 — 이번 이동 방향으로 부드럽게 (각도 차이를 -π~π 로 접어서 보간)
+          const want = Math.atan2(my, mx);
+          let da = want - d.head;
+          da = Math.atan2(Math.sin(da), Math.cos(da));
+          d.head += da * Math.min(1, dt * 10);
+          d.hue = (d.hue + dt * 60) % 360;
           d.trail.push({ x: d.x, y: d.y });
           // 꼬리 길이 = 몸 길이의 2배 (몸 중심에서 몸 반 + 2배 만큼 뒤까지)
           let len = 0;
@@ -6662,22 +6762,35 @@
             if (len > d.size * 2.5) { d.trail.splice(0, k - 1); break; }
           }
 
-          // 꼬리 — 뒤로 갈수록 가늘고 옅게
+          // 꼬리 — 굵기 일정한 띠(사각형), 끝으로 갈수록 옅게. 무지개는 꼬리 전체에 색 4~5개만 (띠 간격 넓게)
           const n = d.trail.length;
-          for (let k = 0; k < n - 1; k++) {
-            const t = (k + 1) / n;
-            const p = d.trail[k], q = d.trail[k + 1];
-            ctx.strokeStyle = d.isRainbow
-              ? `hsla(${(d.hue + k * 20) % 360}, 95%, 65%, ${t * 0.75})`
-              : `rgba(255, 200, 230, ${t * 0.7})`;
-            ctx.lineWidth = d.size * 0.42 * t;
-            ctx.lineCap = 'round';
-            ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y); ctx.stroke();
+          if (n > 1) {
+            const p0 = d.trail[0], p1 = d.trail[n - 1];
+            const gr = ctx.createLinearGradient(p0.x, p0.y, p1.x, p1.y);
+            const STEPS = 8;
+            for (let k = 0; k <= STEPS; k++) {
+              const t = k / STEPS;               // 0 = 꼬리 끝, 1 = 몸 쪽
+              const a = 0.15 + t * 0.65;
+              gr.addColorStop(t, d.isRainbow
+                ? `hsla(${(d.hue + (1 - t) * 220) % 360}, 95%, 64%, ${a})`
+                : `rgba(255, 196, 228, ${a})`);
+            }
+            ctx.strokeStyle = gr;
+            ctx.lineWidth = d.size * 0.42;
+            ctx.lineCap = 'butt';
+            ctx.lineJoin = 'round';
+            ctx.beginPath();
+            ctx.moveTo(p0.x, p0.y);
+            for (let k = 1; k < n; k++) ctx.lineTo(d.trail[k].x, d.trail[k].y);
+            ctx.stroke();
           }
 
           ctx.save();
           ctx.translate(d.x, d.y);
-          ctx.rotate(Math.sin(d.rot) * 0.35);
+          // 원본 도로는 왼쪽을 봄 — 오른쪽으로 갈 땐 좌우 뒤집고, 머리가 날아가는 쪽을 향하게 기울임 (거꾸로 뒤집히지 않게)
+          const goRight = Math.cos(d.head) > 0;
+          ctx.rotate(goRight ? d.head : d.head - Math.PI);
+          if (goRight) ctx.scale(-1, 1);
           ctx.shadowColor = d.isRainbow ? `hsl(${d.hue}, 95%, 65%)` : 'rgba(255, 180, 220, 0.9)';
           ctx.shadowBlur = 14;
           const h = d.size * SH / SW;
@@ -7117,6 +7230,8 @@
     if (personalSection) personalSection.style.display = t === 'personal' ? 'block' : 'none';
     const nikkeSection = document.getElementById('section-nikke');
     if (nikkeSection) nikkeSection.style.display = t === 'nikke' ? 'block' : 'none';
+    const bossSection = document.getElementById('section-boss');
+    if (bossSection) bossSection.style.display = t === 'boss' ? 'block' : 'none';
 
     const totalContent = document.getElementById('raid-total-content');
     if(totalContent) totalContent.style.display = 'none';
@@ -7126,12 +7241,19 @@
     if(document.getElementById('btn-total')) document.getElementById('btn-total').classList.remove('active');
     if(document.getElementById('btn-personal')) document.getElementById('btn-personal').classList.remove('active');
     if(document.getElementById('btn-nikke')) document.getElementById('btn-nikke').classList.remove('active');
+    if(document.getElementById('btn-boss')) document.getElementById('btn-boss').classList.remove('active');
 
     if (t === 'nikke') {
       if (nikkeSection) nikkeSection.style.display = 'block';
       document.getElementById('btn-nikke').classList.add('active');
       document.getElementById('raid-btn-group').style.display = 'flex'; // 회차 버튼 공유
       if (typeof initNikkeTab === 'function') initNikkeTab();
+    }
+    else if (t === 'boss') {
+      // 보스 통계 — 회차 구분 없이 전체 기록이라 회차 버튼 숨김
+      document.getElementById('btn-boss').classList.add('active');
+      document.getElementById('raid-btn-group').style.display = 'none';
+      if (typeof initBossTab === 'function') initBossTab();
     }
     else if (t === 'personal') {
       if (personalSection) personalSection.style.display = 'block';
@@ -7180,6 +7302,7 @@
     if (t !== _lastActiveTab) {
       const _tabAnimMap = {
         raid:     'section-raid',
+        boss:     'section-boss',
         nikke:    'section-nikke',
         personal: 'section-personal',
         growth:   'section-growth',
@@ -7367,31 +7490,30 @@
     }
   }
 
-  // ── 스킨 (테마) ──  'siren' 세이렌 (기본) · 'classic' 구버전
-  // 세이렌은 style_siren.html 이 색 · 글꼴 · 모양을 덮어씀. 라이트/다크(모드)는 두 테마 공통으로 테마 메뉴에서 선택
+  // ── 스킨 (테마) ──  지금은 'siren' 세이렌 하나 (구버전 'classic' 은 261102 에 없앰). 새 테마는 SKIN_LIST 에 추가
+  // 세이렌은 style_siren.html 이 색 · 글꼴 · 모양을 덮어씀. 라이트/다크(모드)는 테마 메뉴에서 선택
+  //   새 테마 추가 시: SKIN_LIST · _SKIN_ATTR_COLORS(키+Dark/Light) · _SKIN_RANK_COLORS · body[data-skin="키"] CSS · .skin-swatch-키
   const SKIN_LIST = [
     { key: 'siren',   name: '세이렌', desc: '진주 · 심해' },
-    { key: 'classic', name: '구버전',      desc: '기존 디자인', note: '삭제 예정' }, // 추후 제거 예정 — 새 기능은 세이렌 기준으로만 맞춤
   ];
   const _SKIN_ATTR_COLORS = {
-    classic:    { "작열": "#e00400", "철갑": "#f7c864", "풍압": "#60cf58", "전격": "#d02dd9", "수냉": "#3376f0" },
     // 맑은 파스텔 — 채도는 살리고 명도만 올림 (회색빛으로 흐려지지 않게). 다크는 한 단계 더 밝게
     sirenDark:  { "작열": "#f88181", "철갑": "#fbc956", "풍압": "#5fdd94", "전격": "#d788f2", "수냉": "#74a5fb" },
     sirenLight: { "작열": "#f26868", "철갑": "#f5be3d", "풍압": "#47d181", "전격": "#ca74e6", "수냉": "#5a94f6" },
   };
   const _SKIN_RANK_COLORS = {
-    classic: { 1: '#FFD700', 2: '#C0C0C0', 3: '#CD7F32' },
     siren:   { 1: '#e2b14a', 2: '#a9b3c6', 3: '#c98f6a' },
   };
+  const _validSkin = (k) => SKIN_LIST.some(s => s.key === k) ? k : SKIN_LIST[0].key;
   function currentSkin() {
-    return document.body.getAttribute('data-skin') === 'classic' ? 'classic' : 'siren';
+    return _validSkin(document.body.getAttribute('data-skin'));
   }
   function applySkinPalette() {
     const skin = currentSkin();
     const dark = document.body.getAttribute('data-theme') === 'dark';
-    const attr = skin === 'classic' ? _SKIN_ATTR_COLORS.classic : (dark ? _SKIN_ATTR_COLORS.sirenDark : _SKIN_ATTR_COLORS.sirenLight);
+    const attr = _SKIN_ATTR_COLORS[skin + (dark ? 'Dark' : 'Light')] || _SKIN_ATTR_COLORS.sirenLight;
     Object.assign(colors, attr);
-    Object.assign(RANK_COLOR, _SKIN_RANK_COLORS[skin]);
+    Object.assign(RANK_COLOR, _SKIN_RANK_COLORS[skin] || _SKIN_RANK_COLORS.siren);
   }
   // CSS 변수 값 읽기 (차트처럼 색을 JS 로 넘겨야 하는 곳용)
   function themeVar(name, fallback) {
@@ -7401,7 +7523,7 @@
   function themeAccent() { return themeVar('--accent', '#007bff'); }
 
   function setSkin(skin) {
-    const key = skin === 'classic' ? 'classic' : 'siren';
+    const key = _validSkin(skin);
     document.body.setAttribute('data-skin', key);
     try { localStorage.setItem('skin', key); } catch (_) {}
     applySkinPalette();
@@ -7421,9 +7543,10 @@
     if (e) e.stopPropagation();
     const menu = document.getElementById('skin-menu');
     if (!menu) return;
-    if (menu.style.display === 'block') { menu.style.display = 'none'; return; }
+    if (menu.style.display === 'block') { _closeSkinMenu(); return; }
     _renderSkinMenu();
     menu.style.display = 'block';
+    _scheduleSkinMenuClose();
     const btn = e && e.currentTarget;
     if (btn && btn.getBoundingClientRect) {
       const r = btn.getBoundingClientRect();
@@ -7450,14 +7573,29 @@
       '<div class="skin-menu-title">모드</div>' +
       '<div class="skin-mode-row">' + modeBtn(false, 'fa-sun', '라이트') + modeBtn(true, 'fa-moon', '다크') + '</div>';
   }
+  // 테마 메뉴 자동 닫힘 — 동작 메뉴와 같은 시간, 메뉴 안에서 움직이거나 누르면 다시 셈
+  let _skinMenuTimer = null;
+  function _closeSkinMenu() {
+    const menu = document.getElementById('skin-menu');
+    if (menu) menu.style.display = 'none';
+    if (_skinMenuTimer) { clearTimeout(_skinMenuTimer); _skinMenuTimer = null; }
+  }
+  function _scheduleSkinMenuClose() {
+    if (_skinMenuTimer) clearTimeout(_skinMenuTimer);
+    _skinMenuTimer = setTimeout(_closeSkinMenu, _ACTION_MENU_AUTO_MS);
+  }
   document.addEventListener('click', (e) => {
     const menu = document.getElementById('skin-menu');
     if (!menu || menu.style.display !== 'block') return;
-    if (menu.contains(e.target)) return;
-    menu.style.display = 'none';
+    if (menu.contains(e.target)) { _scheduleSkinMenuClose(); return; }
+    _closeSkinMenu();
   });
+  document.addEventListener('pointermove', (e) => {
+    const menu = document.getElementById('skin-menu');
+    if (menu && menu.style.display === 'block' && menu.contains(e.target)) _scheduleSkinMenuClose();
+  }, { passive: true });
 
-  // 세이렌 배경 비눗방울 (구버전에서는 비움)
+  // 세이렌 배경 비눗방울 (다른 테마에서는 비움)
   function _syncSirenSea() {
     const sea = document.getElementById('siren-sea');
     if (!sea) return;
@@ -7510,6 +7648,8 @@
     }
     const nikkeVisible = document.getElementById('section-nikke')?.style.display === 'block';
     if (nikkeVisible && typeof renderNikkeStats === 'function') setTimeout(() => renderNikkeStats(), 50);
+    const bossVisible = document.getElementById('section-boss')?.style.display === 'block';
+    if (bossVisible && typeof renderBossStats === 'function') setTimeout(() => renderBossStats(), 50);
   }
 
   // 라이트/다크 테마 토글 + 현재 보이는 차트 재렌더
@@ -8507,7 +8647,27 @@
     { type: 'end' },
   ];
 
+  // 보스 통계
+  const TOUR_STEPS_BOSS = [
+    {
+      type: 'explain',
+      targets: () => [document.getElementById('bs-rank-grid')].filter(Boolean),
+      title: '<b>보스 순위</b>',
+      desc: '역대 회차의 <b>난이도가 가장 높았던 / 낮았던 보스</b>와<br><b>가장 많이 / 적게 맞은 보스</b>를 볼 수 있어요.<br>맞은 횟수는 <b>누적</b>과 <b>회당 평균</b> 중 고를 수 있어요.',
+      position: 'bottom',
+    },
+    {
+      type: 'explain',
+      targets: () => [document.getElementById('bs-boss-grid')].filter(Boolean),
+      title: '<b>보스별 기록</b>',
+      desc: '보스마다 등장 횟수 · 총 타수 · 누적 딜 · 평균 난이도와<br>그 보스를 가장 많이 때린 <b>약점 속성 니케</b>를 보여줘요.',
+      position: 'top',
+    },
+    { type: 'end' },
+  ];
+
   const TOUR_TABS = {
+    boss:     TOUR_STEPS_BOSS,
     total:    TOUR_STEPS_TOTAL,
     raid:     TOUR_STEPS_RAID,
     nikke:    TOUR_STEPS_NIKKE,
@@ -8535,6 +8695,7 @@
     const map = [
       ['raid-total-content', 'total'],
       ['section-nikke', 'nikke'],
+      ['section-boss', 'boss'],
       ['section-personal', 'personal'],
       ['section-growth', 'growth'],
       ['section-raid', 'raid'],
@@ -9008,7 +9169,7 @@
     });
   }
 </script>
-<!-- 261102 레이드 통계 — 멤버 효율에서 막타 제외(지표 안내와 맞춤 · 기여도는 포함) / 261030 레이드 통계 — NO RECORD 덮개가 지표 안내 등 팝업 위로 올라오던 문제(z-index 9000→500) / 261023 레이드 통계 — 보스 상세 효율·기여도를 타격별로(막타 제외 평균 기준) · 요약 묶음 · Level 표기 · 코멘트 링크 · 세이렌 도넛 · 산점도 축/격자 테마 색 -->
+<!-- 261102 레이드 통계 — Level × DMG 추세선을 20n+1 공격력 구간 기반(a × 공격력^β, 계단형)으로 · 레벨 민감도 β 표시 · 멤버 효율에서 막타 제외(지표 안내와 맞춤 · 기여도는 포함) / 261030 레이드 통계 — NO RECORD 덮개가 지표 안내 등 팝업 위로 올라오던 문제(z-index 9000→500) / 261023 레이드 통계 — 보스 상세 효율·기여도를 타격별로(막타 제외 평균 기준) · 요약 묶음 · Level 표기 · 코멘트 링크 · 세이렌 도넛 · 산점도 축/격자 테마 색 -->
 <script>
   let currentRaidSort = 'dmg';
   let currentDetailSort = 'dmg';
@@ -10599,6 +10760,7 @@
           <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
             <div style="width:3px; height:14px; background:var(--accent);"></div>
             <span style="font-family:'Rajdhani',sans-serif; font-size:13px; font-weight:700; letter-spacing:3px; color:var(--text-dim,#6b7280); text-transform:uppercase;">Level × DMG Distribution</span>
+            <span id="boss_scatter_note" style="margin-left:auto; font-family:'Noto Sans KR',sans-serif; font-size:12px; color:var(--text-dim,#6b7280);"></span>
           </div>
           <div id="boss_scatter_chart" style="width:100%; height:406px;"></div>
         </div>
@@ -10986,8 +11148,59 @@
       },
     };
 
+    // 추세선 — 20n+1 공격력 구간표 기반 기대딜 = a × 공격력(Lv)^β (막타 제외 타격으로 log-log 최소제곱)
+    //   공격력이 20n+1 레벨에서 다음 구간으로 넘어가므로 선이 계단 모양. β 는 이 보스의 레벨(공격력) 민감도
+    const fit = _fitAtkTrend(scatterData);
+    const note = document.getElementById('boss_scatter_note');
+    let drawData = scatterData;
+    if (fit) {
+      drawData = scatterData.clone();
+      drawData.addColumn('number', '기대딜');
+      const lo = Math.max(40, Math.ceil(xStart)), hi = Math.floor(xEnd);
+      for (let L = lo; L <= hi; L++) {
+        const atk = calcAtk(L);
+        if (atk > 0) drawData.addRow([L, null, null, null, null, null, null, fit.a * Math.pow(atk, fit.beta)]);
+      }
+      delete options.trendlines;
+      options.series = {
+        2: { lineWidth: 2, pointSize: 0, color: themeVar('--chart-trend', isDark ? '#ff9800' : '#007bff'),
+             visibleInLegend: false, enableInteractivity: false },
+      };
+      if (note) {
+        note.textContent = '레벨 민감도 β ' + fit.beta.toFixed(2) + (fit.fallback ? ' (표본 적음 · 1 로 고정)' : '');
+        note.title = '추세선: 기대딜 = a × 공격력(레벨)^β · 공격력은 20n+1 레벨마다 다음 구간으로 바뀜
+' +
+          'β 가 1보다 크면 레벨이 높을수록 공격력 상승분보다 딜이 더 크게 늘어나는 보스 (막타 제외 ' + fit.n + '타 기준)';
+      }
+    } else if (note) {
+      note.textContent = '';
+    }
+
     const chart = new google.visualization.ScatterChart(chartContainer);
-    chart.draw(scatterData, options);
+    chart.draw(drawData, options);
+  }
+
+  // 산점도의 일반 타격(막타 제외)으로 ln(딜) = ln(a) + β·ln(공격력) 을 맞춤
+  //   표본이 적거나 β 가 비정상(0.5~2 밖)이면 β = 1 (지금 효율 계산과 같은 가정)로 a 만 맞춤
+  function _fitAtkTrend(dt) {
+    const xs = [], ys = [];
+    for (let i = 0; i < dt.getNumberOfRows(); i++) {
+      const lv = dt.getValue(i, 0), dmg = dt.getValue(i, 1);
+      if (lv == null || dmg == null || !(dmg > 0)) continue;
+      const atk = calcAtk(lv);
+      if (!(atk > 0)) continue;
+      xs.push(Math.log(atk)); ys.push(Math.log(dmg));
+    }
+    const n = xs.length;
+    if (n < 2) return null;
+    const mx = xs.reduce((a, b) => a + b, 0) / n, my = ys.reduce((a, b) => a + b, 0) / n;
+    let sxx = 0, sxy = 0;
+    for (let i = 0; i < n; i++) { sxx += (xs[i] - mx) ** 2; sxy += (xs[i] - mx) * (ys[i] - my); }
+    let beta = sxx > 1e-9 ? sxy / sxx : NaN;
+    let fallback = false;
+    if (n < 5 || !(beta >= 0.5 && beta <= 2)) { beta = 1; fallback = true; }
+    const a = Math.exp(my - beta * mx);
+    return { a, beta, n, fallback };
   }
 
   // 성장 비교 팝업 — 현재 회차 + 해당 보스 이전 등장 회차 전체
@@ -15005,6 +15218,206 @@
     document.body.style.overflow = '';
     document.documentElement.style.overflow = '';
     document.body.classList.remove('popup-open');
+  }
+</script>
+
+<!-- 261102 보스 통계 탭 — 회차 구분 없이 전체 기록을 보스 기준으로: 역대 난이도 순위 · 많이/적게 맞은 보스 · 보스별 약점 속성 니케 -->
+<script>
+  // 많이/적게 맞은 보스 기준 — 'total' 누적 타수 · 'avg' 등장 1회당 평균 타수
+  let _bossHitMode = 'total';
+
+  function initBossTab() {
+    renderBossStats();
+  }
+
+  // 니케 이름/줄임말 → { name, attr, img }
+  function _bossNikkeLookup() {
+    const out = {};
+    if (!db.nikkeData) return out;
+    const cName = NIKKE_COL['이름'], cS1 = NIKKE_COL['줄임말1'], cS2 = NIKKE_COL['줄임말2'];
+    const cAttr = NIKKE_COL['속성'], cImg = NIKKE_COL['링크'];
+    db.nikkeData.slice(1).forEach(n => {
+      const name = String(n[cName] || '').trim();
+      if (!name) return;
+      const info = { name, attr: String(n[cAttr] || '').trim(), img: String(n[cImg] || '').trim() };
+      [cName, cS1, cS2].forEach(ci => {
+        const v = String(n[ci] || '').trim();
+        if (v && v !== '-' && !out[v]) out[v] = info;
+      });
+    });
+    return out;
+  }
+
+  // 보스별 집계 — 레이드 통계에 기록이 있는 회차만
+  //   apps: 등장 회차마다 { title, attr, diff(그 회차 난이도 %), hits, dmg }
+  //   nikke: 약점 속성(그 회차 보스 속성)과 같은 속성 니케가 낀 타격 수 · 그 타격들의 딜 합
+  function _collectBossStats() {
+    const titles = (db.bossData && db.bossData[0]) || [];
+    const nk = _bossNikkeLookup();
+    const units = [RAID_COL.UNIT1, RAID_COL.UNIT2, RAID_COL.UNIT3, RAID_COL.UNIT4, RAID_COL.UNIT5].filter(ci => ci !== undefined);
+    const bosses = {};
+    let raidCount = 0;
+
+    for (let c = 1; c < titles.length; c++) {
+      const t = String(titles[c] || '').trim();
+      if (!t) continue;
+      const rows = getRaidRows(t).filter(r => String(r[RAID_COL.BOSS] || '').trim() !== '');
+      if (rows.length === 0) continue;
+      raidCount++;
+      const diff = typeof calcBossDifficulty === 'function' ? (calcBossDifficulty(t).score || {}) : {};
+
+      const appOf = {};
+      for (let i = 1; i <= 5; i++) {
+        const nameRow = getRowIdx(`보스${i}`), attrRow = getRowIdx(`속성${i}`);
+        if (nameRow === -1) continue;
+        const name = String(db.bossData[nameRow][c] || '').trim();
+        if (!name) continue;
+        const attr = attrRow !== -1 ? String(db.bossData[attrRow][c] || '').trim() : '';
+        const b = bosses[name] || (bosses[name] = { name, attr, apps: [], hits: 0, dmg: 0, nikke: {} });
+        if (attr) b.attr = attr; // 최근 회차 속성
+        const app = { title: t, attr, diff: diff[name], hits: 0, dmg: 0 };
+        b.apps.push(app);
+        appOf[name] = app;
+      }
+
+      rows.forEach(r => {
+        const name = String(r[RAID_COL.BOSS]).trim();
+        const app = appOf[name];
+        if (!app) return;
+        const b = bosses[name];
+        const dmg = Number(r[RAID_COL.DMG]) || 0;
+        app.hits++; app.dmg += dmg;
+        b.hits++;   b.dmg += dmg;
+        const seen = new Set(); // 같은 타격에 같은 니케가 두 번 적혀도 1번만
+        units.forEach(ci => {
+          const info = nk[String(r[ci] || '').trim()];
+          if (!info || !app.attr || info.attr !== app.attr || seen.has(info.name)) return;
+          seen.add(info.name);
+          const e = b.nikke[info.name] || (b.nikke[info.name] = { name: info.name, img: info.img, count: 0, dmg: 0 });
+          e.count++; e.dmg += dmg;
+        });
+      });
+    }
+    return { list: Object.values(bosses), raidCount };
+  }
+
+  function _bossImg(name) {
+    return IMG_COL.boss && IMG_COL.boss.name !== undefined ? findImgByName(name, IMG_COL.boss.name, IMG_COL.boss.img) : '';
+  }
+  const _bsEsc = s => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+  function _bsAttrChip(attr) {
+    if (!attr) return '';
+    const col = colors[attr] || 'var(--text-dim)';
+    return `<span class="bs-attr" style="--ac:${col};">${_bsEsc(attr)}</span>`;
+  }
+  function _bsThumb(name) {
+    const url = _bossImg(name);
+    return `<div class="bs-thumb"${url ? ` style="background-image:url('${_bsEsc(url)}')"` : ''}></div>`;
+  }
+
+  function setBossHitMode(mode) {
+    _bossHitMode = mode === 'avg' ? 'avg' : 'total';
+    renderBossStats();
+  }
+
+  function renderBossStats() {
+    const rankEl = document.getElementById('bs-rank-grid');
+    const gridEl = document.getElementById('bs-boss-grid');
+    const metaEl = document.getElementById('bs-meta');
+    if (!rankEl || !gridEl || !db.bossData || !db.raidStats) return;
+
+    const { list, raidCount } = _collectBossStats();
+    if (metaEl) metaEl.textContent = `${raidCount}개 회차 · 보스 ${list.length}종`;
+    if (list.length === 0) {
+      rankEl.innerHTML = `<div class="td-hof-empty">레이드 통계에 기록이 없어요</div>`;
+      gridEl.innerHTML = '';
+      return;
+    }
+
+    // ── 1) 역대 난이도 — 보스 × 회차 단위 (회차 안 평균 = 100%) ──
+    const diffEntries = [];
+    list.forEach(b => b.apps.forEach(a => { if (a.diff > 0) diffEntries.push({ name: b.name, attr: a.attr, title: a.title, diff: a.diff, hits: a.hits }); }));
+    const hardest = [...diffEntries].sort((a, b) => b.diff - a.diff).slice(0, 5);
+    const easiest = [...diffEntries].sort((a, b) => a.diff - b.diff).slice(0, 5);
+    const diffRows = arr => arr.length === 0 ? `<div class="td-hof-empty">데이터 부족</div>` : `<div class="bs-list">${arr.map((e, i) => `
+        <div class="bs-row">
+          <span class="bs-rank">${i + 1}</span>
+          ${_bsThumb(e.name)}
+          <div class="bs-main">
+            <div class="bs-name">${_bsEsc(e.name)} ${_bsAttrChip(e.attr)}</div>
+            <div class="bs-sub">${_bsEsc(e.title)} · ${e.hits}타</div>
+          </div>
+          <span class="bs-val" style="color:${diffColor(e.diff)};">${e.diff.toFixed(1)}<small>%</small></span>
+        </div>`).join('')}</div>`;
+
+    // ── 2) 많이/적게 맞은 보스 — 누적 타수 또는 등장 1회당 평균 타수 ──
+    const hitVal = b => _bossHitMode === 'avg' ? b.hits / Math.max(1, b.apps.length) : b.hits;
+    const byHits = [...list].sort((a, b) => hitVal(b) - hitVal(a) || b.dmg - a.dmg);
+    const most = byHits.slice(0, 5);
+    const least = [...byHits].reverse().slice(0, 5);
+    const hitRows = arr => `<div class="bs-list">${arr.map((b, i) => `
+        <div class="bs-row">
+          <span class="bs-rank">${i + 1}</span>
+          ${_bsThumb(b.name)}
+          <div class="bs-main">
+            <div class="bs-name">${_bsEsc(b.name)} ${_bsAttrChip(b.attr)}</div>
+            <div class="bs-sub">등장 ${b.apps.length}회 · 누적 ${formatDmg(b.dmg)}</div>
+          </div>
+          <span class="bs-val">${_bossHitMode === 'avg' ? hitVal(b).toFixed(1) : hitVal(b).toLocaleString()}<small>타</small></span>
+        </div>`).join('')}</div>`;
+    const modeToggle = `
+      <div class="bs-toggle">
+        <button class="${_bossHitMode === 'total' ? 'on' : ''}" onclick="setBossHitMode('total')">누적</button>
+        <button class="${_bossHitMode === 'avg' ? 'on' : ''}" onclick="setBossHitMode('avg')">회당 평균</button>
+      </div>`;
+
+    const card = (title, desc, body, extra) => `
+      <div class="td-hof-card">
+        <div class="td-hof-head">
+          <div class="td-hof-titlebox">
+            <div class="td-hof-title">${title}</div>
+            <div class="td-hof-desc">${desc}</div>
+          </div>
+          ${extra || ''}
+        </div>
+        ${body}
+      </div>`;
+    rankEl.innerHTML =
+      card('가장 어려웠던 보스', '역대 회차별 난이도 TOP 5 (그 회차 평균 = 100%)', diffRows(hardest)) +
+      card('가장 쉬웠던 보스', '역대 회차별 난이도 하위 5', diffRows(easiest)) +
+      card('가장 많이 맞은 보스', _bossHitMode === 'avg' ? '등장 1회당 평균 타수 TOP 5' : '누적 타수 TOP 5', hitRows(most), modeToggle) +
+      card('가장 적게 맞은 보스', _bossHitMode === 'avg' ? '등장 1회당 평균 타수 하위 5' : '누적 타수 하위 5', hitRows(least), modeToggle);
+
+    // ── 3) 보스별 기록 — 등장 많은 순 · 약점 속성 니케 TOP 3 ──
+    const sorted = [...list].sort((a, b) => b.apps.length - a.apps.length || b.hits - a.hits);
+    gridEl.innerHTML = sorted.map(b => {
+      const diffs = b.apps.map(a => a.diff).filter(v => v > 0);
+      const avgDiff = diffs.length ? diffs.reduce((s, v) => s + v, 0) / diffs.length : 0;
+      const top = Object.values(b.nikke).sort((x, y) => y.count - x.count || y.dmg - x.dmg).slice(0, 3);
+      const nikkeHtml = top.length === 0
+        ? `<div class="bs-nk-empty">약점 속성 니케 기록 없음</div>`
+        : top.map((n, i) => `
+            <div class="bs-nk" title="${_bsEsc(n.name)} · ${n.count}타 · ${_bsEsc(formatDmg(n.dmg))}">
+              <div class="bs-nk-img"${n.img ? ` style="background-image:url('${_bsEsc(n.img)}')"` : ''}><span>${i + 1}</span></div>
+              <div class="bs-nk-name">${_bsEsc(n.name)}</div>
+              <div class="bs-nk-cnt">${n.count}<small>타</small></div>
+            </div>`).join('');
+      const url = _bossImg(b.name);
+      return `
+        <div class="bs-boss-card" style="--ac:${colors[b.attr] || 'var(--accent)'};">
+          <div class="bs-boss-hero"${url ? ` style="background-image:url('${_bsEsc(url)}')"` : ''}>
+            <div class="bs-boss-title">${_bsEsc(b.name)} ${_bsAttrChip(b.attr)}</div>
+          </div>
+          <div class="bs-boss-stats">
+            <div><b>${b.apps.length}</b><span>등장</span></div>
+            <div><b>${b.hits.toLocaleString()}</b><span>총 타수</span></div>
+            <div><b>${formatDmg(b.dmg)}</b><span>누적 딜</span></div>
+            <div><b style="color:${avgDiff ? diffColor(avgDiff) : 'inherit'};">${avgDiff ? avgDiff.toFixed(1) + '%' : '-'}</b><span>평균 난이도</span></div>
+          </div>
+          <div class="bs-nk-head">많이 때린 약점 속성 니케</div>
+          <div class="bs-nk-row">${nikkeHtml}</div>
+        </div>`;
+    }).join('');
   }
 </script>
 
