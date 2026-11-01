@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <script>window.APP_BUILD = '261102-0321'; window.APP_CHANNEL = 'dev';</script>
+  <script>window.APP_BUILD = '261102-0351'; window.APP_CHANNEL = 'dev';</script>
   <script>window.CURRENT_SHEET_VERSION = '{{SHEET_VERSION}}'; window.__perf = { appStart: performance.now() };</script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
@@ -11,7 +11,7 @@
 
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Bebas+Neue&family=Rajdhani:wght@600;700&family=Outfit:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,600;1,500;1,600&family=Noto+Serif+KR:wght@600;700&display=swap" rel="stylesheet">
 
-  <!-- 261102 — 보스 통계 탭(.bs-*) · 싱크로 분포 막대 툴팁(#uls-tip) · 작은 도로 무리 캔버스(맨 앞) / 261028 — 최신 버전 알림 타이머 3초 · 정보 창 로딩 시간 · 제목 우상단 서버 표기 · 회차 선택 전체 회차 버튼/패널 · 폭 1760px · 테마 색 변수 · Most Deployed 배치 · 토스트 · 코멘트 링크 -->
+  <!-- 261102 — 이스터에그 이모티콘 젤리 모양 · 니케 속성/버스트 작은 아이콘 위치 = 괄호 위치(dual-left/right) · 보스 통계 탭(.bs-* · 순위 타일) · 싱크로 분포 막대 툴팁(#uls-tip) · 작은 도로 무리 캔버스(맨 앞) / 261028 — 최신 버전 알림 타이머 3초 · 정보 창 로딩 시간 · 제목 우상단 서버 표기 · 회차 선택 전체 회차 버튼/패널 · 폭 1760px · 테마 색 변수 · Most Deployed 배치 · 토스트 · 코멘트 링크 -->
 <style>
   /* ===== CSS 변수 (테마) ===== */
   :root {
@@ -2654,13 +2654,12 @@
   .nikke-icon-dual .ni-primary   { width: 72%; height: 72%; }
   .nikke-icon-dual .ni-secondary { width: 54%; height: 54%; z-index: 2; }
 
-  /* 위치 — 속성: primary 좌하, secondary 우상 / 버스트: primary 우하 + secondary 좌상(작은수)·우상(큰수) */
-  .nikke-icon-dual.dual-attr .ni-primary        { bottom: 0; left: 0; }
-  .nikke-icon-dual.dual-attr .ni-secondary      { top: 0; right: 0; }
-  .nikke-icon-dual.dual-burst-left  .ni-primary   { bottom: 0; right: 0; }
-  .nikke-icon-dual.dual-burst-left  .ni-secondary { top: 0; left: 0; }
-  .nikke-icon-dual.dual-burst-right .ni-primary   { bottom: 0; right: 0; }
-  .nikke-icon-dual.dual-burst-right .ni-secondary { top: 0; right: 0; }
+  /* 위치 — 시트 값의 괄호 위치를 따름 (속성 · 버스트 공통)
+     "주(부)" → dual-right: 작은 아이콘 우상단 + 큰 아이콘 좌하단 / "(부)주" → dual-left: 작은 아이콘 좌상단 + 큰 아이콘 우하단 */
+  .nikke-icon-dual.dual-right .ni-primary   { bottom: 0; left: 0; }
+  .nikke-icon-dual.dual-right .ni-secondary { top: 0; right: 0; }
+  .nikke-icon-dual.dual-left  .ni-primary   { bottom: 0; right: 0; }
+  .nikke-icon-dual.dual-left  .ni-secondary { top: 0; left: 0; }
   /* 다크모드: 모든 아이콘 배경 검정 + 흰 계열 테두리 + invert 해제 */
   [data-theme='dark'] .nikke-icon { background: #000; border-color: rgba(255,255,255,0.35); }
   [data-theme='dark'] .nikke-icon-empty { background: #000; border-color: rgba(255,255,255,0.35); }
@@ -4705,83 +4704,72 @@
   }
 
 
-  /* ===== 보스 통계 탭 ===== */
-  .bs-list { display: flex; flex-direction: column; gap: 8px; position: relative; z-index: 1; }
-  .bs-row {
-    display: grid; grid-template-columns: 22px 44px minmax(0, 1fr) auto;
-    align-items: center; gap: 12px;
-    padding: 8px 10px; background: var(--card2); border: 1px solid var(--border);
+  /* ===== 보스 통계 탭 — 순위 구역마다 보스 이미지 타일 5칸 ===== */
+  .bs-sections { display: flex; flex-direction: column; gap: 20px; }
+  .bs-section {
+    background: var(--card2); border: 1px solid var(--border); border-top: 3px solid var(--accent);
+    padding: 18px 20px 20px;
   }
-  .bs-rank { font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: var(--text-dim); text-align: center; }
-  .bs-row:first-child .bs-rank { color: var(--accent); }
-  .bs-thumb {
-    width: 44px; height: 44px; background: var(--card) center/cover no-repeat;
-    border: 1px solid var(--border);
+  .bs-section-head { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 14px; }
+  .bs-section-title { font-family: 'Noto Sans KR', sans-serif; font-size: 20px; font-weight: 700; color: var(--text); line-height: 1.2; }
+  .bs-section-desc { font-family: 'Noto Sans KR', sans-serif; font-size: 13px; color: var(--text-dim); margin-top: 4px; }
+  .bs-tiles { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
+  .bs-tile {
+    position: relative; height: 250px; overflow: hidden;
+    background: var(--card); border: 1px solid var(--border); border-bottom: 3px solid var(--ac);
   }
-  .bs-main { min-width: 0; }
-  .bs-name {
-    font-family: 'Noto Sans KR', sans-serif; font-size: 15px; font-weight: 700; color: var(--text);
-    display: flex; align-items: center; gap: 6px; white-space: nowrap; overflow: hidden;
+  .bs-tile-img {
+    position: absolute; inset: 0;
+    background: center 30% / cover no-repeat;
+    transition: transform 0.35s ease;
   }
-  .bs-sub { font-family: 'Noto Sans KR', sans-serif; font-size: 12px; color: var(--text-dim); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .bs-val { font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: 0.5px; color: var(--text); white-space: nowrap; }
-  .bs-val small { font-family: 'Rajdhani', sans-serif; font-size: 13px; font-weight: 700; color: var(--text-dim); margin-left: 2px; }
+  .bs-tile:hover .bs-tile-img { transform: scale(1.06); }
+  .bs-tile::after {
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.35) 0%, transparent 22%, transparent 45%, rgba(0, 0, 0, 0.82) 100%);
+  }
+  .bs-tile-rank {
+    position: absolute; top: 6px; left: 12px; z-index: 2;
+    font-family: 'Bebas Neue', sans-serif; font-size: 36px; line-height: 1; color: #fff;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+  }
+  .bs-tile-1 .bs-tile-rank { color: #ffd86b; font-size: 42px; }
+  .bs-tile-info { position: absolute; left: 12px; right: 12px; bottom: 10px; z-index: 2; color: #fff; }
+  .bs-tile-name {
+    font-family: 'Noto Sans KR', sans-serif; font-size: 16px; font-weight: 700;
+    display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+  }
+  .bs-tile-sub { font-family: 'Noto Sans KR', sans-serif; font-size: 12px; opacity: 0.85; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .bs-tile-val {
+    font-family: 'Bebas Neue', sans-serif; font-size: 34px; letter-spacing: 0.5px; line-height: 1; margin-top: 4px;
+    color: #fff; text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6); white-space: nowrap;
+  }
+  .bs-tile-val small { font-family: 'Rajdhani', sans-serif; font-size: 15px; font-weight: 700; margin-left: 2px; opacity: 0.8; }
   .bs-attr {
     display: inline-block; padding: 1px 7px; font-size: 11px; font-weight: 700; line-height: 1.5;
-    color: #fff; background: var(--ac); border-radius: 3px; flex-shrink: 0;
+    color: #fff; background: var(--ac); border-radius: 3px; flex-shrink: 0; text-shadow: none;
   }
-  .bs-toggle { display: flex; gap: 4px; margin-left: auto; flex-shrink: 0; align-self: flex-start; }
+  .bs-toggle { display: flex; gap: 4px; margin-left: auto; flex-shrink: 0; }
   .bs-toggle button {
     padding: 4px 10px; border: 1px solid var(--border-bright); background: var(--card); color: var(--text-dim);
     font-family: 'Noto Sans KR', sans-serif; font-size: 12px; font-weight: 600; cursor: pointer;
   }
   .bs-toggle button.on { border-color: var(--accent); color: var(--accent); }
-  .bs-boss-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
-  .bs-boss-card {
-    background: var(--card2); border: 1px solid var(--border); border-top: 3px solid var(--ac);
-    display: flex; flex-direction: column; overflow: hidden;
+  @media (max-width: 1100px) {
+    .bs-tile { height: 210px; }
+    .bs-tile-val { font-size: 28px; }
   }
-  .bs-boss-hero {
-    height: 110px; position: relative; background: var(--card) center 25%/cover no-repeat;
-  }
-  .bs-boss-hero::after {
-    content: ''; position: absolute; inset: 0;
-    background: linear-gradient(180deg, transparent 35%, rgba(0, 0, 0, 0.72) 100%);
-  }
-  .bs-boss-title {
-    position: absolute; left: 12px; right: 12px; bottom: 8px; z-index: 1;
-    display: flex; align-items: center; gap: 8px;
-    font-family: 'Noto Sans KR', sans-serif; font-size: 18px; font-weight: 700; color: #fff;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
-  }
-  .bs-boss-stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-bottom: 1px solid var(--border); }
-  .bs-boss-stats > div { padding: 10px 4px; text-align: center; display: flex; flex-direction: column; gap: 3px; min-width: 0; }
-  .bs-boss-stats b { font-family: 'Bebas Neue', sans-serif; font-size: 19px; font-weight: 400; color: var(--text); white-space: nowrap; }
-  .bs-boss-stats span { font-family: 'Noto Sans KR', sans-serif; font-size: 11px; color: var(--text-dim); }
-  .bs-nk-head { padding: 10px 12px 4px; font-family: 'Noto Sans KR', sans-serif; font-size: 12px; font-weight: 700; color: var(--text-dim); }
-  .bs-nk-note { font-weight: 400; font-size: 11px; }
-  .bs-nk-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; padding: 6px 12px 14px; }
-  .bs-nk { display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 0; }
-  .bs-nk-img {
-    width: 100%; max-width: 72px; aspect-ratio: 1; position: relative;
-    background: var(--card) center top/cover no-repeat; border: 2px solid var(--ac);
-  }
-  .bs-nk-img span {
-    position: absolute; left: 0; top: 0; padding: 0 6px;
-    font-family: 'Bebas Neue', sans-serif; font-size: 16px; color: #fff; background: var(--ac);
-  }
-  .bs-nk-name { font-family: 'Noto Sans KR', sans-serif; font-size: 12px; font-weight: 700; color: var(--text); max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .bs-nk-cnt { font-family: 'Bebas Neue', sans-serif; font-size: 18px; color: var(--text); line-height: 1; }
-  .bs-nk-cnt small { font-family: 'Rajdhani', sans-serif; font-size: 12px; font-weight: 700; color: var(--text-dim); margin-left: 1px; }
-  .bs-nk-empty { grid-column: 1 / -1; padding: 14px 0; text-align: center; font-family: 'Noto Sans KR', sans-serif; font-size: 13px; color: var(--text-dim); }
-  @media (max-width: 600px) {
-    .bs-row { grid-template-columns: 18px 38px minmax(0, 1fr) auto; gap: 8px; padding: 7px 8px; }
-    .bs-thumb { width: 38px; height: 38px; }
-    .bs-val { font-size: 22px; }
-    .bs-boss-grid { grid-template-columns: 1fr; }
+  @media (max-width: 700px) {
+    /* 좁은 화면 — 타일을 가로로 밀어서 보기 */
+    .bs-section { padding: 14px 12px 16px; }
+    .bs-tiles { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 150px; overflow-x: auto; padding-bottom: 4px; }
+    .bs-tile { height: 200px; }
+    .bs-tile-name { font-size: 14px; }
   }
 
   /* ===== 이스터에그 랜덤 이미지 ===== */
+  /* 젤리 — 둥근 모서리 · 위쪽 반사광 · 아래쪽 두께감 · 살짝 분홍빛 겉막. 출렁임/던지기는 JS(_makeJelly) */
   #easter-egg {
     position: fixed;
     width: 96px;
@@ -4790,35 +4778,41 @@
     background-position: center 25%;
     background-repeat: no-repeat;
     background-color: var(--card);
-    border: 2px solid #000;
+    border-radius: 30%;
     box-shadow:
-      0 0 12px rgba(0, 0, 0, 0.55),
-      0 0 28px rgba(0, 0, 0, 0.35),
-      0 6px 20px rgba(0, 0, 0, 0.4);
-    clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
-    cursor: pointer;
+      inset 0 -9px 16px rgba(120, 30, 70, 0.22),
+      inset 0 7px 12px rgba(255, 255, 255, 0.6),
+      0 10px 22px rgba(0, 0, 0, 0.28);
+    cursor: grab;
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
     z-index: 9999;
     transform-origin: center;
-    animation: easter-egg-float 3.2s ease-in-out infinite, easter-egg-in 0.45s ease-out;
-    transition: opacity 0.3s, transform 0.3s;
+    animation: easter-egg-in 0.45s ease-out;
   }
-  #easter-egg:hover {
-    box-shadow:
-      0 0 18px rgba(0, 0, 0, 0.7),
-      0 0 40px rgba(0, 0, 0, 0.5),
-      0 8px 24px rgba(0, 0, 0, 0.55);
+  #easter-egg::before {   /* 반사광 */
+    content: '';
+    position: absolute; left: 14%; top: 8%; width: 44%; height: 22%;
+    border-radius: 50%;
+    background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0) 70%);
+    transform: rotate(-16deg);
+    pointer-events: none; z-index: 1;
   }
+  #easter-egg::after {    /* 젤리 겉막 */
+    content: '';
+    position: absolute; inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(160deg, rgba(255, 255, 255, 0.28) 0%, rgba(255, 170, 210, 0.16) 55%, rgba(255, 110, 175, 0.24) 100%);
+    pointer-events: none;
+  }
+  #easter-egg.dragging { cursor: grabbing; }
   [data-theme='dark'] #easter-egg {
-    border-color: #000;
     box-shadow:
-      0 0 14px rgba(255, 255, 255, 0.35),
-      0 0 30px rgba(255, 255, 255, 0.2),
-      0 6px 20px rgba(0, 0, 0, 0.5);
-  }
-  @keyframes easter-egg-float {
-    0%   { transform: translateY(0)    rotate(-2deg); }
-    50%  { transform: translateY(-6px) rotate(2deg); }
-    100% { transform: translateY(0)    rotate(-2deg); }
+      inset 0 -9px 16px rgba(120, 30, 70, 0.3),
+      inset 0 7px 12px rgba(255, 255, 255, 0.5),
+      0 0 18px rgba(255, 170, 210, 0.35),
+      0 10px 22px rgba(0, 0, 0, 0.5);
   }
   @keyframes easter-egg-in {
     from { transform: scale(0.4) rotate(-20deg); opacity: 0; }
@@ -4933,7 +4927,7 @@
   }
 
 </style>
-  <!-- 261102 세이렌 스킨 — 구버전 테마 견본 색 삭제 · 싱크로 분포 툴팁(#uls-tip) 모양 / 261021 세이렌 스킨 (서버 표기 · 테마 메뉴 "삭제 예정" 배지) — body[data-skin="siren"] 일 때만 style.html 을 덮어씀 (구버전은 영향 없음)
+  <!-- 261102 세이렌 스킨 — 보스 통계 순위 구역 · 타일 둥글게 · 구버전 테마 견본 색 삭제 · 싱크로 분포 툴팁(#uls-tip) 모양 / 261021 세이렌 스킨 (서버 표기 · 테마 메뉴 "삭제 예정" 배지) — body[data-skin="siren"] 일 때만 style.html 을 덮어씀 (구버전은 영향 없음)
      캡처(html2canvas) 호환: color-mix() · conic-gradient() 사용 금지, 반투명 대신 불투명 카드 -->
 <style>
   /* ───────── 토큰: 진주 (라이트) ───────── */
@@ -5232,6 +5226,9 @@
     overflow: hidden;
   }
   body[data-skin="siren"] .google-visualization-tooltip:has(> .google-visualization-tooltip) { border: none !important; border-radius: 0 !important; }
+  body[data-skin="siren"] .bs-section { border-radius: 16px; border-top-width: 1px; box-shadow: inset 0 3px 0 var(--accent); }
+  body[data-skin="siren"] .bs-tile { border-radius: 12px; }
+  body[data-skin="siren"] .bs-toggle button { border-radius: 999px; }
   body[data-skin="siren"] #uls-tip {
     border-radius: 14px; border: 1px solid var(--border-bright); border-top: 2px solid var(--accent);
     box-shadow: var(--shadow);
@@ -5921,24 +5918,15 @@
     </div>
   </div>
 </div></div>
-  <div id="section-boss" style="display:none;"><!-- 261102 보스 통계 탭 — 역대 난이도 순위 · 많이/적게 맞은 보스 · 보스별 기록(약점 속성 니케) -->
+  <div id="section-boss" style="display:none;"><!-- 261102 보스 통계 탭 — Boss Ranking: 역대 난이도 높은/낮은 보스 · 많이/적게 맞은 보스 (Boss Records 는 보스 상세 TOP5 와 겹쳐 뺌) -->
 <div id="boss-stats-view">
-  <div class="card" style="margin-bottom:20px;">
+  <div class="card">
     <div style="display:flex; align-items:center; gap:10px; margin-bottom:16px;">
       <span style="display:inline-block; width:3px; height:16px; background:var(--accent);"></span>
       <span style="font-family:'Rajdhani',sans-serif; font-size:16px; font-weight:700; letter-spacing:3px; color:var(--text-dim,#6b7280); text-transform:uppercase;">Boss Ranking</span>
       <span id="bs-meta" style="font-family:'Rajdhani',sans-serif; font-size:16px; color:var(--text-dim); letter-spacing:1px; margin-left:auto;"></span>
     </div>
-    <div id="bs-rank-grid" class="td-hof-grid"></div>
-  </div>
-
-  <div class="card">
-    <div style="display:flex; align-items:center; gap:10px; margin-bottom:16px;">
-      <span style="display:inline-block; width:3px; height:16px; background:var(--accent);"></span>
-      <span style="font-family:'Rajdhani',sans-serif; font-size:16px; font-weight:700; letter-spacing:3px; color:var(--text-dim,#6b7280); text-transform:uppercase;">Boss Records</span>
-      <span style="font-family:'Noto Sans KR',sans-serif; font-size:13px; color:var(--text-dim); margin-left:auto;">약점 속성 니케 = 보스 속성과 같은 속성 니케만</span>
-    </div>
-    <div id="bs-boss-grid" class="bs-boss-grid"></div>
+    <div id="bs-rank-grid" class="bs-sections"></div>
   </div>
 </div>
 </div>
@@ -6340,7 +6328,7 @@
   </button>
 </div>
 
-<!-- 261102 공용 — 보스 통계 탭 전환 · 가이드 · 테마 전환 다시 그리기 · 날아다니는 도로: 더 크고 빠르게 · 머리를 날아가는 방향으로 · 꼬리는 일정한 굵기 띠 · 무지개 색 간격 넓게 · 구버전 테마 삭제(테마 메뉴는 유지) · 테마 메뉴 자동 닫힘 · 시험판 이스터에그 100% · 작은 도로 맨 앞 · 꼬리 몸의 2배 · 캡처에 작은 도로 합성 · 도로 홀로그램 뒤 작은 도로 무리(별똥별 꼬리 · 무지개) · 딜량 · HP 표기 숫자와 단위 사이 줄바꿈 금지 · 차트 회차 목록 chartRaidTitles(기록 없는 앞뒤 회차 제외) · 캡처 때 분포 툴팁 숨김 / 261030 공용 — dataBoss 시작일 + 1일(하드 오픈) 전 회차는 표시 안 함 · 가이드: 기록 없는 회차(NO RECORD)에서 시작하면 기록 있는 최근 회차로 이동 · 버전 확인: 마스터 '사용법' 탭 전체에서 버전 형식(v261030) 칸을 찾아 가장 큰 값 사용 / 261028 공용 — 최신 버전 알림 3초 · 버전 확인: 마스터 버전 칸이 비면 업데이트 있음으로 표시 · 데이터 일괄 읽기(getFullDataBatch, 실패 시 기존 방식) · 정보 창에 빌드 번호 · 로딩 구간별 시간(시트별 서버 읽기 포함) · 캡처 시 세이렌 그림자 제거(얼룩 방지) · 레벨 차트 좌우 폭 가득 · 캡처 시 유니온명 그라데이션 글자 · 줄바꿈 보정 · 최신 버전 읽는 칸 사용법!E10 → E8 · 테마 메뉴 구버전에 "삭제 예정" 표시 · 회차 선택(최신 5개 + 전체 회차 패널) · 세이렌/구버전 스킨 -->
+<!-- 261102 공용 — 이스터에그 이모티콘 젤리(출렁임 · 잡아서 던지기, 살짝 누르면 터짐) · 도로 꼬리 끝 완전 투명 · 보스 통계 탭 전환 · 가이드 · 테마 전환 다시 그리기 · 날아다니는 도로: 더 크고 빠르게 · 머리를 날아가는 방향으로 · 꼬리는 일정한 굵기 띠 · 무지개 색 간격 넓게 · 구버전 테마 삭제(테마 메뉴는 유지) · 테마 메뉴 자동 닫힘 · 시험판 이스터에그 100% · 작은 도로 맨 앞 · 꼬리 몸의 2배 · 캡처에 작은 도로 합성 · 도로 홀로그램 뒤 작은 도로 무리(별똥별 꼬리 · 무지개) · 딜량 · HP 표기 숫자와 단위 사이 줄바꿈 금지 · 차트 회차 목록 chartRaidTitles(기록 없는 앞뒤 회차 제외) · 캡처 때 분포 툴팁 숨김 / 261030 공용 — dataBoss 시작일 + 1일(하드 오픈) 전 회차는 표시 안 함 · 가이드: 기록 없는 회차(NO RECORD)에서 시작하면 기록 있는 최근 회차로 이동 · 버전 확인: 마스터 '사용법' 탭 전체에서 버전 형식(v261030) 칸을 찾아 가장 큰 값 사용 / 261028 공용 — 최신 버전 알림 3초 · 버전 확인: 마스터 버전 칸이 비면 업데이트 있음으로 표시 · 데이터 일괄 읽기(getFullDataBatch, 실패 시 기존 방식) · 정보 창에 빌드 번호 · 로딩 구간별 시간(시트별 서버 읽기 포함) · 캡처 시 세이렌 그림자 제거(얼룩 방지) · 레벨 차트 좌우 폭 가득 · 캡처 시 유니온명 그라데이션 글자 · 줄바꿈 보정 · 최신 버전 읽는 칸 사용법!E10 → E8 · 테마 메뉴 구버전에 "삭제 예정" 표시 · 회차 선택(최신 5개 + 전체 회차 패널) · 세이렌/구버전 스킨 -->
 <script>
   google.charts.load('current', {'packages':['corechart', 'scatter']});
 
@@ -6584,7 +6572,7 @@
     el.style.left = left + 'px';
     el.style.top  = top  + 'px';
     el.title = '?';
-    el.addEventListener('click', (e) => {
+    const pop = () => {
       _burstEasterEgg(el);
       el.classList.add('easter-egg-pop');
       setTimeout(() => el.remove(), 500);
@@ -6592,8 +6580,92 @@
       if (Math.random() < DORO_HOLO_CHANCE) {
         setTimeout(spawnDoroHolo, 520);
       }
-    });
+    };
     document.body.appendChild(el);
+    _makeJelly(el, size, pop);
+  }
+
+  // 이스터에그 젤리 — 말랑하게 출렁이고, 잡아서 던질 수 있음 (살짝 눌렀다 떼면 기존처럼 터짐)
+  //   던지면 미끄러지다 화면 가장자리에서 튕기고, 부딪힌 쪽으로 납작하게 눌림
+  function _makeJelly(el, size, onTap) {
+    let x = parseFloat(el.style.left) || 0, y = parseFloat(el.style.top) || 0;
+    let vx = 0, vy = 0;                    // 던진 속도 (px/초)
+    let sx = 1, sy = 1, vsx = 0, vsy = 0;  // 출렁임 — 가로/세로 늘어남과 그 변화 속도
+    let drag = null, alive = true;
+    const t0 = performance.now();
+    let last = t0;
+    const samples = [];
+    const poke = (ax, ay) => { vsx += ax; vsy += ay; };
+
+    el.addEventListener('pointerdown', e => {
+      if (e.button !== 0) return;
+      e.preventDefault();
+      el.setPointerCapture(e.pointerId);
+      drag = { ox: e.clientX - x, oy: e.clientY - y, t: performance.now(), moved: 0 };
+      samples.length = 0;
+      samples.push({ x: e.clientX, y: e.clientY, t: performance.now() });
+      vx = vy = 0;
+      el.classList.add('dragging');
+      poke(1.6, -1.6); // 잡으면 꾹 눌림
+    });
+    el.addEventListener('pointermove', e => {
+      if (!drag) return;
+      const nx = e.clientX - drag.ox, ny = e.clientY - drag.oy;
+      const dx = nx - x, dy = ny - y;
+      drag.moved += Math.hypot(dx, dy);
+      // 움직인 방향으로 늘어났다가 출렁 — 옆으로 끌면 가로로, 위아래로 끌면 세로로
+      poke((Math.abs(dx) - Math.abs(dy)) * 0.03, (Math.abs(dy) - Math.abs(dx)) * 0.03);
+      x = nx; y = ny;
+      samples.push({ x: e.clientX, y: e.clientY, t: performance.now() });
+      while (samples.length > 6) samples.shift();
+    });
+    const end = () => {
+      if (!drag) return;
+      const tap = drag.moved < 6 && performance.now() - drag.t < 350;
+      drag = null;
+      el.classList.remove('dragging');
+      if (tap) { alive = false; onTap(); return; }
+      // 놓기 직전 움직임으로 던지는 속도
+      const a = samples[0], b = samples[samples.length - 1];
+      const dt = Math.max(16, b.t - a.t) / 1000;
+      vx = (b.x - a.x) / dt; vy = (b.y - a.y) / dt;
+      const sp = Math.hypot(vx, vy), MAXV = 4000;
+      if (sp > MAXV) { vx *= MAXV / sp; vy *= MAXV / sp; }
+    };
+    el.addEventListener('pointerup', end);
+    el.addEventListener('pointercancel', end);
+
+    const tick = (now) => {
+      if (!alive || !el.isConnected) return;
+      const dt = Math.min(0.033, (now - last) / 1000);
+      last = now;
+      if (!drag) {
+        x += vx * dt; y += vy * dt;
+        const f = Math.exp(-1.6 * dt); // 미끄러지며 느려짐
+        vx *= f; vy *= f;
+        const W = window.innerWidth - size, H = window.innerHeight - size;
+        const hit = v => Math.min(3, Math.abs(v) / 500);
+        if (x < 0 && vx < 0)  { x = 0; poke(-hit(vx), hit(vx)); vx = -vx * 0.6; }
+        if (x > W && vx > 0)  { x = W; poke(-hit(vx), hit(vx)); vx = -vx * 0.6; }
+        if (y < 0 && vy < 0)  { y = 0; poke(hit(vy), -hit(vy)); vy = -vy * 0.6; }
+        if (y > H && vy > 0)  { y = H; poke(hit(vy), -hit(vy)); vy = -vy * 0.6; }
+        x = Math.max(0, Math.min(x, Math.max(0, W)));
+        y = Math.max(0, Math.min(y, Math.max(0, H)));
+      }
+      // 출렁임 — 1 로 돌아가려는 용수철 + 감쇠
+      const K = 260, C = 9;
+      vsx += (-K * (sx - 1) - C * vsx) * dt;
+      vsy += (-K * (sy - 1) - C * vsy) * dt;
+      sx = Math.max(0.6, Math.min(1.5, sx + vsx * dt));
+      sy = Math.max(0.6, Math.min(1.5, sy + vsy * dt));
+      // 가만히 있을 땐 숨 쉬듯 살짝 말랑
+      const breathe = drag ? 0 : Math.sin((now - t0) / 480) * 0.03;
+      el.style.left = x + 'px';
+      el.style.top = y + 'px';
+      el.style.transform = `scale(${(sx + breathe).toFixed(3)}, ${(sy - breathe).toFixed(3)})`;
+      requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
   }
 
   // 도로 홀로그램 리소스 URL 조회 (name 대소문자/기호 정확 매칭)
@@ -6771,7 +6843,7 @@
             const STEPS = 8;
             for (let k = 0; k <= STEPS; k++) {
               const t = k / STEPS;               // 0 = 꼬리 끝, 1 = 몸 쪽
-              const a = 0.15 + t * 0.65;
+              const a = Math.pow(t, 1.8) * 0.8;  // 꼬리 끝(0)은 완전히 투명 → 몸 쪽으로 갈수록 진하게
               gr.addColorStop(t, d.isRainbow
                 ? `hsla(${(d.hue + (1 - t) * 220) % 360}, 95%, 64%, ${a})`
                 : `rgba(255, 196, 228, ${a})`);
@@ -8656,13 +8728,6 @@
       title: '<b>보스 순위</b>',
       desc: '역대 회차의 <b>난이도가 가장 높았던 / 낮았던 보스</b>와<br><b>가장 많이 / 적게 맞은 보스</b>를 볼 수 있어요.<br>맞은 횟수는 <b>누적</b>과 <b>회당 평균</b> 중 고를 수 있어요.',
       position: 'bottom',
-    },
-    {
-      type: 'explain',
-      targets: () => [document.getElementById('bs-boss-grid')].filter(Boolean),
-      title: '<b>보스별 기록</b>',
-      desc: '보스마다 등장 횟수 · 총 타수 · 누적 딜 · 평균 난이도와<br>그 보스를 가장 많이 때린 <b>약점 속성 니케</b>를 보여줘요.',
-      position: 'top',
     },
     { type: 'end' },
   ];
@@ -13557,7 +13622,7 @@
   }
 </script>
 
-<!-- 261102 개인 기록 — Damage Trend 는 기록 있는 회차 범위만 / 261021 개인 기록 — 증감 색 테마 변수 · Damage Trend 빈 회차 포함 · Most Deployed 이름 표기 -->
+<!-- 261102 개인 기록 — 속성/버스트 작은 아이콘 위치를 괄호 위치로 · Damage Trend 는 기록 있는 회차 범위만 / 261021 개인 기록 — 증감 색 테마 변수 · Damage Trend 빈 회차 포함 · Most Deployed 이름 표기 -->
 <script>
   let _personalCtx = null;
   let _personalSort = 'no';      // 'no' | 'name' | 'level'
@@ -14065,30 +14130,29 @@
     const NIKKE_ICON_FIELDS_2x2 = ['속성', '버스트', '클래스', '총기']; // 소속 제외
     const NIKKE_ICON_INVERT = new Set(['버스트', '클래스', '총기', '소속']);
     const DUAL_FIELDS = new Set(['속성', '버스트']);
+    // "주(부)" → 작은 아이콘 우상단 · "(부)주" → 좌상단 (니케 통계와 같은 규칙)
     const parseDual = (raw) => {
       const s = String(raw || '').trim();
-      const m = s.match(/^(.+?)\s*\(\s*(.+?)\s*\)\s*$/);
-      if (m) return { primary: m[1].trim(), secondary: m[2].trim() };
-      return { primary: s, secondary: '' };
+      let m = s.match(/^(.+?)\s*\(\s*(.+?)\s*\)\s*$/);
+      if (m) return { primary: m[1].trim(), secondary: m[2].trim(), side: 'right' };
+      m = s.match(/^\(\s*(.+?)\s*\)\s*(.+?)\s*$/);
+      if (m) return { primary: m[2].trim(), secondary: m[1].trim(), side: 'left' };
+      return { primary: s, secondary: '', side: '' };
     };
     const buildIconHtml = (nData, f) => {
       const colIdx = NIKKE_COL[f];
       const raw = (colIdx !== undefined && nData) ? String(nData[colIdx] || '').trim() : '';
-      let primary = raw, secondary = '';
+      let primary = raw, secondary = '', side = '';
       if (DUAL_FIELDS.has(f) && raw) {
         const p = parseDual(raw);
-        primary = p.primary; secondary = p.secondary;
+        primary = p.primary; secondary = p.secondary; side = p.side;
       }
       const url  = primary   ? (typeof findImgByName === 'function' ? findImgByName(primary)   : '') : '';
       const url2 = secondary ? (typeof findImgByName === 'function' ? findImgByName(secondary) : '') : '';
       if (!url && !url2) return `<div class="nikke-icon-empty" data-tt="${f}: -"></div>`;
       const invertCls = NIKKE_ICON_INVERT.has(f) ? ' nikke-icon-invert' : '';
       if (DUAL_FIELDS.has(f) && secondary && url2) {
-        let posCls = 'dual-attr';
-        if (f === '버스트') {
-          const sNum = Number(secondary), pNum = Number(primary);
-          posCls = (sNum < pNum) ? 'dual-burst-left' : 'dual-burst-right';
-        }
+        const posCls = side === 'left' ? 'dual-left' : 'dual-right';
         const tt = `${f}: ${primary} (${secondary})`;
         return `<div class="nikke-icon nikke-icon-dual ${posCls}${invertCls}" data-tt="${tt}">
           <img class="ni-primary" src="${url}">
@@ -14538,7 +14602,7 @@
   }
 </script>
 
-<!-- 260714 니케 통계 — 속성 정렬 3-state 토글 + tiebreak 안정화 -->
+<!-- 261102 니케 통계 — 속성/버스트 작은 아이콘 위치를 괄호 위치로: 주(부)=우상단 · (부)주=좌상단 / 260714 니케 통계 — 속성 정렬 3-state 토글 + tiebreak 안정화 -->
 <script>
   // 정렬/검색/필터 상태
   let _nikkeSort = 'count';
@@ -14559,12 +14623,15 @@
   const _SOSOK_OVERSPEC = new Set(['엘리시온', '미실리스', '테트라']);
   const _SOSOK_SUFFIX = '(오)';
 
-  // "주(부)" 셀 파싱 (속성/버스트 전용; 소속 (오) 는 별도 처리)
+  // "주(부)" · "(부)주" 셀 파싱 (속성/버스트 전용; 소속 (오) 는 별도 처리)
+  //   side: 괄호가 뒤에 있으면 'right'(작은 아이콘 우상단), 앞에 있으면 'left'(좌상단)
   function parseDualValue(raw) {
     const s = String(raw || '').trim();
-    const m = s.match(/^(.+?)\s*\(\s*(.+?)\s*\)\s*$/);
-    if (m) return { primary: m[1].trim(), secondary: m[2].trim() };
-    return { primary: s, secondary: '' };
+    let m = s.match(/^(.+?)\s*\(\s*(.+?)\s*\)\s*$/);
+    if (m) return { primary: m[1].trim(), secondary: m[2].trim(), side: 'right' };
+    m = s.match(/^\(\s*(.+?)\s*\)\s*(.+?)\s*$/);
+    if (m) return { primary: m[2].trim(), secondary: m[1].trim(), side: 'left' };
+    return { primary: s, secondary: '', side: '' };
   }
   const _DUAL_FIELDS = new Set(['속성', '버스트']);
 
@@ -14864,15 +14931,15 @@
       const icons = _NIKKE_ICON_FIELDS.map(f => {
         const colIdx = NIKKE_COL[f];
         const raw = (nData && colIdx !== undefined) ? String(nData[colIdx] || '').trim() : '';
-        let primary = raw, secondary = '';
+        let primary = raw, secondary = '', side = '';
         if (_DUAL_FIELDS.has(f) && raw) {
           const p = parseDualValue(raw);
-          primary = p.primary; secondary = p.secondary;
+          primary = p.primary; secondary = p.secondary; side = p.side;
         }
         return {
           field: f,
           value: raw,
-          primary, secondary,
+          primary, secondary, side,
           url:  primary   ? findImgByName(primary)   : '',
           url2: secondary ? findImgByName(secondary) : ''
         };
@@ -15005,11 +15072,7 @@
 
         // dual 표시 — 속성/버스트 + secondary 존재
         if (_DUAL_FIELDS.has(ic.field) && ic.secondary && ic.url2) {
-          let posCls = 'dual-attr';
-          if (ic.field === '버스트') {
-            const sNum = Number(ic.secondary), pNum = Number(ic.primary);
-            posCls = (sNum < pNum) ? 'dual-burst-left' : 'dual-burst-right';
-          }
+          const posCls = ic.side === 'left' ? 'dual-left' : 'dual-right';
           const tt = `${ic.field}: ${ic.primary} (${ic.secondary})`;
           // invert는 컨테이너에 적용 → 단일 외곽 테두리/배경 그대로 invert (내부 img는 색 그대로)
           return `<div class="nikke-icon nikke-icon-dual ${posCls}${invertCls}" data-tt="${tt}">
@@ -15221,7 +15284,7 @@
   }
 </script>
 
-<!-- 261102 보스 통계 탭 — 회차 구분 없이 전체 기록을 보스 기준으로: 역대 난이도 순위 · 많이/적게 맞은 보스 · 보스별 약점 속성 니케 -->
+<!-- 261102 보스 통계 탭 — 회차 구분 없이 전체 기록을 보스 기준으로: 역대 난이도 높은/낮은 보스 · 많이/적게 맞은 보스 (큰 보스 이미지 타일 5칸) -->
 <script>
   // 많이/적게 맞은 보스 기준 — 'total' 누적 타수 · 'avg' 등장 1회당 평균 타수
   let _bossHitMode = 'total';
@@ -15230,31 +15293,10 @@
     renderBossStats();
   }
 
-  // 니케 이름/줄임말 → { name, attr, img }
-  function _bossNikkeLookup() {
-    const out = {};
-    if (!db.nikkeData) return out;
-    const cName = NIKKE_COL['이름'], cS1 = NIKKE_COL['줄임말1'], cS2 = NIKKE_COL['줄임말2'];
-    const cAttr = NIKKE_COL['속성'], cImg = NIKKE_COL['링크'];
-    db.nikkeData.slice(1).forEach(n => {
-      const name = String(n[cName] || '').trim();
-      if (!name) return;
-      const info = { name, attr: String(n[cAttr] || '').trim(), img: String(n[cImg] || '').trim() };
-      [cName, cS1, cS2].forEach(ci => {
-        const v = String(n[ci] || '').trim();
-        if (v && v !== '-' && !out[v]) out[v] = info;
-      });
-    });
-    return out;
-  }
-
   // 보스별 집계 — 레이드 통계에 기록이 있는 회차만
   //   apps: 등장 회차마다 { title, attr, diff(그 회차 난이도 %), hits, dmg }
-  //   nikke: 약점 속성(그 회차 보스 속성)과 같은 속성 니케가 낀 타격 수 · 그 타격들의 딜 합
   function _collectBossStats() {
     const titles = (db.bossData && db.bossData[0]) || [];
-    const nk = _bossNikkeLookup();
-    const units = [RAID_COL.UNIT1, RAID_COL.UNIT2, RAID_COL.UNIT3, RAID_COL.UNIT4, RAID_COL.UNIT5].filter(ci => ci !== undefined);
     const bosses = {};
     let raidCount = 0;
 
@@ -15273,7 +15315,7 @@
         const name = String(db.bossData[nameRow][c] || '').trim();
         if (!name) continue;
         const attr = attrRow !== -1 ? String(db.bossData[attrRow][c] || '').trim() : '';
-        const b = bosses[name] || (bosses[name] = { name, attr, apps: [], hits: 0, dmg: 0, nikke: {} });
+        const b = bosses[name] || (bosses[name] = { name, attr, apps: [], hits: 0, dmg: 0 });
         if (attr) b.attr = attr; // 최근 회차 속성
         const app = { title: t, attr, diff: diff[name], hits: 0, dmg: 0 };
         b.apps.push(app);
@@ -15284,18 +15326,9 @@
         const name = String(r[RAID_COL.BOSS]).trim();
         const app = appOf[name];
         if (!app) return;
-        const b = bosses[name];
         const dmg = Number(r[RAID_COL.DMG]) || 0;
         app.hits++; app.dmg += dmg;
-        b.hits++;   b.dmg += dmg;
-        const seen = new Set(); // 같은 타격에 같은 니케가 두 번 적혀도 1번만
-        units.forEach(ci => {
-          const info = nk[String(r[ci] || '').trim()];
-          if (!info || !app.attr || info.attr !== app.attr || seen.has(info.name)) return;
-          seen.add(info.name);
-          const e = b.nikke[info.name] || (b.nikke[info.name] = { name: info.name, img: info.img, count: 0, dmg: 0 });
-          e.count++; e.dmg += dmg;
-        });
+        bosses[name].hits++; bosses[name].dmg += dmg;
       });
     }
     return { list: Object.values(bosses), raidCount };
@@ -15310,114 +15343,85 @@
     const col = colors[attr] || 'var(--text-dim)';
     return `<span class="bs-attr" style="--ac:${col};">${_bsEsc(attr)}</span>`;
   }
-  function _bsThumb(name) {
-    const url = _bossImg(name);
-    return `<div class="bs-thumb"${url ? ` style="background-image:url('${_bsEsc(url)}')"` : ''}></div>`;
-  }
 
   function setBossHitMode(mode) {
     _bossHitMode = mode === 'avg' ? 'avg' : 'total';
     renderBossStats();
   }
 
+  // 순위 타일 5칸 — 보스 이미지를 크게, 이름 · 회차 · 값은 이미지 아래쪽에 겹쳐 표시
+  //   item: { name, attr, sub, valHtml, valColor }
+  function _bsTiles(items) {
+    if (items.length === 0) return `<div class="td-hof-empty">데이터 부족</div>`;
+    return `<div class="bs-tiles">${items.map((e, i) => {
+      const url = _bossImg(e.name);
+      return `
+        <div class="bs-tile${i === 0 ? ' bs-tile-1' : ''}" style="--ac:${colors[e.attr] || 'var(--accent)'};">
+          <div class="bs-tile-img"${url ? ` style="background-image:url('${_bsEsc(url)}')"` : ''}></div>
+          <span class="bs-tile-rank">${i + 1}</span>
+          <div class="bs-tile-info">
+            <div class="bs-tile-name">${_bsEsc(e.name)} ${_bsAttrChip(e.attr)}</div>
+            <div class="bs-tile-sub">${e.sub}</div>
+            <div class="bs-tile-val"${e.valColor ? ` style="color:${e.valColor};"` : ''}>${e.valHtml}</div>
+          </div>
+        </div>`;
+    }).join('')}</div>`;
+  }
+
   function renderBossStats() {
     const rankEl = document.getElementById('bs-rank-grid');
-    const gridEl = document.getElementById('bs-boss-grid');
     const metaEl = document.getElementById('bs-meta');
-    if (!rankEl || !gridEl || !db.bossData || !db.raidStats) return;
+    if (!rankEl || !db.bossData || !db.raidStats) return;
 
     const { list, raidCount } = _collectBossStats();
     if (metaEl) metaEl.textContent = `${raidCount}개 회차 · 보스 ${list.length}종`;
     if (list.length === 0) {
       rankEl.innerHTML = `<div class="td-hof-empty">레이드 통계에 기록이 없어요</div>`;
-      gridEl.innerHTML = '';
       return;
     }
 
-    // ── 1) 역대 난이도 — 보스 × 회차 단위 (회차 안 평균 = 100%) · 3타 미만은 표본이 적어 순위에서 뺌 ──
+    // ── 역대 난이도 — 보스 × 회차 단위 (회차 안 평균 = 100%) · 3타 미만은 표본이 적어 순위에서 뺌 ──
     const diffEntries = [];
     list.forEach(b => b.apps.forEach(a => { if (a.diff > 0 && a.hits >= 3) diffEntries.push({ name: b.name, attr: a.attr, title: a.title, diff: a.diff, hits: a.hits }); }));
-    const hardest = [...diffEntries].sort((a, b) => b.diff - a.diff).slice(0, 5);
-    const easiest = [...diffEntries].sort((a, b) => a.diff - b.diff).slice(0, 5);
-    const diffRows = arr => arr.length === 0 ? `<div class="td-hof-empty">데이터 부족</div>` : `<div class="bs-list">${arr.map((e, i) => `
-        <div class="bs-row">
-          <span class="bs-rank">${i + 1}</span>
-          ${_bsThumb(e.name)}
-          <div class="bs-main">
-            <div class="bs-name">${_bsEsc(e.name)} ${_bsAttrChip(e.attr)}</div>
-            <div class="bs-sub">${_bsEsc(e.title)} · ${e.hits}타</div>
-          </div>
-          <span class="bs-val" style="color:${diffColor(e.diff)};">${e.diff.toFixed(1)}<small>%</small></span>
-        </div>`).join('')}</div>`;
+    const diffItem = e => ({
+      name: e.name, attr: e.attr, sub: `${_bsEsc(e.title)} · ${e.hits}타`,
+      valHtml: `${e.diff.toFixed(1)}<small>%</small>`, valColor: diffColor(e.diff)
+    });
+    const hardest = [...diffEntries].sort((a, b) => b.diff - a.diff).slice(0, 5).map(diffItem);
+    const easiest = [...diffEntries].sort((a, b) => a.diff - b.diff).slice(0, 5).map(diffItem);
 
-    // ── 2) 많이/적게 맞은 보스 — 누적 타수 또는 등장 1회당 평균 타수 ──
+    // ── 많이/적게 맞은 보스 — 누적 타수 또는 등장 1회당 평균 타수 ──
     const hitVal = b => _bossHitMode === 'avg' ? b.hits / Math.max(1, b.apps.length) : b.hits;
     const byHits = [...list].sort((a, b) => hitVal(b) - hitVal(a) || b.dmg - a.dmg);
-    const most = byHits.slice(0, 5);
-    const least = [...byHits].reverse().slice(0, 5);
-    const hitRows = arr => `<div class="bs-list">${arr.map((b, i) => `
-        <div class="bs-row">
-          <span class="bs-rank">${i + 1}</span>
-          ${_bsThumb(b.name)}
-          <div class="bs-main">
-            <div class="bs-name">${_bsEsc(b.name)} ${_bsAttrChip(b.attr)}</div>
-            <div class="bs-sub">등장 ${b.apps.length}회 · 누적 ${formatDmg(b.dmg)}</div>
-          </div>
-          <span class="bs-val">${_bossHitMode === 'avg' ? hitVal(b).toFixed(1) : hitVal(b).toLocaleString()}<small>타</small></span>
-        </div>`).join('')}</div>`;
+    const hitItem = b => ({
+      name: b.name, attr: b.attr, sub: `등장 ${b.apps.length}회 · ${formatDmg(b.dmg)}`,
+      valHtml: `${_bossHitMode === 'avg' ? hitVal(b).toFixed(1) : hitVal(b).toLocaleString()}<small>타</small>`
+    });
+    const most = byHits.slice(0, 5).map(hitItem);
+    const least = [...byHits].reverse().slice(0, 5).map(hitItem);
     const modeToggle = `
       <div class="bs-toggle">
         <button class="${_bossHitMode === 'total' ? 'on' : ''}" onclick="setBossHitMode('total')">누적</button>
         <button class="${_bossHitMode === 'avg' ? 'on' : ''}" onclick="setBossHitMode('avg')">회당 평균</button>
       </div>`;
 
-    const card = (title, desc, body, extra) => `
-      <div class="td-hof-card">
-        <div class="td-hof-head">
-          <div class="td-hof-titlebox">
-            <div class="td-hof-title">${title}</div>
-            <div class="td-hof-desc">${desc}</div>
+    const section = (title, desc, body, extra) => `
+      <div class="bs-section">
+        <div class="bs-section-head">
+          <div>
+            <div class="bs-section-title">${title}</div>
+            <div class="bs-section-desc">${desc}</div>
           </div>
           ${extra || ''}
         </div>
         ${body}
       </div>`;
+    const avgLabel = _bossHitMode === 'avg' ? '등장 1회당 평균 타수' : '누적 타수';
     rankEl.innerHTML =
-      card('가장 어려웠던 보스', '역대 회차별 난이도 TOP 5 (그 회차 평균 = 100% · 3타 이상)', diffRows(hardest)) +
-      card('가장 쉬웠던 보스', '역대 회차별 난이도 하위 5 (3타 이상)', diffRows(easiest)) +
-      card('가장 많이 맞은 보스', _bossHitMode === 'avg' ? '등장 1회당 평균 타수 TOP 5' : '누적 타수 TOP 5', hitRows(most), modeToggle) +
-      card('가장 적게 맞은 보스', _bossHitMode === 'avg' ? '등장 1회당 평균 타수 하위 5' : '누적 타수 하위 5', hitRows(least), modeToggle);
-
-    // ── 3) 보스별 기록 — 등장 많은 순 · 약점 속성 니케 TOP 3 ──
-    const sorted = [...list].sort((a, b) => b.apps.length - a.apps.length || b.hits - a.hits);
-    gridEl.innerHTML = sorted.map(b => {
-      const diffs = b.apps.map(a => a.diff).filter(v => v > 0);
-      const avgDiff = diffs.length ? diffs.reduce((s, v) => s + v, 0) / diffs.length : 0;
-      const top = Object.values(b.nikke).sort((x, y) => y.count - x.count || y.dmg - x.dmg).slice(0, 3);
-      const nikkeHtml = top.length === 0
-        ? `<div class="bs-nk-empty">약점 속성 니케 기록 없음</div>`
-        : top.map((n, i) => `
-            <div class="bs-nk" title="${_bsEsc(n.name)} · ${n.count}타 · ${_bsEsc(formatDmg(n.dmg))}">
-              <div class="bs-nk-img"${n.img ? ` style="background-image:url('${_bsEsc(n.img)}')"` : ''}><span>${i + 1}</span></div>
-              <div class="bs-nk-name">${_bsEsc(n.name)}</div>
-              <div class="bs-nk-cnt">${n.count}<small>타</small></div>
-            </div>`).join('');
-      const url = _bossImg(b.name);
-      return `
-        <div class="bs-boss-card" style="--ac:${colors[b.attr] || 'var(--accent)'};">
-          <div class="bs-boss-hero"${url ? ` style="background-image:url('${_bsEsc(url)}')"` : ''}>
-            <div class="bs-boss-title">${_bsEsc(b.name)} ${[...new Set(b.apps.map(a => a.attr).filter(Boolean))].reverse().map(_bsAttrChip).join('')}</div>
-          </div>
-          <div class="bs-boss-stats">
-            <div><b>${b.apps.length}</b><span>등장</span></div>
-            <div><b>${b.hits.toLocaleString()}</b><span>총 타수</span></div>
-            <div><b>${formatDmg(b.dmg)}</b><span>누적 딜</span></div>
-            <div><b style="color:${avgDiff ? diffColor(avgDiff) : 'inherit'};">${avgDiff ? avgDiff.toFixed(1) + '%' : '-'}</b><span>평균 난이도</span></div>
-          </div>
-          <div class="bs-nk-head">많이 때린 약점 속성 니케${new Set(b.apps.map(a => a.attr).filter(Boolean)).size > 1 ? ' <span class="bs-nk-note">(회차마다 그 회차 속성 기준)</span>' : ''}</div>
-          <div class="bs-nk-row">${nikkeHtml}</div>
-        </div>`;
-    }).join('');
+      section('가장 어려웠던 보스', '역대 회차별 난이도 TOP 5 · 그 회차 평균 = 100% · 3타 이상', _bsTiles(hardest)) +
+      section('가장 쉬웠던 보스', '역대 회차별 난이도 하위 5 · 3타 이상', _bsTiles(easiest)) +
+      section('가장 많이 맞은 보스', avgLabel + ' TOP 5', _bsTiles(most), modeToggle) +
+      section('가장 적게 맞은 보스', avgLabel + ' 하위 5', _bsTiles(least), modeToggle);
   }
 </script>
 
