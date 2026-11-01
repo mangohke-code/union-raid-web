@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <script>window.APP_BUILD = '261102-0157';</script>
+  <script>window.APP_BUILD = '261102-0159';</script>
   <script>window.CURRENT_SHEET_VERSION = '{{SHEET_VERSION}}'; window.__perf = { appStart: performance.now() };</script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
@@ -6639,7 +6639,7 @@
           d.rot += d.spin * dt;
           d.hue = (d.hue + dt * 240) % 360;
           d.trail.push({ x: d.x, y: d.y });
-          if (d.trail.length > 18) d.trail.shift();
+          if (d.trail.length > 26) d.trail.shift();
 
           // 꼬리 — 뒤로 갈수록 가늘고 옅게
           const n = d.trail.length;
@@ -6647,8 +6647,8 @@
             const t = (k + 1) / n;
             const p = d.trail[k], q = d.trail[k + 1];
             ctx.strokeStyle = d.isRainbow
-              ? `hsla(${(d.hue + k * 20) % 360}, 95%, 65%, ${t * 0.55})`
-              : `rgba(255, 220, 240, ${t * 0.5})`;
+              ? `hsla(${(d.hue + k * 20) % 360}, 95%, 65%, ${t * 0.75})`
+              : `rgba(255, 200, 230, ${t * 0.7})`;
             ctx.lineWidth = d.size * 0.42 * t;
             ctx.lineCap = 'round';
             ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y); ctx.stroke();
