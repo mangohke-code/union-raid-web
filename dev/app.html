@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <script>window.APP_BUILD = '261102-0319'; window.APP_CHANNEL = 'dev';</script>
+  <script>window.APP_BUILD = '261102-0321'; window.APP_CHANNEL = 'dev';</script>
   <script>window.CURRENT_SHEET_VERSION = '{{SHEET_VERSION}}'; window.__perf = { appStart: performance.now() };</script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
@@ -4759,6 +4759,7 @@
   .bs-boss-stats b { font-family: 'Bebas Neue', sans-serif; font-size: 19px; font-weight: 400; color: var(--text); white-space: nowrap; }
   .bs-boss-stats span { font-family: 'Noto Sans KR', sans-serif; font-size: 11px; color: var(--text-dim); }
   .bs-nk-head { padding: 10px 12px 4px; font-family: 'Noto Sans KR', sans-serif; font-size: 12px; font-weight: 700; color: var(--text-dim); }
+  .bs-nk-note { font-weight: 400; font-size: 11px; }
   .bs-nk-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; padding: 6px 12px 14px; }
   .bs-nk { display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 0; }
   .bs-nk-img {
@@ -15333,9 +15334,9 @@
       return;
     }
 
-    // ── 1) 역대 난이도 — 보스 × 회차 단위 (회차 안 평균 = 100%) ──
+    // ── 1) 역대 난이도 — 보스 × 회차 단위 (회차 안 평균 = 100%) · 3타 미만은 표본이 적어 순위에서 뺌 ──
     const diffEntries = [];
-    list.forEach(b => b.apps.forEach(a => { if (a.diff > 0) diffEntries.push({ name: b.name, attr: a.attr, title: a.title, diff: a.diff, hits: a.hits }); }));
+    list.forEach(b => b.apps.forEach(a => { if (a.diff > 0 && a.hits >= 3) diffEntries.push({ name: b.name, attr: a.attr, title: a.title, diff: a.diff, hits: a.hits }); }));
     const hardest = [...diffEntries].sort((a, b) => b.diff - a.diff).slice(0, 5);
     const easiest = [...diffEntries].sort((a, b) => a.diff - b.diff).slice(0, 5);
     const diffRows = arr => arr.length === 0 ? `<div class="td-hof-empty">데이터 부족</div>` : `<div class="bs-list">${arr.map((e, i) => `
@@ -15382,8 +15383,8 @@
         ${body}
       </div>`;
     rankEl.innerHTML =
-      card('가장 어려웠던 보스', '역대 회차별 난이도 TOP 5 (그 회차 평균 = 100%)', diffRows(hardest)) +
-      card('가장 쉬웠던 보스', '역대 회차별 난이도 하위 5', diffRows(easiest)) +
+      card('가장 어려웠던 보스', '역대 회차별 난이도 TOP 5 (그 회차 평균 = 100% · 3타 이상)', diffRows(hardest)) +
+      card('가장 쉬웠던 보스', '역대 회차별 난이도 하위 5 (3타 이상)', diffRows(easiest)) +
       card('가장 많이 맞은 보스', _bossHitMode === 'avg' ? '등장 1회당 평균 타수 TOP 5' : '누적 타수 TOP 5', hitRows(most), modeToggle) +
       card('가장 적게 맞은 보스', _bossHitMode === 'avg' ? '등장 1회당 평균 타수 하위 5' : '누적 타수 하위 5', hitRows(least), modeToggle);
 
@@ -15405,7 +15406,7 @@
       return `
         <div class="bs-boss-card" style="--ac:${colors[b.attr] || 'var(--accent)'};">
           <div class="bs-boss-hero"${url ? ` style="background-image:url('${_bsEsc(url)}')"` : ''}>
-            <div class="bs-boss-title">${_bsEsc(b.name)} ${_bsAttrChip(b.attr)}</div>
+            <div class="bs-boss-title">${_bsEsc(b.name)} ${[...new Set(b.apps.map(a => a.attr).filter(Boolean))].reverse().map(_bsAttrChip).join('')}</div>
           </div>
           <div class="bs-boss-stats">
             <div><b>${b.apps.length}</b><span>등장</span></div>
@@ -15413,7 +15414,7 @@
             <div><b>${formatDmg(b.dmg)}</b><span>누적 딜</span></div>
             <div><b style="color:${avgDiff ? diffColor(avgDiff) : 'inherit'};">${avgDiff ? avgDiff.toFixed(1) + '%' : '-'}</b><span>평균 난이도</span></div>
           </div>
-          <div class="bs-nk-head">많이 때린 약점 속성 니케</div>
+          <div class="bs-nk-head">많이 때린 약점 속성 니케${new Set(b.apps.map(a => a.attr).filter(Boolean)).size > 1 ? ' <span class="bs-nk-note">(회차마다 그 회차 속성 기준)</span>' : ''}</div>
           <div class="bs-nk-row">${nikkeHtml}</div>
         </div>`;
     }).join('');
