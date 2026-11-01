@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <script>window.APP_BUILD = '261030-0550';</script>
+  <script>window.APP_BUILD = '261102-0157';</script>
   <script>window.CURRENT_SHEET_VERSION = '{{SHEET_VERSION}}'; window.__perf = { appStart: performance.now() };</script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
@@ -11,7 +11,7 @@
 
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Bebas+Neue&family=Rajdhani:wght@600;700&family=Outfit:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,600;1,500;1,600&family=Noto+Serif+KR:wght@600;700&display=swap" rel="stylesheet">
 
-  <!-- 261028 — 최신 버전 알림 타이머 3초 · 정보 창 로딩 시간 · 제목 우상단 서버 표기 · 회차 선택 전체 회차 버튼/패널 · 폭 1760px · 테마 색 변수 · Most Deployed 배치 · 토스트 · 코멘트 링크 -->
+  <!-- 261102 — 싱크로 분포 막대 툴팁(#uls-tip) · 작은 도로 무리 캔버스 / 261028 — 최신 버전 알림 타이머 3초 · 정보 창 로딩 시간 · 제목 우상단 서버 표기 · 회차 선택 전체 회차 버튼/패널 · 폭 1760px · 테마 색 변수 · Most Deployed 배치 · 토스트 · 코멘트 링크 -->
 <style>
   /* ===== CSS 변수 (테마) ===== */
   :root {
@@ -4671,6 +4671,24 @@
     white-space: nowrap;
     flex-shrink: 0;
   }
+  .uls-bin { cursor: default; }
+  #uls-tip {
+    display: none; position: fixed; z-index: 3000; pointer-events: none;
+    min-width: 150px; max-width: 240px; max-height: 60vh; overflow: hidden;
+    padding: 8px 10px; background: var(--card); color: var(--text);
+    border: 1px solid var(--border-bright); border-left: 3px solid var(--accent);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+    font-family: 'Noto Sans KR', sans-serif; font-size: 12px; line-height: 1.55;
+  }
+  #uls-tip .uls-tip-head {
+    font-family: 'Rajdhani', sans-serif; font-weight: 700; letter-spacing: 1px;
+    color: var(--accent); padding-bottom: 4px; margin-bottom: 4px;
+    border-bottom: 1px solid var(--border);
+  }
+  #uls-tip .uls-tip-row { display: flex; justify-content: space-between; gap: 12px; white-space: nowrap; }
+  #uls-tip .uls-tip-row span { overflow: hidden; text-overflow: ellipsis; }
+  #uls-tip .uls-tip-row b { font-family: 'Rajdhani', sans-serif; font-weight: 700; color: var(--text-dim); }
+  #uls-tip .uls-tip-row em { font-style: normal; color: #ff4757; }
   @media (max-width: 900px) {
     .union-summary-grid { grid-template-columns: 1fr; gap: 12px; }
     .uls-kpis { flex-direction: row; }
@@ -4800,6 +4818,12 @@
       drop-shadow(0 16px 40px rgba(0, 0, 0, 0.5));
     /* 3s: 진입 → slow-peek → 스윕, 이후 중앙 유지 */
     animation: doro-holo-svg-slide-in 3s linear forwards;
+  }
+  /* 작은 도로 무리 (큰 도로가 멈춘 뒤) — 오버레이 전체를 덮는 캔버스 */
+  .doro-swarm-canvas {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
   }
   @keyframes doro-holo-svg-slide-in {
     0%   { opacity: 0;   transform: translateX(100vw); }
@@ -6213,7 +6237,7 @@
   </button>
 </div>
 
-<!-- 261030 공용 — dataBoss 시작일 + 1일(하드 오픈) 전 회차는 표시 안 함 · 가이드: 기록 없는 회차(NO RECORD)에서 시작하면 기록 있는 최근 회차로 이동 · 버전 확인: 마스터 '사용법' 탭 전체에서 버전 형식(v261030) 칸을 찾아 가장 큰 값 사용 / 261028 공용 — 최신 버전 알림 3초 · 버전 확인: 마스터 버전 칸이 비면 업데이트 있음으로 표시 · 데이터 일괄 읽기(getFullDataBatch, 실패 시 기존 방식) · 정보 창에 빌드 번호 · 로딩 구간별 시간(시트별 서버 읽기 포함) · 캡처 시 세이렌 그림자 제거(얼룩 방지) · 레벨 차트 좌우 폭 가득 · 캡처 시 유니온명 그라데이션 글자 · 줄바꿈 보정 · 최신 버전 읽는 칸 사용법!E10 → E8 · 테마 메뉴 구버전에 "삭제 예정" 표시 · 회차 선택(최신 5개 + 전체 회차 패널) · 세이렌/구버전 스킨 -->
+<!-- 261102 공용 — 도로 홀로그램 뒤 작은 도로 무리(별똥별 꼬리 · 무지개) · 딜량 · HP 표기 숫자와 단위 사이 줄바꿈 금지 · 차트 회차 목록 chartRaidTitles(기록 없는 앞뒤 회차 제외) · 캡처 때 분포 툴팁 숨김 / 261030 공용 — dataBoss 시작일 + 1일(하드 오픈) 전 회차는 표시 안 함 · 가이드: 기록 없는 회차(NO RECORD)에서 시작하면 기록 있는 최근 회차로 이동 · 버전 확인: 마스터 '사용법' 탭 전체에서 버전 형식(v261030) 칸을 찾아 가장 큰 값 사용 / 261028 공용 — 최신 버전 알림 3초 · 버전 확인: 마스터 버전 칸이 비면 업데이트 있음으로 표시 · 데이터 일괄 읽기(getFullDataBatch, 실패 시 기존 방식) · 정보 창에 빌드 번호 · 로딩 구간별 시간(시트별 서버 읽기 포함) · 캡처 시 세이렌 그림자 제거(얼룩 방지) · 레벨 차트 좌우 폭 가득 · 캡처 시 유니온명 그라데이션 글자 · 줄바꿈 보정 · 최신 버전 읽는 칸 사용법!E10 → E8 · 테마 메뉴 구버전에 "삭제 예정" 표시 · 회차 선택(최신 5개 + 전체 회차 패널) · 세이렌/구버전 스킨 -->
 <script>
   google.charts.load('current', {'packages':['corechart', 'scatter']});
 
@@ -6528,6 +6552,125 @@
       requestAnimationFrame(shimmer);
     };
     requestAnimationFrame(shimmer);
+
+    // 큰 도로가 가운데 멈춘 뒤(슬라이드 3초) 작은 도로들이 사방에서 날아다님
+    setTimeout(() => _startDoroSwarm(overlay, doroUrl), 3000);
+  }
+
+  // 작은 도로 무리 — 별똥별 꼬리 · 일반/무지개 도로. 큰 도로와 같은 층(카드 뒤)에 그림, 캡처 때는 오버레이째로 숨김
+  function _startDoroSwarm(overlay, doroUrl) {
+    if (!overlay.isConnected) return;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const img = new Image();
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      canvas.className = 'doro-swarm-canvas';
+      overlay.appendChild(canvas);
+      const ctx = canvas.getContext('2d');
+      let W = 0, H = 0;
+      const resize = () => {
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        W = window.innerWidth; H = window.innerHeight;
+        canvas.width = W * dpr; canvas.height = H * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      };
+      resize();
+      window.addEventListener('resize', resize);
+
+      // 스프라이트 미리 만들기 — 일반 1장 + 무지개 1장 (도로 모양 위에만 무지개를 덮음)
+      const SW = 120, SH = Math.round(SW * img.height / img.width) || 90;
+      const sprite = (rainbow) => {
+        const c = document.createElement('canvas');
+        c.width = SW; c.height = SH;
+        const g = c.getContext('2d');
+        g.drawImage(img, 0, 0, SW, SH);
+        if (rainbow) {
+          const gr = g.createLinearGradient(0, 0, SW, SH);
+          ['#ff6ec7', '#ffb347', '#fff37a', '#5ee5a1', '#4dc4ff', '#9b6bff'].forEach((col, i, a) => gr.addColorStop(i / (a.length - 1), col));
+          g.globalCompositeOperation = 'source-atop';
+          g.globalAlpha = 0.6;
+          g.fillStyle = gr;
+          g.fillRect(0, 0, SW, SH);
+        }
+        return c;
+      };
+      const normal = sprite(false), rainbow = sprite(true);
+
+      const doros = [];
+      const MAX = window.innerWidth <= 600 ? 7 : 12;
+      const spawn = () => {
+        const side = Math.floor(Math.random() * 4);
+        const size = 40 + Math.random() * 36;
+        const m = size;
+        let x, y;
+        if (side === 0)      { x = -m;    y = Math.random() * H; }
+        else if (side === 1) { x = W + m; y = Math.random() * H; }
+        else if (side === 2) { x = Math.random() * W; y = -m; }
+        else                 { x = Math.random() * W; y = H + m; }
+        // 화면 가운데 근처의 아무 점을 향해 날아감
+        const tx = W * (0.2 + Math.random() * 0.6), ty = H * (0.2 + Math.random() * 0.6);
+        const ang = Math.atan2(ty - y, tx - x);
+        const speed = 160 + Math.random() * 200; // px/초
+        doros.push({
+          x, y, size, vx: Math.cos(ang) * speed, vy: Math.sin(ang) * speed,
+          rot: Math.random() * Math.PI * 2, spin: (Math.random() - 0.5) * 4,
+          wob: Math.random() * Math.PI * 2, isRainbow: Math.random() < 0.4,
+          hue: Math.random() * 360, trail: []
+        });
+      };
+
+      let last = performance.now(), nextSpawn = 0;
+      const tick = (now) => {
+        if (!overlay.isConnected) { window.removeEventListener('resize', resize); return; }
+        const dt = Math.min(0.05, (now - last) / 1000);
+        last = now;
+        nextSpawn -= dt;
+        if (nextSpawn <= 0 && doros.length < MAX) { spawn(); nextSpawn = 0.25 + Math.random() * 0.45; }
+
+        ctx.clearRect(0, 0, W, H);
+        for (let i = doros.length - 1; i >= 0; i--) {
+          const d = doros[i];
+          d.wob += dt * 3;
+          // 진행 방향에 수직으로 살짝 흔들리며 날아감
+          const nx = -d.vy, ny = d.vx, nl = Math.hypot(nx, ny) || 1;
+          const w = Math.sin(d.wob) * 40 * dt;
+          d.x += d.vx * dt + nx / nl * w;
+          d.y += d.vy * dt + ny / nl * w;
+          d.rot += d.spin * dt;
+          d.hue = (d.hue + dt * 240) % 360;
+          d.trail.push({ x: d.x, y: d.y });
+          if (d.trail.length > 18) d.trail.shift();
+
+          // 꼬리 — 뒤로 갈수록 가늘고 옅게
+          const n = d.trail.length;
+          for (let k = 0; k < n - 1; k++) {
+            const t = (k + 1) / n;
+            const p = d.trail[k], q = d.trail[k + 1];
+            ctx.strokeStyle = d.isRainbow
+              ? `hsla(${(d.hue + k * 20) % 360}, 95%, 65%, ${t * 0.55})`
+              : `rgba(255, 220, 240, ${t * 0.5})`;
+            ctx.lineWidth = d.size * 0.42 * t;
+            ctx.lineCap = 'round';
+            ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y); ctx.stroke();
+          }
+
+          ctx.save();
+          ctx.translate(d.x, d.y);
+          ctx.rotate(Math.sin(d.rot) * 0.35);
+          ctx.shadowColor = d.isRainbow ? `hsl(${d.hue}, 95%, 65%)` : 'rgba(255, 180, 220, 0.9)';
+          ctx.shadowBlur = 14;
+          const h = d.size * SH / SW;
+          ctx.drawImage(d.isRainbow ? rainbow : normal, -d.size / 2, -h / 2, d.size, h);
+          ctx.restore();
+
+          const out = d.size * 2;
+          if (d.x < -out - 40 || d.x > W + out + 40 || d.y < -out - 40 || d.y > H + out + 40) doros.splice(i, 1);
+        }
+        requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    };
+    img.src = doroUrl;
   }
 
   // 클릭 이펙트 — 링 3개 + 스파클 8방향 방출
@@ -6740,6 +6883,15 @@
     if (!m) return null;
     const y = m[1].length === 2 ? 2000 + Number(m[1]) : Number(m[1]);
     return Date.UTC(y, Number(m[2]) - 1, Number(m[3]), (Number(m[4]) || 0) - 9, Number(m[5]) || 0);
+  }
+
+  // 차트용 회차 목록 — 레이드 통계에 기록이 하나도 없는 회차는 앞 · 뒤 끝에서만 뺌 (중간에 빈 회차는 자리 유지)
+  function chartRaidTitles() {
+    const all = (db.bossData && db.bossData[0]) ? db.bossData[0].slice(1) : [];
+    const has = t => getRaidRows(String(t || '').trim()).some(r => String(r[RAID_COL.NAME] || '').trim() !== '');
+    let first = -1, last = -1;
+    all.forEach((t, i) => { if (has(t)) { if (first < 0) first = i; last = i; } });
+    return first < 0 ? all : all.slice(first, last + 1);
   }
 
   function _raidCols() {
@@ -7542,7 +7694,7 @@
     // 캡처에 섞이면 안 되는 오버레이들 (도로 홀로그램 · 이스터에그 · 시트 버전 팝업)
     // 팝업 캡처 모드에서는 target 이 어차피 팝업 내부라 body 오버레이는 캡처 안 되지만, 안전 차원에서 함께 감춤
     const overlaysToHide = document.querySelectorAll(
-      '#doro-holo-overlay, #easter-egg, #sheet-version-popup, #siren-sea'
+      '#doro-holo-overlay, #easter-egg, #sheet-version-popup, #siren-sea, #uls-tip'
     );
 
     btnGroups.forEach(el => el.style.display = 'none');
@@ -7840,14 +7992,16 @@
   }
 
   // 딜량 포맷
+  // 숫자와 단위 사이는 줄이 안 바뀌게 — 좁은 칸에서 "6012.52" / "억" 처럼 두 줄로 밀려 카드 · 막대 높이가 어긋나던 문제
+  //   \u2060 = 폭 없는 줄바꿈 금지 문자, \u00a0 = 줄바꿈 안 되는 공백
   function formatDmg(val) {
     if (val >= 1000000000000) {
       const jo = Math.floor(val / 1000000000000);
       const eok = Math.floor((val % 1000000000000) / 100000000);
-      return eok > 0 ? `${jo}조 ${eok}억` : `${jo}조`;
+      return eok > 0 ? `${jo}\u2060조\u00a0${eok}\u2060억` : `${jo}\u2060조`;
     }
-    if (val >= 100000000) return (val / 100000000).toFixed(2) + "억";
-    if (val > 0) return Number((val / 10000).toFixed(2)).toLocaleString(undefined, { minimumFractionDigits: 2 }) + "만";
+    if (val >= 100000000) return (val / 100000000).toFixed(2) + "\u2060억";
+    if (val > 0) return Number((val / 10000).toFixed(2)).toLocaleString(undefined, { minimumFractionDigits: 2 }) + "\u2060만";
     return "0";
   }
 
@@ -7855,8 +8009,8 @@
   function formatHp(val, useShort = true) {
     if (!val || val <= 0) return useShort ? '0' : '0';
     if (useShort) {
-      if (val >= 100000000) return (val / 100000000).toFixed(1) + '억';
-      if (val >= 10000) return Math.round(val / 10000) + '만';
+      if (val >= 100000000) return (val / 100000000).toFixed(1) + '\u2060억';
+      if (val >= 10000) return Math.round(val / 10000) + '\u2060만';
       return val.toLocaleString();
     }
     return val.toLocaleString();
@@ -10988,7 +11142,7 @@
     }
   }
 </script>
-<!-- 261021 종합 뷰 — Raid History 이동 시 칩 줄 갱신 · 증감/선 색 테마 변수 · ∞ 타일 4단계 딜량 · 빈 회차 표시 -->
+<!-- 261102 종합 뷰 — 차트는 기록 있는 회차 범위만 · Member DMG Trend 왼쪽 눈금 잘림 수정 / 261021 종합 뷰 — Raid History 이동 시 칩 줄 갱신 · 증감/선 색 테마 변수 · ∞ 타일 4단계 딜량 · 빈 회차 표시 -->
 <script>
   let totalDmgChart = null;
   let totalDmgData = null;
@@ -11524,7 +11678,7 @@
     }
 
     if (typeof google !== 'undefined' && google.visualization) {
-      const raidLabels = titles.slice(1).map(t => String(t || '').trim()).filter(Boolean);
+      const raidLabels = chartRaidTitles().map(t => String(t || '').trim()).filter(Boolean);
       drawLastHitAvgChart(raidLabels, lastByRaid);
       drawAttrTrendChart('td-attr-hits-chart', raidLabels, attrByRaid, attrByRaidBoss, 'hits');
       drawAttrTrendChart('td-attr-dmg-chart',  raidLabels, attrByRaid, attrByRaidBoss, 'dmg');
@@ -11757,6 +11911,11 @@
 
     // 데이터가 2개 미만이면 그래프 의미 없음
     if (validRows.length < 2) { _trendEmpty(container); return; }
+    // 순위가 하나도 없는 앞 · 뒤 끝 회차는 뺌 (중간 빈 회차는 '?' 로 자리 유지)
+    const firstValid = allRows.indexOf(validRows[0]);
+    const lastValid  = allRows.indexOf(validRows[validRows.length - 1]);
+    allRows.splice(lastValid + 1);
+    allRows.splice(0, firstValid);
 
     const chartData = new google.visualization.DataTable();
     chartData.addColumn('string', '회차');
@@ -11842,7 +12001,7 @@
     const container = document.getElementById('union-dmg-trend-chart');
     if (!container || !db.raidStats || !db.bossData) return;
 
-    const labels = db.bossData[0].slice(1);
+    const labels = chartRaidTitles();
 
     // 회차별 전체 딜량 합산
     const dmgByRaid = {};
@@ -11910,7 +12069,7 @@
     const container = document.getElementById('total-member-dmg-chart');
     if (!container || !db.raidStats) return;
 
-    const labels = db.bossData[0].slice(1);
+    const labels = chartRaidTitles();
 
     // 현재 멤버 (탈퇴자 제외)
     const currentMemberSet = new Set(
@@ -12029,7 +12188,7 @@
     const options = {
       tooltip: { isHtml: true, trigger: 'both' },
       backgroundColor: 'transparent',
-      chartArea: { left: 40, right: 40, width: '90%', height: '80%', backgroundColor: 'transparent' },
+      chartArea: { left: 72, right: 24, width: '90%', height: '80%', backgroundColor: 'transparent' }, // 왼쪽 딜량 눈금 글자 안 잘리게
       curveType: 'none',
       legend: { position: 'none' },
       series: seriesOptions,
@@ -12052,7 +12211,7 @@
     totalDmgChart.draw(totalDmgData, options);
   }
 </script>
-<!-- 261021 멤버 상세 — 딜량 추이 빈 회차 표시/좌우 꽉 채움 · 증감·축 색 테마 변수 · 속성 행 클래스(m-attr-row) -->
+<!-- 261102 멤버 상세 — 딜량 추이는 기록 있는 회차 범위만 / 261021 멤버 상세 — 딜량 추이 빈 회차 표시/좌우 꽉 채움 · 증감·축 색 테마 변수 · 속성 행 클래스(m-attr-row) -->
 <div id="member-detail-overlay" onclick="closeMemberDetail(event)">
   <button id="m-nav-prev" class="member-nav-btn left" onclick="navigateMember(-1, event)" aria-label="이전 멤버">‹</button>
   <button id="m-nav-next" class="member-nav-btn right" onclick="navigateMember(1, event)" aria-label="다음 멤버">›</button>
@@ -12410,7 +12569,7 @@
 
   // 역대 누적 딜량 그래프
   function drawMemberHistoryChart(name) {
-    const labels = db.bossData[0].slice(1);
+    const labels = chartRaidTitles();
     const historyData = new google.visualization.DataTable();
     historyData.addColumn('string', '회차');
     historyData.addColumn('number', '딜량');
@@ -12504,7 +12663,7 @@
     });
   })();
 </script>
-<!-- 261021 싱크로 통계 — 강조/하락/라벨 색 테마 변수 · 펼친 패널 클래스(md-panel) -->
+<!-- 261102 싱크로 통계 — 멤버 펼친 패널 표는 최근 회차부터 · 레벨/상승량 분포 막대에 마우스 올리면 그 구간 멤버 목록(레벨 순) / 261021 싱크로 통계 — 강조/하락/라벨 색 테마 변수 · 펼친 패널 클래스(md-panel) -->
 <script>
   // 전체 멤버 레벨 변화 차트
   function renderFullChart() {
@@ -12657,7 +12816,7 @@
             <div id="member-inline-chart-${name}" style="width:100%; height:330px;"></div>
           </div>
 
-          <!-- 우: 전체 회차 기록 표 (세로, 스크롤) -->
+          <!-- 우: 전체 회차 기록 표 (세로, 스크롤 · 최근 회차가 맨 위) -->
           <div style="max-height:450px; overflow-y:auto; overflow-x:hidden; border:1px solid var(--border-bright);">
             <table style="width:100%; border-collapse:collapse; table-layout:auto;">
               <thead style="position:sticky; top:0; z-index:1;">
@@ -12685,7 +12844,7 @@
                     <td style="padding:7px 12px; text-align:center; font-family:'Rajdhani',sans-serif; font-weight:700; font-size:14px; ${isLast ? 'color:var(--accent);' : ''}">${curr}</td>
                     <td style="padding:7px 12px; text-align:center; font-family:'Rajdhani',sans-serif; font-size:13px;">${diff !== null ? diffHtml : '-'}</td>
                   </tr>`;
-                }).join('')}
+                }).reverse().join('')}
               </tbody>
             </table>
           </div>
@@ -12965,13 +13124,14 @@
     const grid = document.getElementById('union-summary-grid');
     if (!grid || !rawMembers || rawMembers.length === 0) return;
 
-    // 각 멤버의 최신(마지막 회차 이전까지 최근) 레벨 뽑기
+    // 각 멤버의 최신(마지막 회차 이전까지 최근) 레벨 뽑기 — 툴팁용으로 이름도 같이
     const latestLevels = [];
+    const latestOf = {};
     rawMembers.forEach(m => {
       const lv = m.levels || [];
       for (let i = lv.length - 1; i >= 0; i--) {
         const v = Number(lv[i]);
-        if (v > 0) { latestLevels.push(v); return; }
+        if (v > 0) { latestLevels.push(v); latestOf[m.name] = v; return; }
       }
     });
     if (latestLevels.length === 0) { grid.innerHTML = ''; return; }
@@ -12995,12 +13155,13 @@
 
     // 최근 회차 상승량 (직전 회차 → 최근 회차) — 상승량 분포 차트 용
     const latestGrowths = [];
+    const growthOf = {};
     rawMembers.forEach(m => {
       const lv = m.levels || [];
       if (lv.length < 2) return;
       const c = Number(lv[lv.length - 1]);
       const p = Number(lv[lv.length - 2]);
-      if (c > 0 && p > 0) latestGrowths.push(c - p);
+      if (c > 0 && p > 0) { latestGrowths.push(c - p); growthOf[m.name] = c - p; }
     });
 
     // 레벨 분포 (20 단위 bin)
@@ -13020,6 +13181,14 @@
     };
     const levelBins  = buildBins(latestLevels, 20);
     const growthBins = buildBins(latestGrowths, 5);
+    // 구간별 멤버 (툴팁 — 레벨 높은 순)
+    const membersIn = (bin, size, valOf) => Object.keys(valOf)
+      .filter(n => Math.floor(valOf[n] / size) * size === bin.start)
+      .map(n => ({ name: n, lv: latestOf[n], g: growthOf[n] }))
+      .sort((a, b) => (b.lv || 0) - (a.lv || 0) || String(a.name).localeCompare(String(b.name), 'ko'));
+    levelBins.forEach(b => { b.members = membersIn(b, 20, latestOf); b.range = b.start + '~' + (b.start + 19); });
+    growthBins.forEach(b => { b.members = membersIn(b, 5, growthOf); b.range = '+' + b.start + '~' + (b.start + 4); });
+    _ulsBins = { level: levelBins, growth: growthBins };
     const maxLevelCount  = Math.max(1, ...levelBins.map(f => f.count));
     const maxGrowthCount = Math.max(1, ...growthBins.map(f => f.count));
 
@@ -13037,13 +13206,13 @@
       });
       return m;
     };
-    const barsHtml = (bins, maxCount, unitSuffix) => {
+    const barsHtml = (bins, maxCount, unitSuffix, kind) => {
       const satMap = _uniqOpacity(bins.map(b => b.count));
-      return bins.map(b => {
+      return bins.map((b, i) => {
         const pct = b.count > 0 ? Math.max(4, Math.round((b.count / maxCount) * 100)) : 0;
         const sat = b.count > 0 ? satMap.get(b.count) : 1;
         return `
-          <div class="uls-bin">
+          <div class="uls-bin" data-kind="${kind}" data-i="${i}">
             <div class="uls-bin-value">${b.count > 0 ? b.count : ''}</div>
             <div class="uls-bin-bar-col">
               ${pct > 0 ? `<div class="uls-bin-bar-fill" style="height:${pct}%; opacity:${sat};"></div>` : ''}
@@ -13070,7 +13239,7 @@
           <span class="uls-dist-sub">20 단위</span>
         </div>
         <div class="uls-dist-bars">
-          ${barsHtml(levelBins, maxLevelCount, '')}
+          ${barsHtml(levelBins, maxLevelCount, '', 'level')}
         </div>
       </div>
       <div class="uls-dist">
@@ -13079,13 +13248,53 @@
           <span class="uls-dist-sub">5 단위 · 최근 회차</span>
         </div>
         <div class="uls-dist-bars">
-          ${barsHtml(growthBins, maxGrowthCount, '')}
+          ${barsHtml(growthBins, maxGrowthCount, '', 'growth')}
         </div>
       </div>`;
+    _bindUlsTip(grid);
+  }
+
+  // ── 분포 막대 툴팁 — 그 구간 멤버를 레벨 높은 순으로 ──
+  let _ulsBins = { level: [], growth: [] };
+  function _bindUlsTip(grid) {
+    if (grid._ulsTipBound) return;
+    grid._ulsTipBound = true;
+    const tip = () => {
+      let t = document.getElementById('uls-tip');
+      if (!t) { t = document.createElement('div'); t.id = 'uls-tip'; document.body.appendChild(t); }
+      return t;
+    };
+    const hide = () => { const t = document.getElementById('uls-tip'); if (t) t.style.display = 'none'; };
+    const place = (t, x, y) => {
+      const w = t.offsetWidth, h = t.offsetHeight, pad = 12;
+      let left = x + 14, top = y + 14;
+      if (left + w > window.innerWidth - pad) left = Math.max(pad, x - w - 14);
+      if (top + h > window.innerHeight - pad) top = Math.max(pad, y - h - 14);
+      t.style.left = left + 'px'; t.style.top = top + 'px';
+    };
+    const show = (binEl, x, y) => {
+      const b = (_ulsBins[binEl.dataset.kind] || [])[Number(binEl.dataset.i)];
+      if (!b || !b.members || !b.members.length) { hide(); return; }
+      const isG = binEl.dataset.kind === 'growth';
+      const t = tip();
+      t.innerHTML =
+        '<div class="uls-tip-head">' + (isG ? '상승량 ' : 'Lv.') + b.range + ' · ' + b.members.length + '명</div>' +
+        b.members.map(m => '<div class="uls-tip-row"><span>' + String(displayName(m.name)).replace(/&/g, '&amp;').replace(/</g, '&lt;') + '</span>' +
+          '<b>Lv.' + (m.lv || '-') + (isG ? ' <em>+' + m.g + '</em>' : '') + '</b></div>').join('');
+      t.style.display = 'block';
+      place(t, x, y);
+    };
+    grid.addEventListener('mousemove', e => {
+      const binEl = e.target.closest('.uls-bin');
+      if (!binEl) { hide(); return; }
+      show(binEl, e.clientX, e.clientY);
+    });
+    grid.addEventListener('mouseleave', hide);
+    window.addEventListener('scroll', hide, { passive: true });
   }
 </script>
 
-<!-- 261021 개인 기록 — 증감 색 테마 변수 · Damage Trend 빈 회차 포함 · Most Deployed 이름 표기 -->
+<!-- 261102 개인 기록 — Damage Trend 는 기록 있는 회차 범위만 / 261021 개인 기록 — 증감 색 테마 변수 · Damage Trend 빈 회차 포함 · Most Deployed 이름 표기 -->
 <script>
   let _personalCtx = null;
   let _personalSort = 'no';      // 'no' | 'name' | 'level'
@@ -13707,7 +13916,7 @@
 
       const perfByTitle = {};
       raidPerf.forEach(r => { perfByTitle[r.title] = r; });
-      const allTitles = (db.bossData[0] || []).slice(1).map(t => String(t || '').trim()).filter(Boolean);
+      const allTitles = chartRaidTitles().map(t => String(t || '').trim()).filter(Boolean);
       const firstIdx = allTitles.findIndex(t => perfByTitle[t]);
       // 첫 참여 회차부터 최신 회차까지. 참여 안 한 회차는 { title, empty: true } 로 빈 자리 유지
       const sorted = firstIdx === -1
