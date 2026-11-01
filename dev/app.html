@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <script>window.APP_BUILD = '261102-0236'; window.APP_CHANNEL = 'dev';</script>
+  <script>window.APP_BUILD = '261102-0237'; window.APP_CHANNEL = 'dev';</script>
   <script>window.CURRENT_SHEET_VERSION = '{{SHEET_VERSION}}'; window.__perf = { appStart: performance.now() };</script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
@@ -4672,10 +4672,13 @@
     flex-shrink: 0;
   }
   .uls-bin { cursor: default; }
-  /* 상자 모양(배경 · 모서리 · 그림자 · 세이렌 윗선)은 차트 툴팁과 같은 .google-visualization-tooltip 클래스에서 받음 */
+  /* 상자 모양은 차트 툴팁(.google-visualization-tooltip)과 같게 — 세이렌은 style_siren 에서 둥글게 · 윗선 */
   #uls-tip {
     display: none; position: fixed; z-index: 3000; pointer-events: none;
     min-width: 160px; max-width: 260px; max-height: 70vh; overflow: hidden;
+    padding: 12px; border-radius: 8px;
+    background: var(--card); color: var(--text);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
     font-family: 'Noto Sans KR', sans-serif; font-size: 12px; line-height: 1.6;
   }
   #uls-tip .uls-tip-head {
@@ -4853,7 +4856,7 @@
   }
 
 </style>
-  <!-- 261021 세이렌 스킨 (서버 표기 · 테마 메뉴 "삭제 예정" 배지) — body[data-skin="siren"] 일 때만 style.html 을 덮어씀 (구버전은 영향 없음)
+  <!-- 261102 세이렌 스킨 — 싱크로 분포 툴팁(#uls-tip) 모양 / 261021 세이렌 스킨 (서버 표기 · 테마 메뉴 "삭제 예정" 배지) — body[data-skin="siren"] 일 때만 style.html 을 덮어씀 (구버전은 영향 없음)
      캡처(html2canvas) 호환: color-mix() · conic-gradient() 사용 금지, 반투명 대신 불투명 카드 -->
 <style>
   /* ───────── 토큰: 진주 (라이트) ───────── */
@@ -5152,6 +5155,10 @@
     overflow: hidden;
   }
   body[data-skin="siren"] .google-visualization-tooltip:has(> .google-visualization-tooltip) { border: none !important; border-radius: 0 !important; }
+  body[data-skin="siren"] #uls-tip {
+    border-radius: 14px; border: 1px solid var(--border-bright); border-top: 2px solid var(--accent);
+    box-shadow: var(--shadow);
+  }
 
   /* ───────── 종합 ───────── */
   body[data-skin="siren"] .rank-badge-card {
@@ -13304,7 +13311,7 @@
     grid._ulsTipBound = true;
     const tip = () => {
       let t = document.getElementById('uls-tip');
-      if (!t) { t = document.createElement('div'); t.id = 'uls-tip'; t.className = 'google-visualization-tooltip'; document.body.appendChild(t); }
+      if (!t) { t = document.createElement('div'); t.id = 'uls-tip'; document.body.appendChild(t); }
       return t;
     };
     const hide = () => { const t = document.getElementById('uls-tip'); if (t) t.style.display = 'none'; };
