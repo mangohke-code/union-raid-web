@@ -1,8 +1,8 @@
-<!-- 261023 화면 원본 (배포.py 로 GitHub Pages 에 올림 · Apps Script 에는 안 올라감) — 정보 창 로딩 시간 칸 · 제목 구역 우상단 서버 표기('유니온 정보' 탭) · 세이렌 스킨(style_siren) · 저장된 테마/모드 선적용 · 테마 메뉴(라이트/다크 포함) · 상단 패널 틀(hero-wrap) -->
+<!-- 261102 화면 원본 (배포.py 로 GitHub Pages 에 올림 · Apps Script 에는 안 올라감) — 보스 통계 탭(레이드 통계와 니케 통계 사이) · 구버전 테마 저장값 무시(세이렌 고정) · 정보 창 로딩 시간 칸 · 제목 구역 우상단 서버 표기('유니온 정보' 탭) · 세이렌 스킨(style_siren) · 저장된 테마/모드 선적용 · 테마 메뉴(라이트/다크 포함) · 상단 패널 틀(hero-wrap) -->
 <!DOCTYPE html>
 <html>
 <head>
-  <script>window.APP_BUILD = '261030-0550';</script>
+  <script>window.APP_BUILD = '261102-0609'; window.APP_CHANNEL = 'live';</script>
   <script>window.CURRENT_SHEET_VERSION = '{{SHEET_VERSION}}'; window.__perf = { appStart: performance.now() };</script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
@@ -11,7 +11,7 @@
 
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Bebas+Neue&family=Rajdhani:wght@600;700&family=Outfit:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,600;1,500;1,600&family=Noto+Serif+KR:wght@600;700&display=swap" rel="stylesheet">
 
-  <!-- 261028 — 최신 버전 알림 타이머 3초 · 정보 창 로딩 시간 · 제목 우상단 서버 표기 · 회차 선택 전체 회차 버튼/패널 · 폭 1760px · 테마 색 변수 · Most Deployed 배치 · 토스트 · 코멘트 링크 -->
+  <!-- 261102 — 이스터에그 이모티콘 사각형 유지 + 젤리 질감 · 니케 속성/버스트 작은 아이콘 위치 = 괄호 위치(dual-left/right) · 보스 통계 탭(.bs-* · 순위 타일) · 싱크로 분포 막대 툴팁(#uls-tip) · 작은 도로 무리 캔버스(맨 앞) / 261028 — 최신 버전 알림 타이머 3초 · 정보 창 로딩 시간 · 제목 우상단 서버 표기 · 회차 선택 전체 회차 버튼/패널 · 폭 1760px · 테마 색 변수 · Most Deployed 배치 · 토스트 · 코멘트 링크 -->
 <style>
   /* ===== CSS 변수 (테마) ===== */
   :root {
@@ -2654,13 +2654,12 @@
   .nikke-icon-dual .ni-primary   { width: 72%; height: 72%; }
   .nikke-icon-dual .ni-secondary { width: 54%; height: 54%; z-index: 2; }
 
-  /* 위치 — 속성: primary 좌하, secondary 우상 / 버스트: primary 우하 + secondary 좌상(작은수)·우상(큰수) */
-  .nikke-icon-dual.dual-attr .ni-primary        { bottom: 0; left: 0; }
-  .nikke-icon-dual.dual-attr .ni-secondary      { top: 0; right: 0; }
-  .nikke-icon-dual.dual-burst-left  .ni-primary   { bottom: 0; right: 0; }
-  .nikke-icon-dual.dual-burst-left  .ni-secondary { top: 0; left: 0; }
-  .nikke-icon-dual.dual-burst-right .ni-primary   { bottom: 0; right: 0; }
-  .nikke-icon-dual.dual-burst-right .ni-secondary { top: 0; right: 0; }
+  /* 위치 — 시트 값의 괄호 위치를 따름 (속성 · 버스트 공통)
+     "주(부)" → dual-right: 작은 아이콘 우상단 + 큰 아이콘 좌하단 / "(부)주" → dual-left: 작은 아이콘 좌상단 + 큰 아이콘 우하단 */
+  .nikke-icon-dual.dual-right .ni-primary   { bottom: 0; left: 0; }
+  .nikke-icon-dual.dual-right .ni-secondary { top: 0; right: 0; }
+  .nikke-icon-dual.dual-left  .ni-primary   { bottom: 0; right: 0; }
+  .nikke-icon-dual.dual-left  .ni-secondary { top: 0; left: 0; }
   /* 다크모드: 모든 아이콘 배경 검정 + 흰 계열 테두리 + invert 해제 */
   [data-theme='dark'] .nikke-icon { background: #000; border-color: rgba(255,255,255,0.35); }
   [data-theme='dark'] .nikke-icon-empty { background: #000; border-color: rgba(255,255,255,0.35); }
@@ -4671,6 +4670,25 @@
     white-space: nowrap;
     flex-shrink: 0;
   }
+  .uls-bin { cursor: default; }
+  /* 상자 모양은 차트 툴팁(.google-visualization-tooltip)과 같게 — 세이렌은 style_siren 에서 둥글게 · 윗선 */
+  #uls-tip {
+    display: none; position: fixed; z-index: 3000; pointer-events: none;
+    min-width: 160px; max-width: 260px; max-height: 70vh; overflow: hidden;
+    padding: 12px; border-radius: 8px;
+    background: var(--card); color: var(--text);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    font-family: 'Noto Sans KR', sans-serif; font-size: 12px; line-height: 1.6;
+  }
+  #uls-tip .uls-tip-head {
+    font-family: 'Rajdhani', 'Noto Sans KR', sans-serif; font-weight: 700; letter-spacing: 1px;
+    color: var(--accent); padding-bottom: 4px; margin-bottom: 5px;
+    border-bottom: 1px solid var(--border);
+  }
+  #uls-tip .uls-tip-row { display: flex; justify-content: space-between; gap: 12px; white-space: nowrap; }
+  #uls-tip .uls-tip-row span { overflow: hidden; text-overflow: ellipsis; }
+  #uls-tip .uls-tip-row b { font-family: 'Rajdhani', sans-serif; font-weight: 700; color: var(--text-dim); }
+  #uls-tip .uls-tip-row em { font-style: normal; color: #ff4757; }
   @media (max-width: 900px) {
     .union-summary-grid { grid-template-columns: 1fr; gap: 12px; }
     .uls-kpis { flex-direction: row; }
@@ -4685,7 +4703,73 @@
     .uls-dist-bars { height: 140px; gap: 3px; }
   }
 
+
+  /* ===== 보스 통계 탭 — 순위 구역마다 보스 이미지 타일 5칸 ===== */
+  .bs-sections { display: flex; flex-direction: column; gap: 20px; }
+  .bs-section {
+    background: var(--card2); border: 1px solid var(--border); border-top: 3px solid var(--accent);
+    padding: 18px 20px 20px;
+  }
+  .bs-section-head { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 14px; }
+  .bs-section-title { font-family: 'Noto Sans KR', sans-serif; font-size: 20px; font-weight: 700; color: var(--text); line-height: 1.2; }
+  .bs-section-desc { font-family: 'Noto Sans KR', sans-serif; font-size: 13px; color: var(--text-dim); margin-top: 4px; }
+  .bs-tiles { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
+  .bs-tile {
+    position: relative; height: 250px; overflow: hidden;
+    background: var(--card); border: 1px solid var(--border); border-bottom: 3px solid var(--ac);
+  }
+  .bs-tile-img {
+    position: absolute; inset: 0;
+    background: center 30% / cover no-repeat;
+    transition: transform 0.35s ease;
+  }
+  .bs-tile:hover .bs-tile-img { transform: scale(1.06); }
+  .bs-tile::after {
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.35) 0%, transparent 22%, transparent 45%, rgba(0, 0, 0, 0.82) 100%);
+  }
+  .bs-tile-rank {
+    position: absolute; top: 6px; left: 12px; z-index: 2;
+    font-family: 'Bebas Neue', sans-serif; font-size: 36px; line-height: 1; color: #fff;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+  }
+  .bs-tile-1 .bs-tile-rank { color: #ffd86b; font-size: 42px; }
+  .bs-tile-info { position: absolute; left: 12px; right: 12px; bottom: 10px; z-index: 2; color: #fff; }
+  .bs-tile-name {
+    font-family: 'Noto Sans KR', sans-serif; font-size: 16px; font-weight: 700;
+    display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+  }
+  .bs-tile-sub { font-family: 'Noto Sans KR', sans-serif; font-size: 12px; opacity: 0.85; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .bs-tile-val {
+    font-family: 'Bebas Neue', sans-serif; font-size: 34px; letter-spacing: 0.5px; line-height: 1; margin-top: 4px;
+    color: #fff; text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6); white-space: nowrap;
+  }
+  .bs-tile-val small { font-family: 'Rajdhani', sans-serif; font-size: 15px; font-weight: 700; margin-left: 2px; opacity: 0.8; }
+  .bs-attr {
+    display: inline-block; padding: 1px 7px; font-size: 11px; font-weight: 700; line-height: 1.5;
+    color: #fff; background: var(--ac); border-radius: 3px; flex-shrink: 0; text-shadow: none;
+  }
+  .bs-toggle { display: flex; gap: 4px; margin-left: auto; flex-shrink: 0; }
+  .bs-toggle button {
+    padding: 4px 10px; border: 1px solid var(--border-bright); background: var(--card); color: var(--text-dim);
+    font-family: 'Noto Sans KR', sans-serif; font-size: 12px; font-weight: 600; cursor: pointer;
+  }
+  .bs-toggle button.on { border-color: var(--accent); color: var(--accent); }
+  @media (max-width: 1100px) {
+    .bs-tile { height: 210px; }
+    .bs-tile-val { font-size: 28px; }
+  }
+  @media (max-width: 700px) {
+    /* 좁은 화면 — 타일을 가로로 밀어서 보기 */
+    .bs-section { padding: 14px 12px 16px; }
+    .bs-tiles { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 150px; overflow-x: auto; padding-bottom: 4px; }
+    .bs-tile { height: 200px; }
+    .bs-tile-name { font-size: 14px; }
+  }
+
   /* ===== 이스터에그 랜덤 이미지 ===== */
+  /* 원래 사각형 모양 그대로 + 젤리 질감(위쪽 반사광 · 안쪽 두께감). 출렁임/던지기는 JS(_makeJelly) */
   #easter-egg {
     position: fixed;
     width: 96px;
@@ -4696,33 +4780,35 @@
     background-color: var(--card);
     border: 2px solid #000;
     box-shadow:
+      inset 0 -8px 14px rgba(0, 0, 0, 0.16),
+      inset 0 6px 10px rgba(255, 255, 255, 0.55),
       0 0 12px rgba(0, 0, 0, 0.55),
-      0 0 28px rgba(0, 0, 0, 0.35),
       0 6px 20px rgba(0, 0, 0, 0.4);
     clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
-    cursor: pointer;
+    cursor: grab;
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
     z-index: 9999;
     transform-origin: center;
-    animation: easter-egg-float 3.2s ease-in-out infinite, easter-egg-in 0.45s ease-out;
-    transition: opacity 0.3s, transform 0.3s;
+    animation: easter-egg-in 0.45s ease-out;
   }
-  #easter-egg:hover {
-    box-shadow:
-      0 0 18px rgba(0, 0, 0, 0.7),
-      0 0 40px rgba(0, 0, 0, 0.5),
-      0 8px 24px rgba(0, 0, 0, 0.55);
+  #easter-egg::before {   /* 젤리 반사광 */
+    content: '';
+    position: absolute; left: 10%; top: 6%; width: 50%; height: 22%;
+    border-radius: 50%;
+    background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0) 70%);
+    transform: rotate(-12deg);
+    pointer-events: none;
   }
+  #easter-egg.dragging { cursor: grabbing; }
   [data-theme='dark'] #easter-egg {
     border-color: #000;
     box-shadow:
+      inset 0 -8px 14px rgba(0, 0, 0, 0.22),
+      inset 0 6px 10px rgba(255, 255, 255, 0.45),
       0 0 14px rgba(255, 255, 255, 0.35),
-      0 0 30px rgba(255, 255, 255, 0.2),
       0 6px 20px rgba(0, 0, 0, 0.5);
-  }
-  @keyframes easter-egg-float {
-    0%   { transform: translateY(0)    rotate(-2deg); }
-    50%  { transform: translateY(-6px) rotate(2deg); }
-    100% { transform: translateY(0)    rotate(-2deg); }
   }
   @keyframes easter-egg-in {
     from { transform: scale(0.4) rotate(-20deg); opacity: 0; }
@@ -4801,6 +4887,13 @@
     /* 3s: 진입 → slow-peek → 스윕, 이후 중앙 유지 */
     animation: doro-holo-svg-slide-in 3s linear forwards;
   }
+  /* 작은 도로 무리 (큰 도로가 멈춘 뒤) — 오버레이 전체를 덮는 캔버스 */
+  #doro-swarm {
+    position: fixed; inset: 0;
+    width: 100vw; height: 100vh;
+    z-index: 1500; /* 카드 · 차트보다 앞, 팝업(2000~)보다 뒤 */
+    pointer-events: none;
+  }
   @keyframes doro-holo-svg-slide-in {
     0%   { opacity: 0;   transform: translateX(100vw); }
     15%  { opacity: 1;   transform: translateX(65vw);  }  /* 진입 완료 (0.45s) */
@@ -4830,7 +4923,7 @@
   }
 
 </style>
-  <!-- 261021 세이렌 스킨 (서버 표기 · 테마 메뉴 "삭제 예정" 배지) — body[data-skin="siren"] 일 때만 style.html 을 덮어씀 (구버전은 영향 없음)
+  <!-- 261102 세이렌 스킨 — 보스 통계 순위 구역 · 타일 둥글게 · 구버전 테마 견본 색 삭제 · 싱크로 분포 툴팁(#uls-tip) 모양 / 261021 세이렌 스킨 (서버 표기 · 테마 메뉴 "삭제 예정" 배지) — body[data-skin="siren"] 일 때만 style.html 을 덮어씀 (구버전은 영향 없음)
      캡처(html2canvas) 호환: color-mix() · conic-gradient() 사용 금지, 반투명 대신 불투명 카드 -->
 <style>
   /* ───────── 토큰: 진주 (라이트) ───────── */
@@ -5129,6 +5222,13 @@
     overflow: hidden;
   }
   body[data-skin="siren"] .google-visualization-tooltip:has(> .google-visualization-tooltip) { border: none !important; border-radius: 0 !important; }
+  body[data-skin="siren"] .bs-section { border-radius: 16px; border-top-width: 1px; box-shadow: inset 0 3px 0 var(--accent); }
+  body[data-skin="siren"] .bs-tile { border-radius: 12px; }
+  body[data-skin="siren"] .bs-toggle button { border-radius: 999px; }
+  body[data-skin="siren"] #uls-tip {
+    border-radius: 14px; border: 1px solid var(--border-bright); border-top: 2px solid var(--accent);
+    box-shadow: var(--shadow);
+  }
 
   /* ───────── 종합 ───────── */
   body[data-skin="siren"] .rank-badge-card {
@@ -5535,7 +5635,6 @@
     font-style: normal; font-size: 10.5px; font-weight: 600; letter-spacing: 0;
     color: var(--coral, #d9465f); border: 1px solid currentColor; opacity: .85;
   }
-  .skin-swatch-classic { background: linear-gradient(135deg, #f8f9fa 0%, #f8f9fa 50%, #0a0c10 51%, #4a9eff 100%); }
 </style>
 
 </head>
@@ -5543,9 +5642,8 @@
 <script>
   // 저장된 테마(스킨)와 라이트/다크를 화면이 그려지기 전에 적용 — 기본은 세이렌 · 라이트
   (function () {
-    var skin = 'siren', mode = 'light';
+    var skin = 'siren', mode = 'light'; // 테마는 세이렌 하나 (예전에 고른 '구버전' 도 세이렌으로)
     try {
-      if (localStorage.getItem('skin') === 'classic') skin = 'classic';
       if (localStorage.getItem('mode') === 'dark') mode = 'dark';
     } catch (e) {}
     document.body.setAttribute('data-skin', skin);
@@ -5618,6 +5716,7 @@
     <div class="tabs">
       <button id="btn-total" class="tab-btn" onclick="switchTab('total')">종합</button>
       <button id="btn-raid" class="tab-btn active" onclick="switchTab('raid')">레이드 통계</button>
+      <button id="btn-boss" class="tab-btn" onclick="switchTab('boss')">보스 통계</button>
       <button id="btn-nikke" class="tab-btn" onclick="switchTab('nikke')">니케 통계</button>
       <button id="btn-personal" class="tab-btn" onclick="switchTab('personal')">개인 기록</button>
     </div>
@@ -5815,6 +5914,18 @@
     </div>
   </div>
 </div></div>
+  <div id="section-boss" style="display:none;"><!-- 261102 보스 통계 탭 — Boss Ranking: 역대 난이도 높은/낮은 보스 · 많이/적게 맞은 보스 (Boss Records 는 보스 상세 TOP5 와 겹쳐 뺌) -->
+<div id="boss-stats-view">
+  <div class="card">
+    <div style="display:flex; align-items:center; gap:10px; margin-bottom:16px;">
+      <span style="display:inline-block; width:3px; height:16px; background:var(--accent);"></span>
+      <span style="font-family:'Rajdhani',sans-serif; font-size:16px; font-weight:700; letter-spacing:3px; color:var(--text-dim,#6b7280); text-transform:uppercase;">Boss Ranking</span>
+      <span id="bs-meta" style="font-family:'Rajdhani',sans-serif; font-size:16px; color:var(--text-dim); letter-spacing:1px; margin-left:auto;"></span>
+    </div>
+    <div id="bs-rank-grid" class="bs-sections"></div>
+  </div>
+</div>
+</div>
   <div id="section-nikke" style="display:none;"><!-- 260630 니케 통계 탭 -->
 <div id="nikke-stats-view">
   <div class="card">
@@ -6213,11 +6324,18 @@
   </button>
 </div>
 
-<!-- 261030 공용 — dataBoss 시작일 + 1일(하드 오픈) 전 회차는 표시 안 함 · 가이드: 기록 없는 회차(NO RECORD)에서 시작하면 기록 있는 최근 회차로 이동 · 버전 확인: 마스터 '사용법' 탭 전체에서 버전 형식(v261030) 칸을 찾아 가장 큰 값 사용 / 261028 공용 — 최신 버전 알림 3초 · 버전 확인: 마스터 버전 칸이 비면 업데이트 있음으로 표시 · 데이터 일괄 읽기(getFullDataBatch, 실패 시 기존 방식) · 정보 창에 빌드 번호 · 로딩 구간별 시간(시트별 서버 읽기 포함) · 캡처 시 세이렌 그림자 제거(얼룩 방지) · 레벨 차트 좌우 폭 가득 · 캡처 시 유니온명 그라데이션 글자 · 줄바꿈 보정 · 최신 버전 읽는 칸 사용법!E10 → E8 · 테마 메뉴 구버전에 "삭제 예정" 표시 · 회차 선택(최신 5개 + 전체 회차 패널) · 세이렌/구버전 스킨 -->
+<!-- 261102 공용 — 등장 비율 도로롱 3 · 나머지(무지개 포함) 각 1 · 무지개 도로 6색 팔레트(빨강 선명) · 머리/꼬리 색 변화 초당 600 · 슈로롱 회전 초당 2바퀴 · 신데렐롱 느리게(280~330 · 뒤뚱) · 무지개 머리색 초당 420 · 꼬리 100 · 슈로롱 추가(보라 꼬리 · 빙글빙글 회전) · 날아다니는 캐릭터 속도 원래대로(300~600) · 무지개만 750~1100 · 무지개/세로롱 색 변화 끊김 수정 · 무지개 도로: doro-mask(머리카락 · 리본)에만 빛나는 무지개 · 무지개만 빠르게(나머지 180~360px/초) · 모든 캐릭터 도로처럼 좌우 뒤집기 · 날아다니는 캐릭터 4종(도로·시로·세로·신도롱, 색에 맞는 효과 · 세로롱은 세이렌 색 · 비눗방울) · 클릭하면 방향 꺾임 · 무지개 도로 몸 색 흐름 · 꼬리 무지개 흐름 방향 몸→꼬리 · 이스터에그 이모티콘 젤리(출렁임 · 잡아서 던지기, 살짝 누르면 터짐) · 도로 꼬리 끝 완전 투명 · 보스 통계 탭 전환 · 가이드 · 테마 전환 다시 그리기 · 날아다니는 도로: 더 크고 빠르게 · 머리를 날아가는 방향으로 · 꼬리는 일정한 굵기 띠 · 무지개 색 간격 넓게 · 구버전 테마 삭제(테마 메뉴는 유지) · 테마 메뉴 자동 닫힘 · 시험판 이스터에그 100% · 작은 도로 맨 앞 · 꼬리 몸의 2배 · 캡처에 작은 도로 합성 · 도로 홀로그램 뒤 작은 도로 무리(별똥별 꼬리 · 무지개) · 딜량 · HP 표기 숫자와 단위 사이 줄바꿈 금지 · 차트 회차 목록 chartRaidTitles(기록 없는 앞뒤 회차 제외) · 캡처 때 분포 툴팁 숨김 / 261030 공용 — dataBoss 시작일 + 1일(하드 오픈) 전 회차는 표시 안 함 · 가이드: 기록 없는 회차(NO RECORD)에서 시작하면 기록 있는 최근 회차로 이동 · 버전 확인: 마스터 '사용법' 탭 전체에서 버전 형식(v261030) 칸을 찾아 가장 큰 값 사용 / 261028 공용 — 최신 버전 알림 3초 · 버전 확인: 마스터 버전 칸이 비면 업데이트 있음으로 표시 · 데이터 일괄 읽기(getFullDataBatch, 실패 시 기존 방식) · 정보 창에 빌드 번호 · 로딩 구간별 시간(시트별 서버 읽기 포함) · 캡처 시 세이렌 그림자 제거(얼룩 방지) · 레벨 차트 좌우 폭 가득 · 캡처 시 유니온명 그라데이션 글자 · 줄바꿈 보정 · 최신 버전 읽는 칸 사용법!E10 → E8 · 테마 메뉴 구버전에 "삭제 예정" 표시 · 회차 선택(최신 5개 + 전체 회차 패널) · 세이렌/구버전 스킨 -->
 <script>
   google.charts.load('current', {'packages':['corechart', 'scatter']});
 
   let db = {}, rawMembers = [], displayMembers = [], headerLabels = [], currentSort = 'no', isAsc = true, selectedRaidIdx = null, expandedMember = null;
+
+  // .container(z-index:1) 안에 든 팝업은 z-index 를 아무리 높여도 종합 화면(#raid-total-content) · 작은 도로 뒤로 깔림
+  //   → body 바로 아래로 옮겨서 다른 팝업들과 같은 층에 둠 (지표 안내가 화면 뒤로 가던 문제)
+  ['metrics-info-overlay', 'growth-detail-overlay', 'nikke-squad-overlay'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el && el.parentElement !== document.body) document.body.appendChild(el);
+  });
   let _lastActiveTab = null;
   let currentViewMode = 'specific';
   // 속성 색 — 값은 스킨(테마)에 따라 applySkinPalette() 가 덮어씀. 객체는 그대로 두고 값만 바뀜
@@ -6406,8 +6524,10 @@
 
   // 이스터에그 — 지정된 이모티콘 2종만 랜덤 팝업으로 등장, 클릭 시 사라짐 / 확률로 도로 홀로그램 트리거
   // 테스트 종료 후 EASTER_EGG_CHANCE = 0.01, DORO_HOLO_CHANCE = 0.01 로 낮출 것
-  const EASTER_EGG_CHANCE = 0.01; // 1% — 페이지 로드/탭 전환 시 이모티콘 등장 확률
-  const DORO_HOLO_CHANCE  = 0.50; // 50% — 이모티콘 클릭 시 도로 홀로그램 등장 확률
+  // 시험판(?ch=dev, 배포.py 가 APP_CHANNEL='dev' 로 표시)은 확인용으로 둘 다 100%
+  const _IS_DEV_CHANNEL = window.APP_CHANNEL === 'dev';
+  const EASTER_EGG_CHANCE = _IS_DEV_CHANNEL ? 1 : 0.01; // 1% — 페이지 로드/탭 전환 시 이모티콘 등장 확률
+  const DORO_HOLO_CHANCE  = _IS_DEV_CHANNEL ? 1 : 0.50; // 50% — 이모티콘 클릭 시 도로 홀로그램 등장 확률
   // 팝업 pool 화이트리스트 (dataIMG #기타 섹션 name 값, 대소문자/기호 정확 매칭)
   const EASTER_EGG_NAMES = new Set([
     'AADHIAAAuAgAANVYAACuMAAAwusAAMW0',
@@ -6448,7 +6568,7 @@
     el.style.left = left + 'px';
     el.style.top  = top  + 'px';
     el.title = '?';
-    el.addEventListener('click', (e) => {
+    const pop = () => {
       _burstEasterEgg(el);
       el.classList.add('easter-egg-pop');
       setTimeout(() => el.remove(), 500);
@@ -6456,8 +6576,92 @@
       if (Math.random() < DORO_HOLO_CHANCE) {
         setTimeout(spawnDoroHolo, 520);
       }
-    });
+    };
     document.body.appendChild(el);
+    _makeJelly(el, size, pop);
+  }
+
+  // 이스터에그 젤리 — 말랑하게 출렁이고, 잡아서 던질 수 있음 (살짝 눌렀다 떼면 기존처럼 터짐)
+  //   던지면 미끄러지다 화면 가장자리에서 튕기고, 부딪힌 쪽으로 납작하게 눌림
+  function _makeJelly(el, size, onTap) {
+    let x = parseFloat(el.style.left) || 0, y = parseFloat(el.style.top) || 0;
+    let vx = 0, vy = 0;                    // 던진 속도 (px/초)
+    let sx = 1, sy = 1, vsx = 0, vsy = 0;  // 출렁임 — 가로/세로 늘어남과 그 변화 속도
+    let drag = null, alive = true;
+    const t0 = performance.now();
+    let last = t0;
+    const samples = [];
+    const poke = (ax, ay) => { vsx += ax; vsy += ay; };
+
+    el.addEventListener('pointerdown', e => {
+      if (e.button !== 0) return;
+      e.preventDefault();
+      el.setPointerCapture(e.pointerId);
+      drag = { ox: e.clientX - x, oy: e.clientY - y, t: performance.now(), moved: 0 };
+      samples.length = 0;
+      samples.push({ x: e.clientX, y: e.clientY, t: performance.now() });
+      vx = vy = 0;
+      el.classList.add('dragging');
+      poke(1.6, -1.6); // 잡으면 꾹 눌림
+    });
+    el.addEventListener('pointermove', e => {
+      if (!drag) return;
+      const nx = e.clientX - drag.ox, ny = e.clientY - drag.oy;
+      const dx = nx - x, dy = ny - y;
+      drag.moved += Math.hypot(dx, dy);
+      // 움직인 방향으로 늘어났다가 출렁 — 옆으로 끌면 가로로, 위아래로 끌면 세로로
+      poke((Math.abs(dx) - Math.abs(dy)) * 0.03, (Math.abs(dy) - Math.abs(dx)) * 0.03);
+      x = nx; y = ny;
+      samples.push({ x: e.clientX, y: e.clientY, t: performance.now() });
+      while (samples.length > 6) samples.shift();
+    });
+    const end = () => {
+      if (!drag) return;
+      const tap = drag.moved < 6 && performance.now() - drag.t < 350;
+      drag = null;
+      el.classList.remove('dragging');
+      if (tap) { alive = false; onTap(); return; }
+      // 놓기 직전 움직임으로 던지는 속도
+      const a = samples[0], b = samples[samples.length - 1];
+      const dt = Math.max(16, b.t - a.t) / 1000;
+      vx = (b.x - a.x) / dt; vy = (b.y - a.y) / dt;
+      const sp = Math.hypot(vx, vy), MAXV = 4000;
+      if (sp > MAXV) { vx *= MAXV / sp; vy *= MAXV / sp; }
+    };
+    el.addEventListener('pointerup', end);
+    el.addEventListener('pointercancel', end);
+
+    const tick = (now) => {
+      if (!alive || !el.isConnected) return;
+      const dt = Math.min(0.033, (now - last) / 1000);
+      last = now;
+      if (!drag) {
+        x += vx * dt; y += vy * dt;
+        const f = Math.exp(-1.6 * dt); // 미끄러지며 느려짐
+        vx *= f; vy *= f;
+        const W = window.innerWidth - size, H = window.innerHeight - size;
+        const hit = v => Math.min(3, Math.abs(v) / 500);
+        if (x < 0 && vx < 0)  { x = 0; poke(-hit(vx), hit(vx)); vx = -vx * 0.6; }
+        if (x > W && vx > 0)  { x = W; poke(-hit(vx), hit(vx)); vx = -vx * 0.6; }
+        if (y < 0 && vy < 0)  { y = 0; poke(hit(vy), -hit(vy)); vy = -vy * 0.6; }
+        if (y > H && vy > 0)  { y = H; poke(hit(vy), -hit(vy)); vy = -vy * 0.6; }
+        x = Math.max(0, Math.min(x, Math.max(0, W)));
+        y = Math.max(0, Math.min(y, Math.max(0, H)));
+      }
+      // 출렁임 — 1 로 돌아가려는 용수철 + 감쇠
+      const K = 260, C = 9;
+      vsx += (-K * (sx - 1) - C * vsx) * dt;
+      vsy += (-K * (sy - 1) - C * vsy) * dt;
+      sx = Math.max(0.6, Math.min(1.5, sx + vsx * dt));
+      sy = Math.max(0.6, Math.min(1.5, sy + vsy * dt));
+      // 가만히 있을 땐 숨 쉬듯 살짝 말랑
+      const breathe = drag ? 0 : Math.sin((now - t0) / 480) * 0.03;
+      el.style.left = x + 'px';
+      el.style.top = y + 'px';
+      el.style.transform = `scale(${(sx + breathe).toFixed(3)}, ${(sy - breathe).toFixed(3)})`;
+      requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
   }
 
   // 도로 홀로그램 리소스 URL 조회 (name 대소문자/기호 정확 매칭)
@@ -6528,6 +6732,336 @@
       requestAnimationFrame(shimmer);
     };
     requestAnimationFrame(shimmer);
+
+    // 큰 도로가 가운데 멈춘 뒤(슬라이드 3초) 작은 도로들이 사방에서 날아다님
+    setTimeout(() => _startDoroSwarm(overlay, _flyerDefs()), 3000);
+  }
+
+  // 날아다니는 캐릭터 — dataIMG #기타 의 이름(키)으로 이미지를 찾음. 이미지가 없으면 그 캐릭터는 안 나옴
+  //   모두 도로처럼 왼쪽을 보는 그림으로 다룸 — 오른쪽으로 날 땐 좌우 뒤집고 머리를 날아가는 쪽으로 기울임
+  //   looks: 나올 때 고르는 효과 — 각자 색에 맞는 것만 (무지개는 도로롱만, 세로롱은 세이렌 테마 색)
+  //   mask: 무지개 도로는 머리카락 · 리본 모양(doro-mask)에만 빛나는 무지개를 덮음
+  //   weight: 등장 비율 — 도로롱 3 · 무지개 도로롱 · 시로롱 · 세로롱 · 신데렐롱 · 슈로롱 각 1
+  const FLYER_DEFS = [
+    { key: 'doro',    name: DORO_NAME_DISPLAY,           weight: 3, looks: ['pink'] },
+    { key: 'rainbow', name: DORO_NAME_DISPLAY,           mask: DORO_NAME_MASK, weight: 1, looks: ['rainbow'] },
+    { key: 'shiro',   name: 'AADC3AAAs8QAALhc',          weight: 1, looks: ['sky'] },
+    { key: 'sero',    name: 'AADBOAAAuFwAALhx',          weight: 1, looks: ['siren'] },
+    { key: 'cindoro', name: 'AADC4AAAs3AAALgQAAC4cQ==',  weight: 1, looks: ['silver'], speed: [280, 330], waddle: true }, // 뚱뚱해서 최저 속도 근처 · 뒤뚱
+    { key: 'syuro',   name: 'AADCiAAAuFwAALhx',          weight: 1, looks: ['violet'], spin: true }, // 몸이 빙글빙글 (오른쪽 이동 = 시계 · 왼쪽 = 반시계)
+  ];
+  function _etcImgUrl(name) {
+    if (!db.dataIMG || !IMG_COL.etc || IMG_COL.etc.img === undefined) return '';
+    const row = db.dataIMG.find(r => String(r[IMG_COL.etc.name] || '').trim() === name);
+    const v = row ? String(row[IMG_COL.etc.img] || '').trim() : '';
+    return /^(https?:|data:)/i.test(v) ? v : ''; // 링크 걸린 글자(예: "doro")는 주소가 아니라 못 씀
+  }
+  function _flyerDefs() {
+    return FLYER_DEFS.map(d => Object.assign({}, d, { url: _etcImgUrl(d.name), maskUrl: d.mask ? _etcImgUrl(d.mask) : '' })).filter(d => d.url);
+  }
+
+  // 무지개 팔레트 — p(0~1 순환) 위치의 색. 빨강을 진하게 보이도록 HSL 대신 6색 사이를 섞음
+  const _RAINBOW6 = [[255, 40, 40], [255, 140, 0], [255, 225, 0], [40, 220, 90], [40, 140, 255], [150, 70, 255]];
+  function _rainbowAt(p, a) {
+    const n = _RAINBOW6.length, x = ((p % 1) + 1) % 1 * n, i = Math.floor(x), f = x - i;
+    const c0 = _RAINBOW6[i % n], c1 = _RAINBOW6[(i + 1) % n];
+    return `rgba(${c0.map((v, k) => Math.round(v + (c1[k] - v) * f)).join(', ')}, ${a})`;
+  }
+
+  // 효과별 색 — 꼬리(t: 0 꼬리 끝 ~ 1 몸 쪽, a: 투명도) · 몸 둘레 빛 · 몸 위에 덮는 움직이는 색(있을 때만)
+  const _SIREN_TEAL = '95, 214, 207', _SIREN_LAV = '179, 156, 242', _SIREN_PEARL = '236, 246, 255';
+  const FLYER_LOOKS = {
+    pink:    { tail: (d, t, a) => `rgba(255, 196, 228, ${a})`, glow: () => 'rgba(255, 180, 220, 0.9)' },
+    // 무지개 — 꼬리 색은 몸에서 꼬리 끝 쪽으로 흘러감 (몸 쪽 색상값이 큼 · 시간에 따라 색상값 증가)
+    // 무지개 — 꼬리 색 위치는 d.hue · 머리 색 위치는 d.bodyHue (둘 다 초당 600 · 0~360 한 바퀴 = 빨주노초파보)
+    //   HSL 은 빨강이 분홍빛으로 흐려져서 선명한 6색 팔레트를 섞어 씀
+    rainbow: {
+      tail: (d, t, a) => _rainbowAt((d.hue + t * 220) / 360, a),
+      glow: d => _rainbowAt(d.bodyHue / 360, 1),
+      body: d => [0, 1, 2, 3].map(i => _rainbowAt((d.bodyHue + i * 50) / 360, 0.95)),
+      maskOnly: true, // 머리카락 · 리본(doro-mask)에만 · 빛나게
+      fast: true,     // 무지개만 매우 빠르게
+    },
+    sky:     { tail: (d, t, a) => `rgba(${Math.round(190 - t * 95)}, ${Math.round(228 - t * 44)}, 255, ${a})`, glow: () => 'rgba(110, 190, 255, 0.9)' },
+    // 세이렌 — 진주 · 청록 · 라벤더가 천천히 오가는 꼬리 + 몸에 은은한 진주빛 + 비눗방울
+    siren: {
+      tail: (d, t, a) => {
+        const k = (Math.sin(d.time * 2 + t * 3) + 1) / 2; // d.time 은 계속 늘어나는 초 — 색상값(0~360 순환)을 쓰면 360→0 에서 튐
+        const mix = (p, q) => p.split(',').map((v, i) => Math.round(+v + (+q.split(',')[i] - +v) * k)).join(', ');
+        return t > 0.85 ? `rgba(${_SIREN_PEARL}, ${a})` : `rgba(${mix(_SIREN_TEAL, _SIREN_LAV)}, ${a})`;
+      },
+      glow: () => `rgba(${_SIREN_TEAL}, 0.9)`,
+      body: d => {
+        const s = d.time * 1.5;
+        return [`rgba(${_SIREN_PEARL}, 0.35)`, `rgba(${_SIREN_TEAL}, ${0.18 + 0.12 * Math.sin(s)})`, `rgba(${_SIREN_LAV}, ${0.18 + 0.12 * Math.cos(s)})`, `rgba(${_SIREN_PEARL}, 0.3)`];
+      },
+      bubbles: true,
+    },
+    violet:  { tail: (d, t, a) => `rgba(${Math.round(185 - t * 65)}, ${Math.round(175 - t * 75)}, ${Math.round(240 - t * 25)}, ${a})`, glow: () => 'rgba(150, 130, 230, 0.9)' },
+    silver:  { tail: (d, t, a) => `rgba(${Math.round(232 - t * 40)}, ${Math.round(232 - t * 40)}, ${Math.round(246 - t * 20)}, ${a})`, glow: () => 'rgba(255, 140, 165, 0.75)' },
+  };
+
+  // 작은 도로 무리 — 별똥별 꼬리(몸 길이의 2배) · 캐릭터마다 색에 맞는 효과. 카드보다 앞(팝업보다는 뒤)에 그림
+  //   클릭하면 그 캐릭터가 방향을 꺾음 (아래 카드는 눌리지 않음)
+  //   캡처 때는 이 캔버스를 그 순간 그대로 결과 그림 위에 합성 (captureScreen)
+  function _startDoroSwarm(overlay, defs) {
+    if (!overlay.isConnected || !defs || defs.length === 0) return;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    // 이미지 받기 — 외부 주소는 CORS 로 받아야 캔버스가 오염되지 않아 캡처 합성이 됨 (안 되면 그냥 받음: 화면엔 보이고 캡처엔 빠짐)
+    const loadImg = url => new Promise(res => {
+      if (!url) { res(null); return; }
+      const img = new Image();
+      img.onload = () => res(img);
+      img.onerror = () => {
+        if (img.crossOrigin) { img.removeAttribute('crossorigin'); img.src = url + (url.includes('?') ? '&' : '?') + 'nocors=1'; }
+        else res(null);
+      };
+      if (/^https?:/i.test(url)) img.crossOrigin = 'anonymous';
+      img.src = url;
+    });
+    const load = def => Promise.all([loadImg(def.url), loadImg(def.maskUrl)])
+      .then(([img, maskImg]) => img ? Object.assign({}, def, { img, maskImg }) : null);
+
+    Promise.all(defs.map(load)).then(list => {
+      const kinds = list.filter(Boolean);
+      if (kinds.length === 0 || !overlay.isConnected) return;
+
+      const canvas = document.createElement('canvas');
+      canvas.id = 'doro-swarm';
+      document.body.appendChild(canvas);
+      const ctx = canvas.getContext('2d');
+      let W = 0, H = 0;
+      const resize = () => {
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        W = window.innerWidth; H = window.innerHeight;
+        canvas.width = W * dpr; canvas.height = H * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      };
+      resize();
+      window.addEventListener('resize', resize);
+
+      // 캐릭터별 기본 스프라이트 (가로 120px) — 몸에 움직이는 색을 덮을 땐 캐릭터마다 작업용 캔버스에 매 프레임 다시 그림
+      const SW = 120;
+      kinds.forEach(k => {
+        k.SH = Math.round(SW * k.img.height / k.img.width) || 90;
+        k.sprite = document.createElement('canvas');
+        k.sprite.width = SW; k.sprite.height = k.SH;
+        k.sprite.getContext('2d').drawImage(k.img, 0, 0, SW, k.SH);
+        if (k.maskImg) {
+          k.maskSprite = document.createElement('canvas');
+          k.maskSprite.width = SW; k.maskSprite.height = k.SH;
+          k.maskSprite.getContext('2d').drawImage(k.maskImg, 0, 0, SW, k.SH);
+        }
+      });
+      const totalW = kinds.reduce((s, k) => s + k.weight, 0);
+      const pickKind = () => {
+        let r = Math.random() * totalW;
+        for (const k of kinds) { r -= k.weight; if (r <= 0) return k; }
+        return kinds[0];
+      };
+
+      const doros = [], bubbles = [];
+      const MAX = window.innerWidth <= 600 ? 7 : 12;
+      const spawn = () => {
+        const kind = pickKind();
+        const look = kind.looks[Math.floor(Math.random() * kind.looks.length)];
+        const side = Math.floor(Math.random() * 4);
+        const size = 44 + Math.random() * 56; // 44~100px
+        const m = size;
+        let x, y;
+        if (side === 0)      { x = -m;    y = Math.random() * H; }
+        else if (side === 1) { x = W + m; y = Math.random() * H; }
+        else if (side === 2) { x = Math.random() * W; y = -m; }
+        else                 { x = Math.random() * W; y = H + m; }
+        // 화면 가운데 근처의 아무 점을 향해 날아감
+        const tx = W * (0.2 + Math.random() * 0.6), ty = H * (0.2 + Math.random() * 0.6);
+        const ang = Math.atan2(ty - y, tx - x);
+        const L = FLYER_LOOKS[look] || FLYER_LOOKS.pink;
+        // px/초 — 무지개 750~1100 · 캐릭터에 speed 가 있으면 그 범위 · 나머지 300~600
+        const [sMin, sMax] = L.fast ? [750, 1100] : (kind.speed || [300, 600]);
+        const speed = sMin + Math.random() * (sMax - sMin);
+        const d = {
+          kind, look: L, x, y, size,
+          vx: Math.cos(ang) * speed, vy: Math.sin(ang) * speed,
+          head: ang, // 실제로 움직이는 방향 (흔들림 포함, 부드럽게 따라감)
+          wob: Math.random() * Math.PI * 2, hue: Math.random() * 360, time: Math.random() * 10, trail: [], squash: 0,
+          spinAng: 0
+        };
+        d.bodyHue = d.hue + 220;
+        if (d.look.body) {
+          d.work = document.createElement('canvas');
+          d.work.width = SW; d.work.height = kind.SH;
+          if (d.look.maskOnly && kind.maskSprite) {
+            d.paint = document.createElement('canvas');
+            d.paint.width = SW; d.paint.height = kind.SH;
+          }
+        }
+        doros.push(d);
+      };
+
+      // 클릭으로 방향 꺾기 — 캔버스는 클릭을 통과시키므로 문서에서 위치로 맞았는지 봄. 맞으면 아래 카드 클릭은 막음
+      let swallowClick = false;
+      const onDown = e => {
+        if (!canvas.isConnected) return;
+        for (let i = doros.length - 1; i >= 0; i--) {
+          const d = doros[i];
+          if (Math.hypot(e.clientX - d.x, e.clientY - d.y) > d.size * 0.55) continue;
+          const sp = Math.hypot(d.vx, d.vy) * 1.15;
+          const turn = (Math.random() < 0.5 ? -1 : 1) * (Math.PI / 3 + Math.random() * Math.PI / 3); // 60~120도
+          const ang = Math.atan2(d.vy, d.vx) + turn;
+          d.vx = Math.cos(ang) * sp; d.vy = Math.sin(ang) * sp;
+          d.squash = 1;
+          swallowClick = true;
+          e.preventDefault(); e.stopPropagation();
+          return;
+        }
+      };
+      const onClick = e => { if (swallowClick) { swallowClick = false; e.preventDefault(); e.stopPropagation(); } };
+      document.addEventListener('pointerdown', onDown, true);
+      document.addEventListener('click', onClick, true);
+
+      let last = performance.now(), nextSpawn = 0;
+      const tick = (now) => {
+        if (!overlay.isConnected) {
+          window.removeEventListener('resize', resize);
+          document.removeEventListener('pointerdown', onDown, true);
+          document.removeEventListener('click', onClick, true);
+          canvas.remove();
+          return;
+        }
+        const dt = Math.min(0.05, (now - last) / 1000);
+        last = now;
+        nextSpawn -= dt;
+        if (nextSpawn <= 0 && doros.length < MAX) { spawn(); nextSpawn = 0.25 + Math.random() * 0.45; }
+
+        ctx.clearRect(0, 0, W, H);
+
+        // 세로롱 비눗방울 — 꼬리에서 떨어져 나와 천천히 떠오르다 사라짐
+        for (let i = bubbles.length - 1; i >= 0; i--) {
+          const b = bubbles[i];
+          b.life -= dt; b.y -= 30 * dt; b.x += Math.sin(b.life * 4 + b.ph) * 12 * dt;
+          if (b.life <= 0) { bubbles.splice(i, 1); continue; }
+          const a = Math.min(1, b.life / 0.6) * 0.7;
+          ctx.beginPath(); ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+          ctx.strokeStyle = `rgba(${_SIREN_LAV}, ${a})`; ctx.lineWidth = 1.5; ctx.stroke();
+          ctx.fillStyle = `rgba(${_SIREN_PEARL}, ${a * 0.35})`; ctx.fill();
+        }
+
+        for (let i = doros.length - 1; i >= 0; i--) {
+          const d = doros[i], L = d.look;
+          d.wob += dt * 3;
+          // 진행 방향에 수직으로 살짝 흔들리며 날아감
+          const nx = -d.vy, ny = d.vx, nl = Math.hypot(nx, ny) || 1;
+          const w = Math.sin(d.wob) * 40 * dt;
+          // 뒤뚱 — 속도가 ±12% 로 천천히 오르내림 (신데렐롱)
+          const pace = d.kind.waddle ? 1 + 0.12 * Math.sin(d.time * 3) : 1;
+          const mx = d.vx * dt * pace + nx / nl * w, my = d.vy * dt * pace + ny / nl * w;
+          d.x += mx; d.y += my;
+          // 머리 방향 — 이번 이동 방향으로 부드럽게 (각도 차이를 -π~π 로 접어서 보간)
+          const want = Math.atan2(my, mx);
+          let da = want - d.head;
+          da = Math.atan2(Math.sin(da), Math.cos(da));
+          d.head += da * Math.min(1, dt * 10);
+          d.hue = (d.hue + dt * 600) % 360;
+          d.bodyHue = (d.bodyHue + dt * 600) % 360;
+          d.time += dt;
+          d.squash = Math.max(0, d.squash - dt * 4);
+          d.trail.push({ x: d.x, y: d.y });
+          // 꼬리 길이 = 몸 길이의 2배 (몸 중심에서 몸 반 + 2배 만큼 뒤까지)
+          let len = 0;
+          for (let k = d.trail.length - 1; k > 0; k--) {
+            len += Math.hypot(d.trail[k].x - d.trail[k - 1].x, d.trail[k].y - d.trail[k - 1].y);
+            if (len > d.size * 2.5) { d.trail.splice(0, k - 1); break; }
+          }
+
+          // 꼬리 — 굵기 일정한 띠(사각형), 끝으로 갈수록 옅게 (끝은 완전히 투명)
+          const n = d.trail.length;
+          if (n > 1) {
+            const p0 = d.trail[0], p1 = d.trail[n - 1];
+            const gr = ctx.createLinearGradient(p0.x, p0.y, p1.x, p1.y);
+            const STEPS = 8;
+            for (let k = 0; k <= STEPS; k++) {
+              const t = k / STEPS;               // 0 = 꼬리 끝, 1 = 몸 쪽
+              gr.addColorStop(t, L.tail(d, t, Math.pow(t, 1.8) * 0.8));
+            }
+            ctx.strokeStyle = gr;
+            ctx.lineWidth = d.size * 0.42;
+            ctx.lineCap = 'butt';
+            ctx.lineJoin = 'round';
+            ctx.beginPath();
+            ctx.moveTo(p0.x, p0.y);
+            for (let k = 1; k < n; k++) ctx.lineTo(d.trail[k].x, d.trail[k].y);
+            ctx.stroke();
+            if (L.bubbles && Math.random() < dt * 6) {
+              const q = d.trail[Math.floor(n * 0.4)];
+              bubbles.push({ x: q.x, y: q.y, r: 2 + Math.random() * 4, life: 1 + Math.random() * 0.8, ph: Math.random() * 6 });
+            }
+          }
+
+          // 몸 — 움직이는 색이 있으면 작업용 캔버스에 그림 + 그 모양 안에만 색을 덮음
+          let src = d.kind.sprite;
+          if (L.body && d.work) {
+            const g = d.work.getContext('2d');
+            g.globalCompositeOperation = 'source-over';
+            g.clearRect(0, 0, SW, d.kind.SH);
+            g.drawImage(d.kind.sprite, 0, 0);
+            // 띠 위치는 고정 · 색만 시간에 따라 계속 바뀜 → 끊김 없이 흐름 (예전엔 띠 위치가 2초마다 처음으로 되돌아가 툭 바뀌어 보였음)
+            const gr = g.createLinearGradient(0, 0, SW, d.kind.SH);
+            const cols = L.body(d);
+            cols.forEach((c, k) => gr.addColorStop(k / (cols.length - 1), c));
+            if (d.paint) {
+              // 무지개 도로 — doro-mask 모양에만 무지개를 칠해서 위에 겹침 + 빛 번짐 · 한 번 더 더해서 반짝
+              const p = d.paint.getContext('2d');
+              p.globalCompositeOperation = 'source-over';
+              p.clearRect(0, 0, SW, d.kind.SH);
+              p.drawImage(d.kind.maskSprite, 0, 0);
+              p.globalCompositeOperation = 'source-in';
+              p.fillStyle = gr;
+              p.fillRect(0, 0, SW, d.kind.SH);
+              g.globalCompositeOperation = 'source-over';
+              g.shadowColor = _rainbowAt(d.bodyHue / 360, 0.9);
+              g.shadowBlur = 6;
+              g.drawImage(d.paint, 0, 0);
+              g.shadowBlur = 0;
+              g.globalCompositeOperation = 'lighter';
+              g.globalAlpha = 0.1; // 반짝임은 살짝만 — 진하게 더하면 빨강이 분홍으로 씻김
+              g.drawImage(d.paint, 0, 0);
+              g.globalAlpha = 1;
+            } else {
+              g.globalCompositeOperation = 'source-atop';
+              g.fillStyle = gr;
+              g.fillRect(0, 0, SW, d.kind.SH);
+            }
+            src = d.work;
+          }
+
+          ctx.save();
+          ctx.translate(d.x, d.y);
+          // 왼쪽을 보는 그림 — 오른쪽으로 갈 땐 좌우 뒤집고, 머리가 날아가는 쪽을 향하게 기울임 (거꾸로 뒤집히지 않게)
+          const goRight = Math.cos(d.head) > 0;
+          if (d.kind.spin) {
+            // 빙글빙글 — 화면 기준 오른쪽 이동은 시계 방향(+), 왼쪽 이동은 반시계 방향(-) · 초당 2바퀴
+            d.spinAng += (goRight ? 1 : -1) * Math.PI * 4 * dt;
+            ctx.rotate(d.spinAng);
+          } else {
+            ctx.rotate(goRight ? d.head : d.head - Math.PI);
+          }
+          if (goRight) ctx.scale(-1, 1);
+          if (d.squash > 0) ctx.scale(1 + d.squash * 0.25, 1 - d.squash * 0.2); // 클릭으로 꺾일 때 찌그러짐
+          ctx.shadowColor = L.glow(d);
+          ctx.shadowBlur = 14;
+          const h = d.size * d.kind.SH / SW;
+          ctx.drawImage(src, -d.size / 2, -h / 2, d.size, h);
+          ctx.restore();
+
+          const out = d.size * 2;
+          if (d.x < -out - 40 || d.x > W + out + 40 || d.y < -out - 40 || d.y > H + out + 40) doros.splice(i, 1);
+        }
+        requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    });
   }
 
   // 클릭 이펙트 — 링 3개 + 스파클 8방향 방출
@@ -6742,6 +7276,15 @@
     return Date.UTC(y, Number(m[2]) - 1, Number(m[3]), (Number(m[4]) || 0) - 9, Number(m[5]) || 0);
   }
 
+  // 차트용 회차 목록 — 레이드 통계에 기록이 하나도 없는 회차는 앞 · 뒤 끝에서만 뺌 (중간에 빈 회차는 자리 유지)
+  function chartRaidTitles() {
+    const all = (db.bossData && db.bossData[0]) ? db.bossData[0].slice(1) : [];
+    const has = t => getRaidRows(String(t || '').trim()).some(r => String(r[RAID_COL.NAME] || '').trim() !== '');
+    let first = -1, last = -1;
+    all.forEach((t, i) => { if (has(t)) { if (first < 0) first = i; last = i; } });
+    return first < 0 ? all : all.slice(first, last + 1);
+  }
+
   function _raidCols() {
     const cols = [];
     if (!db.bossData || !db.bossData[0]) return cols;
@@ -6939,6 +7482,8 @@
     if (personalSection) personalSection.style.display = t === 'personal' ? 'block' : 'none';
     const nikkeSection = document.getElementById('section-nikke');
     if (nikkeSection) nikkeSection.style.display = t === 'nikke' ? 'block' : 'none';
+    const bossSection = document.getElementById('section-boss');
+    if (bossSection) bossSection.style.display = t === 'boss' ? 'block' : 'none';
 
     const totalContent = document.getElementById('raid-total-content');
     if(totalContent) totalContent.style.display = 'none';
@@ -6948,12 +7493,19 @@
     if(document.getElementById('btn-total')) document.getElementById('btn-total').classList.remove('active');
     if(document.getElementById('btn-personal')) document.getElementById('btn-personal').classList.remove('active');
     if(document.getElementById('btn-nikke')) document.getElementById('btn-nikke').classList.remove('active');
+    if(document.getElementById('btn-boss')) document.getElementById('btn-boss').classList.remove('active');
 
     if (t === 'nikke') {
       if (nikkeSection) nikkeSection.style.display = 'block';
       document.getElementById('btn-nikke').classList.add('active');
       document.getElementById('raid-btn-group').style.display = 'flex'; // 회차 버튼 공유
       if (typeof initNikkeTab === 'function') initNikkeTab();
+    }
+    else if (t === 'boss') {
+      // 보스 통계 — 회차 구분 없이 전체 기록이라 회차 버튼 숨김
+      document.getElementById('btn-boss').classList.add('active');
+      document.getElementById('raid-btn-group').style.display = 'none';
+      if (typeof initBossTab === 'function') initBossTab();
     }
     else if (t === 'personal') {
       if (personalSection) personalSection.style.display = 'block';
@@ -7002,6 +7554,7 @@
     if (t !== _lastActiveTab) {
       const _tabAnimMap = {
         raid:     'section-raid',
+        boss:     'section-boss',
         nikke:    'section-nikke',
         personal: 'section-personal',
         growth:   'section-growth',
@@ -7189,31 +7742,30 @@
     }
   }
 
-  // ── 스킨 (테마) ──  'siren' 세이렌 (기본) · 'classic' 구버전
-  // 세이렌은 style_siren.html 이 색 · 글꼴 · 모양을 덮어씀. 라이트/다크(모드)는 두 테마 공통으로 테마 메뉴에서 선택
+  // ── 스킨 (테마) ──  지금은 'siren' 세이렌 하나 (구버전 'classic' 은 261102 에 없앰). 새 테마는 SKIN_LIST 에 추가
+  // 세이렌은 style_siren.html 이 색 · 글꼴 · 모양을 덮어씀. 라이트/다크(모드)는 테마 메뉴에서 선택
+  //   새 테마 추가 시: SKIN_LIST · _SKIN_ATTR_COLORS(키+Dark/Light) · _SKIN_RANK_COLORS · body[data-skin="키"] CSS · .skin-swatch-키
   const SKIN_LIST = [
     { key: 'siren',   name: '세이렌', desc: '진주 · 심해' },
-    { key: 'classic', name: '구버전',      desc: '기존 디자인', note: '삭제 예정' }, // 추후 제거 예정 — 새 기능은 세이렌 기준으로만 맞춤
   ];
   const _SKIN_ATTR_COLORS = {
-    classic:    { "작열": "#e00400", "철갑": "#f7c864", "풍압": "#60cf58", "전격": "#d02dd9", "수냉": "#3376f0" },
     // 맑은 파스텔 — 채도는 살리고 명도만 올림 (회색빛으로 흐려지지 않게). 다크는 한 단계 더 밝게
     sirenDark:  { "작열": "#f88181", "철갑": "#fbc956", "풍압": "#5fdd94", "전격": "#d788f2", "수냉": "#74a5fb" },
     sirenLight: { "작열": "#f26868", "철갑": "#f5be3d", "풍압": "#47d181", "전격": "#ca74e6", "수냉": "#5a94f6" },
   };
   const _SKIN_RANK_COLORS = {
-    classic: { 1: '#FFD700', 2: '#C0C0C0', 3: '#CD7F32' },
     siren:   { 1: '#e2b14a', 2: '#a9b3c6', 3: '#c98f6a' },
   };
+  const _validSkin = (k) => SKIN_LIST.some(s => s.key === k) ? k : SKIN_LIST[0].key;
   function currentSkin() {
-    return document.body.getAttribute('data-skin') === 'classic' ? 'classic' : 'siren';
+    return _validSkin(document.body.getAttribute('data-skin'));
   }
   function applySkinPalette() {
     const skin = currentSkin();
     const dark = document.body.getAttribute('data-theme') === 'dark';
-    const attr = skin === 'classic' ? _SKIN_ATTR_COLORS.classic : (dark ? _SKIN_ATTR_COLORS.sirenDark : _SKIN_ATTR_COLORS.sirenLight);
+    const attr = _SKIN_ATTR_COLORS[skin + (dark ? 'Dark' : 'Light')] || _SKIN_ATTR_COLORS.sirenLight;
     Object.assign(colors, attr);
-    Object.assign(RANK_COLOR, _SKIN_RANK_COLORS[skin]);
+    Object.assign(RANK_COLOR, _SKIN_RANK_COLORS[skin] || _SKIN_RANK_COLORS.siren);
   }
   // CSS 변수 값 읽기 (차트처럼 색을 JS 로 넘겨야 하는 곳용)
   function themeVar(name, fallback) {
@@ -7223,7 +7775,7 @@
   function themeAccent() { return themeVar('--accent', '#007bff'); }
 
   function setSkin(skin) {
-    const key = skin === 'classic' ? 'classic' : 'siren';
+    const key = _validSkin(skin);
     document.body.setAttribute('data-skin', key);
     try { localStorage.setItem('skin', key); } catch (_) {}
     applySkinPalette();
@@ -7243,9 +7795,10 @@
     if (e) e.stopPropagation();
     const menu = document.getElementById('skin-menu');
     if (!menu) return;
-    if (menu.style.display === 'block') { menu.style.display = 'none'; return; }
+    if (menu.style.display === 'block') { _closeSkinMenu(); return; }
     _renderSkinMenu();
     menu.style.display = 'block';
+    _scheduleSkinMenuClose();
     const btn = e && e.currentTarget;
     if (btn && btn.getBoundingClientRect) {
       const r = btn.getBoundingClientRect();
@@ -7272,14 +7825,29 @@
       '<div class="skin-menu-title">모드</div>' +
       '<div class="skin-mode-row">' + modeBtn(false, 'fa-sun', '라이트') + modeBtn(true, 'fa-moon', '다크') + '</div>';
   }
+  // 테마 메뉴 자동 닫힘 — 동작 메뉴와 같은 시간, 메뉴 안에서 움직이거나 누르면 다시 셈
+  let _skinMenuTimer = null;
+  function _closeSkinMenu() {
+    const menu = document.getElementById('skin-menu');
+    if (menu) menu.style.display = 'none';
+    if (_skinMenuTimer) { clearTimeout(_skinMenuTimer); _skinMenuTimer = null; }
+  }
+  function _scheduleSkinMenuClose() {
+    if (_skinMenuTimer) clearTimeout(_skinMenuTimer);
+    _skinMenuTimer = setTimeout(_closeSkinMenu, _ACTION_MENU_AUTO_MS);
+  }
   document.addEventListener('click', (e) => {
     const menu = document.getElementById('skin-menu');
     if (!menu || menu.style.display !== 'block') return;
-    if (menu.contains(e.target)) return;
-    menu.style.display = 'none';
+    if (menu.contains(e.target)) { _scheduleSkinMenuClose(); return; }
+    _closeSkinMenu();
   });
+  document.addEventListener('pointermove', (e) => {
+    const menu = document.getElementById('skin-menu');
+    if (menu && menu.style.display === 'block' && menu.contains(e.target)) _scheduleSkinMenuClose();
+  }, { passive: true });
 
-  // 세이렌 배경 비눗방울 (구버전에서는 비움)
+  // 세이렌 배경 비눗방울 (다른 테마에서는 비움)
   function _syncSirenSea() {
     const sea = document.getElementById('siren-sea');
     if (!sea) return;
@@ -7332,6 +7900,8 @@
     }
     const nikkeVisible = document.getElementById('section-nikke')?.style.display === 'block';
     if (nikkeVisible && typeof renderNikkeStats === 'function') setTimeout(() => renderNikkeStats(), 50);
+    const bossVisible = document.getElementById('section-boss')?.style.display === 'block';
+    if (bossVisible && typeof renderBossStats === 'function') setTimeout(() => renderBossStats(), 50);
   }
 
   // 라이트/다크 테마 토글 + 현재 보이는 차트 재렌더
@@ -7542,8 +8112,23 @@
     // 캡처에 섞이면 안 되는 오버레이들 (도로 홀로그램 · 이스터에그 · 시트 버전 팝업)
     // 팝업 캡처 모드에서는 target 이 어차피 팝업 내부라 body 오버레이는 캡처 안 되지만, 안전 차원에서 함께 감춤
     const overlaysToHide = document.querySelectorAll(
-      '#doro-holo-overlay, #easter-egg, #sheet-version-popup, #siren-sea'
+      '#doro-holo-overlay, #easter-egg, #sheet-version-popup, #siren-sea, #uls-tip'
     );
+
+    // 날아다니는 도로(맨 앞 캔버스) — 지금 화면 그대로 떠 두었다가 결과 그림의 같은 자리에 합성 (페이지 캡처만)
+    const swarmEl = document.getElementById('doro-swarm');
+    let swarmShot = null;
+    if (swarmEl && !isPopUpOpen) {
+      try {
+        swarmEl.getContext('2d').getImageData(0, 0, 1, 1); // 다른 사이트 이미지로 오염됐으면 여기서 실패 → 합성 안 함
+        swarmShot = document.createElement('canvas');
+        swarmShot.width = swarmEl.width; swarmShot.height = swarmEl.height;
+        swarmShot.getContext('2d').drawImage(swarmEl, 0, 0);
+        const br = target.getBoundingClientRect();
+        swarmShot._x = -br.left; swarmShot._y = -br.top;
+      } catch (_) { swarmShot = null; }
+    }
+    if (swarmEl) { swarmEl.dataset.captureHidden = swarmEl.style.display || ''; swarmEl.style.display = 'none'; }
 
     btnGroups.forEach(el => el.style.display = 'none');
     overlaysToHide.forEach(el => {
@@ -7553,6 +8138,7 @@
     clearAllPortaledTooltips();
 
     const restoreUI = () => {
+      if (swarmEl) { swarmEl.style.display = swarmEl.dataset.captureHidden || ''; delete swarmEl.dataset.captureHidden; }
       btnGroups.forEach(el => el.style.display = 'flex');
       overlaysToHide.forEach(el => {
         el.style.display = el.dataset.captureHidden || '';
@@ -7824,6 +8410,11 @@
           }
         }).then(canvas => {
           restoreUI();
+          if (swarmShot) {
+            // html2canvas scale:2 기준 — 화면 왼쪽 위(0,0)는 캡처 그림의 (target 기준 스크롤 위치)
+            const k = 2;
+            canvas.getContext('2d').drawImage(swarmShot, swarmShot._x * k, swarmShot._y * k, window.innerWidth * k, window.innerHeight * k);
+          }
           const link = document.createElement('a');
           link.download = filename;
           link.href = canvas.toDataURL('image/png');
@@ -7840,14 +8431,16 @@
   }
 
   // 딜량 포맷
+  // 숫자와 단위 사이는 줄이 안 바뀌게 — 좁은 칸에서 "6012.52" / "억" 처럼 두 줄로 밀려 카드 · 막대 높이가 어긋나던 문제
+  //   \u2060 = 폭 없는 줄바꿈 금지 문자, \u00a0 = 줄바꿈 안 되는 공백
   function formatDmg(val) {
     if (val >= 1000000000000) {
       const jo = Math.floor(val / 1000000000000);
       const eok = Math.floor((val % 1000000000000) / 100000000);
-      return eok > 0 ? `${jo}조 ${eok}억` : `${jo}조`;
+      return eok > 0 ? `${jo}\u2060조\u00a0${eok}\u2060억` : `${jo}\u2060조`;
     }
-    if (val >= 100000000) return (val / 100000000).toFixed(2) + "억";
-    if (val > 0) return Number((val / 10000).toFixed(2)).toLocaleString(undefined, { minimumFractionDigits: 2 }) + "만";
+    if (val >= 100000000) return (val / 100000000).toFixed(2) + "\u2060억";
+    if (val > 0) return Number((val / 10000).toFixed(2)).toLocaleString(undefined, { minimumFractionDigits: 2 }) + "\u2060만";
     return "0";
   }
 
@@ -7855,8 +8448,8 @@
   function formatHp(val, useShort = true) {
     if (!val || val <= 0) return useShort ? '0' : '0';
     if (useShort) {
-      if (val >= 100000000) return (val / 100000000).toFixed(1) + '억';
-      if (val >= 10000) return Math.round(val / 10000) + '만';
+      if (val >= 100000000) return (val / 100000000).toFixed(1) + '\u2060억';
+      if (val >= 10000) return Math.round(val / 10000) + '\u2060만';
       return val.toLocaleString();
     }
     return val.toLocaleString();
@@ -8306,7 +8899,20 @@
     { type: 'end' },
   ];
 
+  // 보스 통계
+  const TOUR_STEPS_BOSS = [
+    {
+      type: 'explain',
+      targets: () => [document.getElementById('bs-rank-grid')].filter(Boolean),
+      title: '<b>보스 순위</b>',
+      desc: '역대 회차의 <b>난이도가 가장 높았던 / 낮았던 보스</b>와<br><b>가장 많이 / 적게 맞은 보스</b>를 볼 수 있어요.<br>맞은 횟수는 <b>누적</b>과 <b>회당 평균</b> 중 고를 수 있어요.',
+      position: 'bottom',
+    },
+    { type: 'end' },
+  ];
+
   const TOUR_TABS = {
+    boss:     TOUR_STEPS_BOSS,
     total:    TOUR_STEPS_TOTAL,
     raid:     TOUR_STEPS_RAID,
     nikke:    TOUR_STEPS_NIKKE,
@@ -8334,6 +8940,7 @@
     const map = [
       ['raid-total-content', 'total'],
       ['section-nikke', 'nikke'],
+      ['section-boss', 'boss'],
       ['section-personal', 'personal'],
       ['section-growth', 'growth'],
       ['section-raid', 'raid'],
@@ -8807,7 +9414,7 @@
     });
   }
 </script>
-<!-- 261030 레이드 통계 — NO RECORD 덮개가 지표 안내 등 팝업 위로 올라오던 문제(z-index 9000→500) / 261023 레이드 통계 — 보스 상세 효율·기여도를 타격별로(막타 제외 평균 기준) · 요약 묶음 · Level 표기 · 코멘트 링크 · 세이렌 도넛 · 산점도 축/격자 테마 색 -->
+<!-- 261102 레이드 통계 — Level × DMG 추세선을 20n+1 공격력 구간 기반 효율 100% 기준선(a × 공격력, 계단형, β 안 씀)으로 · 멤버 효율에서 막타 제외(지표 안내와 맞춤 · 기여도는 포함) / 261030 레이드 통계 — NO RECORD 덮개가 지표 안내 등 팝업 위로 올라오던 문제(z-index 9000→500) / 261023 레이드 통계 — 보스 상세 효율·기여도를 타격별로(막타 제외 평균 기준) · 요약 묶음 · Level 표기 · 코멘트 링크 · 세이렌 도넛 · 산점도 축/격자 테마 색 -->
 <script>
   let currentRaidSort = 'dmg';
   let currentDetailSort = 'dmg';
@@ -9176,6 +9783,8 @@
     getRaidRows(raidTitle).forEach(r => {
       const bossName = String(r[RAID_COL.BOSS] || "").trim();
       if (!bossName) return; // 타격 기록만
+      // 막타 제외 — 남은 HP 만큼만 들어가 효율을 끌어내림 (지표 안내 "막타 제외" 와 맞춤, 기여도에는 포함)
+      if (String(r[RAID_COL.LAST]).trim().toUpperCase() === "O") return;
       const name = normalizeName(r[RAID_COL.NAME]);
       if (!name) return;
 
@@ -10396,6 +11005,7 @@
           <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
             <div style="width:3px; height:14px; background:var(--accent);"></div>
             <span style="font-family:'Rajdhani',sans-serif; font-size:13px; font-weight:700; letter-spacing:3px; color:var(--text-dim,#6b7280); text-transform:uppercase;">Level × DMG Distribution</span>
+            <span id="boss_scatter_note" style="margin-left:auto; font-family:'Noto Sans KR',sans-serif; font-size:12px; color:var(--text-dim,#6b7280);"></span>
           </div>
           <div id="boss_scatter_chart" style="width:100%; height:406px;"></div>
         </div>
@@ -10783,8 +11393,51 @@
       },
     };
 
+    // 추세선 — 20n+1 공격력 구간표 기반 기대딜 = a × 공격력(Lv) (효율 계산과 같은 가정: 딜은 공격력에 비례)
+    //   a = 막타 제외 타격의 (딜 ÷ 공격력) 평균 → 이 선 위 = 보스 표 효율 100% 초과, 아래 = 미만
+    //   공격력이 20n+1 레벨에서 다음 구간으로 넘어가므로 선이 계단 모양
+    const fit = _fitAtkTrend(scatterData);
+    const note = document.getElementById('boss_scatter_note');
+    let drawData = scatterData;
+    if (fit) {
+      drawData = scatterData.clone();
+      drawData.addColumn('number', '기대딜');
+      const lo = Math.max(40, Math.ceil(xStart)), hi = Math.floor(xEnd);
+      for (let L = lo; L <= hi; L++) {
+        const atk = calcAtk(L);
+        if (atk > 0) drawData.addRow([L, null, null, null, null, null, null, fit.a * Math.pow(atk, fit.beta)]);
+      }
+      delete options.trendlines;
+      options.series = {
+        2: { lineWidth: 2, pointSize: 0, color: themeVar('--chart-trend', isDark ? '#ff9800' : '#007bff'),
+             visibleInLegend: false, enableInteractivity: false },
+      };
+      if (note) {
+        note.textContent = '선 = 효율 100% 기준';
+        note.title = '추세선: 레벨별 공격력(20n+1 레벨마다 다음 구간)에 비례한 기대딜 · 막타 제외 ' + fit.n + '타 기준\n선보다 위에 있는 타격은 보스 표 효율 100% 초과';
+      }
+    } else if (note) {
+      note.textContent = '';
+    }
+
     const chart = new google.visualization.ScatterChart(chartContainer);
-    chart.draw(scatterData, options);
+    chart.draw(drawData, options);
+  }
+
+  // 산점도의 일반 타격(막타 제외)으로 기대딜 = a × 공격력 의 a 를 구함 (β = 1 고정)
+  //   한 유니온 · 한 보스 표본(20~30타)으로는 β(공격력 민감도)가 크게 흔들려서 구하지 않음
+  //   a = (딜 ÷ 공격력) 평균 — 보스 표 효율의 기준(막타 제외 레벨보정 딜 평균)과 같은 값이 되게
+  function _fitAtkTrend(dt) {
+    let sum = 0, n = 0;
+    for (let i = 0; i < dt.getNumberOfRows(); i++) {
+      const lv = dt.getValue(i, 0), dmg = dt.getValue(i, 1);
+      if (lv == null || dmg == null || !(dmg > 0)) continue;
+      const atk = calcAtk(lv);
+      if (!(atk > 0)) continue;
+      sum += dmg / atk; n++;
+    }
+    if (n < 1) return null;
+    return { a: sum / n, beta: 1, n };
   }
 
   // 성장 비교 팝업 — 현재 회차 + 해당 보스 이전 등장 회차 전체
@@ -10988,7 +11641,7 @@
     }
   }
 </script>
-<!-- 261021 종합 뷰 — Raid History 이동 시 칩 줄 갱신 · 증감/선 색 테마 변수 · ∞ 타일 4단계 딜량 · 빈 회차 표시 -->
+<!-- 261102 종합 뷰 — 차트는 기록 있는 회차 범위만 · Member DMG Trend 왼쪽 눈금 잘림 수정 / 261021 종합 뷰 — Raid History 이동 시 칩 줄 갱신 · 증감/선 색 테마 변수 · ∞ 타일 4단계 딜량 · 빈 회차 표시 -->
 <script>
   let totalDmgChart = null;
   let totalDmgData = null;
@@ -11524,7 +12177,7 @@
     }
 
     if (typeof google !== 'undefined' && google.visualization) {
-      const raidLabels = titles.slice(1).map(t => String(t || '').trim()).filter(Boolean);
+      const raidLabels = chartRaidTitles().map(t => String(t || '').trim()).filter(Boolean);
       drawLastHitAvgChart(raidLabels, lastByRaid);
       drawAttrTrendChart('td-attr-hits-chart', raidLabels, attrByRaid, attrByRaidBoss, 'hits');
       drawAttrTrendChart('td-attr-dmg-chart',  raidLabels, attrByRaid, attrByRaidBoss, 'dmg');
@@ -11757,6 +12410,11 @@
 
     // 데이터가 2개 미만이면 그래프 의미 없음
     if (validRows.length < 2) { _trendEmpty(container); return; }
+    // 순위가 하나도 없는 앞 · 뒤 끝 회차는 뺌 (중간 빈 회차는 '?' 로 자리 유지)
+    const firstValid = allRows.indexOf(validRows[0]);
+    const lastValid  = allRows.indexOf(validRows[validRows.length - 1]);
+    allRows.splice(lastValid + 1);
+    allRows.splice(0, firstValid);
 
     const chartData = new google.visualization.DataTable();
     chartData.addColumn('string', '회차');
@@ -11842,7 +12500,7 @@
     const container = document.getElementById('union-dmg-trend-chart');
     if (!container || !db.raidStats || !db.bossData) return;
 
-    const labels = db.bossData[0].slice(1);
+    const labels = chartRaidTitles();
 
     // 회차별 전체 딜량 합산
     const dmgByRaid = {};
@@ -11910,7 +12568,7 @@
     const container = document.getElementById('total-member-dmg-chart');
     if (!container || !db.raidStats) return;
 
-    const labels = db.bossData[0].slice(1);
+    const labels = chartRaidTitles();
 
     // 현재 멤버 (탈퇴자 제외)
     const currentMemberSet = new Set(
@@ -12029,7 +12687,7 @@
     const options = {
       tooltip: { isHtml: true, trigger: 'both' },
       backgroundColor: 'transparent',
-      chartArea: { left: 40, right: 40, width: '90%', height: '80%', backgroundColor: 'transparent' },
+      chartArea: { left: 72, right: 24, width: '90%', height: '80%', backgroundColor: 'transparent' }, // 왼쪽 딜량 눈금 글자 안 잘리게
       curveType: 'none',
       legend: { position: 'none' },
       series: seriesOptions,
@@ -12052,7 +12710,7 @@
     totalDmgChart.draw(totalDmgData, options);
   }
 </script>
-<!-- 261021 멤버 상세 — 딜량 추이 빈 회차 표시/좌우 꽉 채움 · 증감·축 색 테마 변수 · 속성 행 클래스(m-attr-row) -->
+<!-- 261102 멤버 상세 — 딜량 추이는 기록 있는 회차 범위만 / 261021 멤버 상세 — 딜량 추이 빈 회차 표시/좌우 꽉 채움 · 증감·축 색 테마 변수 · 속성 행 클래스(m-attr-row) -->
 <div id="member-detail-overlay" onclick="closeMemberDetail(event)">
   <button id="m-nav-prev" class="member-nav-btn left" onclick="navigateMember(-1, event)" aria-label="이전 멤버">‹</button>
   <button id="m-nav-next" class="member-nav-btn right" onclick="navigateMember(1, event)" aria-label="다음 멤버">›</button>
@@ -12410,7 +13068,7 @@
 
   // 역대 누적 딜량 그래프
   function drawMemberHistoryChart(name) {
-    const labels = db.bossData[0].slice(1);
+    const labels = chartRaidTitles();
     const historyData = new google.visualization.DataTable();
     historyData.addColumn('string', '회차');
     historyData.addColumn('number', '딜량');
@@ -12504,7 +13162,7 @@
     });
   })();
 </script>
-<!-- 261021 싱크로 통계 — 강조/하락/라벨 색 테마 변수 · 펼친 패널 클래스(md-panel) -->
+<!-- 261102 싱크로 통계 — 멤버 펼친 패널 표는 최근 회차부터 · 레벨/상승량 분포 막대에 마우스 올리면 그 구간 멤버 목록(레벨 분포는 레벨 순 · 상승량 분포는 상승량 순) / 261021 싱크로 통계 — 강조/하락/라벨 색 테마 변수 · 펼친 패널 클래스(md-panel) -->
 <script>
   // 전체 멤버 레벨 변화 차트
   function renderFullChart() {
@@ -12657,7 +13315,7 @@
             <div id="member-inline-chart-${name}" style="width:100%; height:330px;"></div>
           </div>
 
-          <!-- 우: 전체 회차 기록 표 (세로, 스크롤) -->
+          <!-- 우: 전체 회차 기록 표 (세로, 스크롤 · 최근 회차가 맨 위) -->
           <div style="max-height:450px; overflow-y:auto; overflow-x:hidden; border:1px solid var(--border-bright);">
             <table style="width:100%; border-collapse:collapse; table-layout:auto;">
               <thead style="position:sticky; top:0; z-index:1;">
@@ -12685,7 +13343,7 @@
                     <td style="padding:7px 12px; text-align:center; font-family:'Rajdhani',sans-serif; font-weight:700; font-size:14px; ${isLast ? 'color:var(--accent);' : ''}">${curr}</td>
                     <td style="padding:7px 12px; text-align:center; font-family:'Rajdhani',sans-serif; font-size:13px;">${diff !== null ? diffHtml : '-'}</td>
                   </tr>`;
-                }).join('')}
+                }).reverse().join('')}
               </tbody>
             </table>
           </div>
@@ -12965,13 +13623,14 @@
     const grid = document.getElementById('union-summary-grid');
     if (!grid || !rawMembers || rawMembers.length === 0) return;
 
-    // 각 멤버의 최신(마지막 회차 이전까지 최근) 레벨 뽑기
+    // 각 멤버의 최신(마지막 회차 이전까지 최근) 레벨 뽑기 — 툴팁용으로 이름도 같이
     const latestLevels = [];
+    const latestOf = {};
     rawMembers.forEach(m => {
       const lv = m.levels || [];
       for (let i = lv.length - 1; i >= 0; i--) {
         const v = Number(lv[i]);
-        if (v > 0) { latestLevels.push(v); return; }
+        if (v > 0) { latestLevels.push(v); latestOf[m.name] = v; return; }
       }
     });
     if (latestLevels.length === 0) { grid.innerHTML = ''; return; }
@@ -12995,12 +13654,13 @@
 
     // 최근 회차 상승량 (직전 회차 → 최근 회차) — 상승량 분포 차트 용
     const latestGrowths = [];
+    const growthOf = {};
     rawMembers.forEach(m => {
       const lv = m.levels || [];
       if (lv.length < 2) return;
       const c = Number(lv[lv.length - 1]);
       const p = Number(lv[lv.length - 2]);
-      if (c > 0 && p > 0) latestGrowths.push(c - p);
+      if (c > 0 && p > 0) { latestGrowths.push(c - p); growthOf[m.name] = c - p; }
     });
 
     // 레벨 분포 (20 단위 bin)
@@ -13020,6 +13680,15 @@
     };
     const levelBins  = buildBins(latestLevels, 20);
     const growthBins = buildBins(latestGrowths, 5);
+    // 구간별 멤버 (툴팁)
+    // 구간 안 순서: 레벨 분포는 레벨 높은 순, 상승량 분포는 상승량 큰 순 (같으면 레벨 · 이름)
+    const membersIn = (bin, size, valOf) => Object.keys(valOf)
+      .filter(n => Math.floor(valOf[n] / size) * size === bin.start)
+      .map(n => ({ name: n, lv: latestOf[n], g: growthOf[n], v: valOf[n] }))
+      .sort((a, b) => (b.v - a.v) || (b.lv || 0) - (a.lv || 0) || String(a.name).localeCompare(String(b.name), 'ko'));
+    levelBins.forEach(b => { b.members = membersIn(b, 20, latestOf); b.range = b.start + '~' + (b.start + 19); });
+    growthBins.forEach(b => { b.members = membersIn(b, 5, growthOf); b.range = '+' + b.start + '~' + (b.start + 4); });
+    _ulsBins = { level: levelBins, growth: growthBins };
     const maxLevelCount  = Math.max(1, ...levelBins.map(f => f.count));
     const maxGrowthCount = Math.max(1, ...growthBins.map(f => f.count));
 
@@ -13037,13 +13706,13 @@
       });
       return m;
     };
-    const barsHtml = (bins, maxCount, unitSuffix) => {
+    const barsHtml = (bins, maxCount, unitSuffix, kind) => {
       const satMap = _uniqOpacity(bins.map(b => b.count));
-      return bins.map(b => {
+      return bins.map((b, i) => {
         const pct = b.count > 0 ? Math.max(4, Math.round((b.count / maxCount) * 100)) : 0;
         const sat = b.count > 0 ? satMap.get(b.count) : 1;
         return `
-          <div class="uls-bin">
+          <div class="uls-bin" data-kind="${kind}" data-i="${i}">
             <div class="uls-bin-value">${b.count > 0 ? b.count : ''}</div>
             <div class="uls-bin-bar-col">
               ${pct > 0 ? `<div class="uls-bin-bar-fill" style="height:${pct}%; opacity:${sat};"></div>` : ''}
@@ -13070,7 +13739,7 @@
           <span class="uls-dist-sub">20 단위</span>
         </div>
         <div class="uls-dist-bars">
-          ${barsHtml(levelBins, maxLevelCount, '')}
+          ${barsHtml(levelBins, maxLevelCount, '', 'level')}
         </div>
       </div>
       <div class="uls-dist">
@@ -13079,13 +13748,53 @@
           <span class="uls-dist-sub">5 단위 · 최근 회차</span>
         </div>
         <div class="uls-dist-bars">
-          ${barsHtml(growthBins, maxGrowthCount, '')}
+          ${barsHtml(growthBins, maxGrowthCount, '', 'growth')}
         </div>
       </div>`;
+    _bindUlsTip(grid);
+  }
+
+  // ── 분포 막대 툴팁 — 그 구간 멤버를 레벨 높은 순으로 ──
+  let _ulsBins = { level: [], growth: [] };
+  function _bindUlsTip(grid) {
+    if (grid._ulsTipBound) return;
+    grid._ulsTipBound = true;
+    const tip = () => {
+      let t = document.getElementById('uls-tip');
+      if (!t) { t = document.createElement('div'); t.id = 'uls-tip'; document.body.appendChild(t); }
+      return t;
+    };
+    const hide = () => { const t = document.getElementById('uls-tip'); if (t) t.style.display = 'none'; };
+    const place = (t, x, y) => {
+      const w = t.offsetWidth, h = t.offsetHeight, pad = 12;
+      let left = x + 14, top = y + 14;
+      if (left + w > window.innerWidth - pad) left = Math.max(pad, x - w - 14);
+      if (top + h > window.innerHeight - pad) top = Math.max(pad, y - h - 14);
+      t.style.left = left + 'px'; t.style.top = top + 'px';
+    };
+    const show = (binEl, x, y) => {
+      const b = (_ulsBins[binEl.dataset.kind] || [])[Number(binEl.dataset.i)];
+      if (!b || !b.members || !b.members.length) { hide(); return; }
+      const isG = binEl.dataset.kind === 'growth';
+      const t = tip();
+      t.innerHTML =
+        '<div class="uls-tip-head">' + (isG ? '상승량 ' : 'Lv.') + b.range + ' · ' + b.members.length + '명</div>' +
+        b.members.map(m => '<div class="uls-tip-row"><span>' + String(displayName(m.name)).replace(/&/g, '&amp;').replace(/</g, '&lt;') + '</span>' +
+          '<b>Lv.' + (m.lv || '-') + (isG ? ' <em>+' + m.g + '</em>' : '') + '</b></div>').join('');
+      t.style.display = 'block';
+      place(t, x, y);
+    };
+    grid.addEventListener('mousemove', e => {
+      const binEl = e.target.closest('.uls-bin');
+      if (!binEl) { hide(); return; }
+      show(binEl, e.clientX, e.clientY);
+    });
+    grid.addEventListener('mouseleave', hide);
+    window.addEventListener('scroll', hide, { passive: true });
   }
 </script>
 
-<!-- 261021 개인 기록 — 증감 색 테마 변수 · Damage Trend 빈 회차 포함 · Most Deployed 이름 표기 -->
+<!-- 261102 개인 기록 — 속성/버스트 작은 아이콘 위치를 괄호 위치로 · Damage Trend 는 기록 있는 회차 범위만 / 261021 개인 기록 — 증감 색 테마 변수 · Damage Trend 빈 회차 포함 · Most Deployed 이름 표기 -->
 <script>
   let _personalCtx = null;
   let _personalSort = 'no';      // 'no' | 'name' | 'level'
@@ -13593,30 +14302,29 @@
     const NIKKE_ICON_FIELDS_2x2 = ['속성', '버스트', '클래스', '총기']; // 소속 제외
     const NIKKE_ICON_INVERT = new Set(['버스트', '클래스', '총기', '소속']);
     const DUAL_FIELDS = new Set(['속성', '버스트']);
+    // "주(부)" → 작은 아이콘 우상단 · "(부)주" → 좌상단 (니케 통계와 같은 규칙)
     const parseDual = (raw) => {
       const s = String(raw || '').trim();
-      const m = s.match(/^(.+?)\s*\(\s*(.+?)\s*\)\s*$/);
-      if (m) return { primary: m[1].trim(), secondary: m[2].trim() };
-      return { primary: s, secondary: '' };
+      let m = s.match(/^(.+?)\s*\(\s*(.+?)\s*\)\s*$/);
+      if (m) return { primary: m[1].trim(), secondary: m[2].trim(), side: 'right' };
+      m = s.match(/^\(\s*(.+?)\s*\)\s*(.+?)\s*$/);
+      if (m) return { primary: m[2].trim(), secondary: m[1].trim(), side: 'left' };
+      return { primary: s, secondary: '', side: '' };
     };
     const buildIconHtml = (nData, f) => {
       const colIdx = NIKKE_COL[f];
       const raw = (colIdx !== undefined && nData) ? String(nData[colIdx] || '').trim() : '';
-      let primary = raw, secondary = '';
+      let primary = raw, secondary = '', side = '';
       if (DUAL_FIELDS.has(f) && raw) {
         const p = parseDual(raw);
-        primary = p.primary; secondary = p.secondary;
+        primary = p.primary; secondary = p.secondary; side = p.side;
       }
       const url  = primary   ? (typeof findImgByName === 'function' ? findImgByName(primary)   : '') : '';
       const url2 = secondary ? (typeof findImgByName === 'function' ? findImgByName(secondary) : '') : '';
       if (!url && !url2) return `<div class="nikke-icon-empty" data-tt="${f}: -"></div>`;
       const invertCls = NIKKE_ICON_INVERT.has(f) ? ' nikke-icon-invert' : '';
       if (DUAL_FIELDS.has(f) && secondary && url2) {
-        let posCls = 'dual-attr';
-        if (f === '버스트') {
-          const sNum = Number(secondary), pNum = Number(primary);
-          posCls = (sNum < pNum) ? 'dual-burst-left' : 'dual-burst-right';
-        }
+        const posCls = side === 'left' ? 'dual-left' : 'dual-right';
         const tt = `${f}: ${primary} (${secondary})`;
         return `<div class="nikke-icon nikke-icon-dual ${posCls}${invertCls}" data-tt="${tt}">
           <img class="ni-primary" src="${url}">
@@ -13707,7 +14415,7 @@
 
       const perfByTitle = {};
       raidPerf.forEach(r => { perfByTitle[r.title] = r; });
-      const allTitles = (db.bossData[0] || []).slice(1).map(t => String(t || '').trim()).filter(Boolean);
+      const allTitles = chartRaidTitles().map(t => String(t || '').trim()).filter(Boolean);
       const firstIdx = allTitles.findIndex(t => perfByTitle[t]);
       // 첫 참여 회차부터 최신 회차까지. 참여 안 한 회차는 { title, empty: true } 로 빈 자리 유지
       const sorted = firstIdx === -1
@@ -14066,7 +14774,7 @@
   }
 </script>
 
-<!-- 260714 니케 통계 — 속성 정렬 3-state 토글 + tiebreak 안정화 -->
+<!-- 261102 니케 통계 — 속성/버스트 작은 아이콘 위치를 괄호 위치로: 주(부)=우상단 · (부)주=좌상단 / 260714 니케 통계 — 속성 정렬 3-state 토글 + tiebreak 안정화 -->
 <script>
   // 정렬/검색/필터 상태
   let _nikkeSort = 'count';
@@ -14087,12 +14795,15 @@
   const _SOSOK_OVERSPEC = new Set(['엘리시온', '미실리스', '테트라']);
   const _SOSOK_SUFFIX = '(오)';
 
-  // "주(부)" 셀 파싱 (속성/버스트 전용; 소속 (오) 는 별도 처리)
+  // "주(부)" · "(부)주" 셀 파싱 (속성/버스트 전용; 소속 (오) 는 별도 처리)
+  //   side: 괄호가 뒤에 있으면 'right'(작은 아이콘 우상단), 앞에 있으면 'left'(좌상단)
   function parseDualValue(raw) {
     const s = String(raw || '').trim();
-    const m = s.match(/^(.+?)\s*\(\s*(.+?)\s*\)\s*$/);
-    if (m) return { primary: m[1].trim(), secondary: m[2].trim() };
-    return { primary: s, secondary: '' };
+    let m = s.match(/^(.+?)\s*\(\s*(.+?)\s*\)\s*$/);
+    if (m) return { primary: m[1].trim(), secondary: m[2].trim(), side: 'right' };
+    m = s.match(/^\(\s*(.+?)\s*\)\s*(.+?)\s*$/);
+    if (m) return { primary: m[2].trim(), secondary: m[1].trim(), side: 'left' };
+    return { primary: s, secondary: '', side: '' };
   }
   const _DUAL_FIELDS = new Set(['속성', '버스트']);
 
@@ -14392,15 +15103,15 @@
       const icons = _NIKKE_ICON_FIELDS.map(f => {
         const colIdx = NIKKE_COL[f];
         const raw = (nData && colIdx !== undefined) ? String(nData[colIdx] || '').trim() : '';
-        let primary = raw, secondary = '';
+        let primary = raw, secondary = '', side = '';
         if (_DUAL_FIELDS.has(f) && raw) {
           const p = parseDualValue(raw);
-          primary = p.primary; secondary = p.secondary;
+          primary = p.primary; secondary = p.secondary; side = p.side;
         }
         return {
           field: f,
           value: raw,
-          primary, secondary,
+          primary, secondary, side,
           url:  primary   ? findImgByName(primary)   : '',
           url2: secondary ? findImgByName(secondary) : ''
         };
@@ -14533,11 +15244,7 @@
 
         // dual 표시 — 속성/버스트 + secondary 존재
         if (_DUAL_FIELDS.has(ic.field) && ic.secondary && ic.url2) {
-          let posCls = 'dual-attr';
-          if (ic.field === '버스트') {
-            const sNum = Number(ic.secondary), pNum = Number(ic.primary);
-            posCls = (sNum < pNum) ? 'dual-burst-left' : 'dual-burst-right';
-          }
+          const posCls = ic.side === 'left' ? 'dual-left' : 'dual-right';
           const tt = `${ic.field}: ${ic.primary} (${ic.secondary})`;
           // invert는 컨테이너에 적용 → 단일 외곽 테두리/배경 그대로 invert (내부 img는 색 그대로)
           return `<div class="nikke-icon nikke-icon-dual ${posCls}${invertCls}" data-tt="${tt}">
@@ -14746,6 +15453,147 @@
     document.body.style.overflow = '';
     document.documentElement.style.overflow = '';
     document.body.classList.remove('popup-open');
+  }
+</script>
+
+<!-- 261102 보스 통계 탭 — 회차 구분 없이 전체 기록을 보스 기준으로: 역대 난이도 높은/낮은 보스 · 많이/적게 맞은 보스 (큰 보스 이미지 타일 5칸) -->
+<script>
+  // 많이/적게 맞은 보스 기준 — 'total' 누적 타수 · 'avg' 등장 1회당 평균 타수
+  let _bossHitMode = 'total';
+
+  function initBossTab() {
+    renderBossStats();
+  }
+
+  // 보스별 집계 — 레이드 통계에 기록이 있는 회차만
+  //   apps: 등장 회차마다 { title, attr, diff(그 회차 난이도 %), hits, dmg }
+  function _collectBossStats() {
+    const titles = (db.bossData && db.bossData[0]) || [];
+    const bosses = {};
+    let raidCount = 0;
+
+    for (let c = 1; c < titles.length; c++) {
+      const t = String(titles[c] || '').trim();
+      if (!t) continue;
+      const rows = getRaidRows(t).filter(r => String(r[RAID_COL.BOSS] || '').trim() !== '');
+      if (rows.length === 0) continue;
+      raidCount++;
+      const diff = typeof calcBossDifficulty === 'function' ? (calcBossDifficulty(t).score || {}) : {};
+
+      const appOf = {};
+      for (let i = 1; i <= 5; i++) {
+        const nameRow = getRowIdx(`보스${i}`), attrRow = getRowIdx(`속성${i}`);
+        if (nameRow === -1) continue;
+        const name = String(db.bossData[nameRow][c] || '').trim();
+        if (!name) continue;
+        const attr = attrRow !== -1 ? String(db.bossData[attrRow][c] || '').trim() : '';
+        const b = bosses[name] || (bosses[name] = { name, attr, apps: [], hits: 0, dmg: 0 });
+        if (attr) b.attr = attr; // 최근 회차 속성
+        const app = { title: t, attr, diff: diff[name], hits: 0, dmg: 0 };
+        b.apps.push(app);
+        appOf[name] = app;
+      }
+
+      rows.forEach(r => {
+        const name = String(r[RAID_COL.BOSS]).trim();
+        const app = appOf[name];
+        if (!app) return;
+        const dmg = Number(r[RAID_COL.DMG]) || 0;
+        app.hits++; app.dmg += dmg;
+        bosses[name].hits++; bosses[name].dmg += dmg;
+      });
+    }
+    return { list: Object.values(bosses), raidCount };
+  }
+
+  function _bossImg(name) {
+    return IMG_COL.boss && IMG_COL.boss.name !== undefined ? findImgByName(name, IMG_COL.boss.name, IMG_COL.boss.img) : '';
+  }
+  const _bsEsc = s => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+  function _bsAttrChip(attr) {
+    if (!attr) return '';
+    const col = colors[attr] || 'var(--text-dim)';
+    return `<span class="bs-attr" style="--ac:${col};">${_bsEsc(attr)}</span>`;
+  }
+
+  function setBossHitMode(mode) {
+    _bossHitMode = mode === 'avg' ? 'avg' : 'total';
+    renderBossStats();
+  }
+
+  // 순위 타일 5칸 — 보스 이미지를 크게, 이름 · 회차 · 값은 이미지 아래쪽에 겹쳐 표시
+  //   item: { name, attr, sub, valHtml, valColor }
+  function _bsTiles(items) {
+    if (items.length === 0) return `<div class="td-hof-empty">데이터 부족</div>`;
+    return `<div class="bs-tiles">${items.map((e, i) => {
+      const url = _bossImg(e.name);
+      return `
+        <div class="bs-tile${i === 0 ? ' bs-tile-1' : ''}" style="--ac:${colors[e.attr] || 'var(--accent)'};">
+          <div class="bs-tile-img"${url ? ` style="background-image:url('${_bsEsc(url)}')"` : ''}></div>
+          <span class="bs-tile-rank">${i + 1}</span>
+          <div class="bs-tile-info">
+            <div class="bs-tile-name">${_bsEsc(e.name)} ${_bsAttrChip(e.attr)}</div>
+            <div class="bs-tile-sub">${e.sub}</div>
+            <div class="bs-tile-val"${e.valColor ? ` style="color:${e.valColor};"` : ''}>${e.valHtml}</div>
+          </div>
+        </div>`;
+    }).join('')}</div>`;
+  }
+
+  function renderBossStats() {
+    const rankEl = document.getElementById('bs-rank-grid');
+    const metaEl = document.getElementById('bs-meta');
+    if (!rankEl || !db.bossData || !db.raidStats) return;
+
+    const { list, raidCount } = _collectBossStats();
+    if (metaEl) metaEl.textContent = `${raidCount}개 회차 · 보스 ${list.length}종`;
+    if (list.length === 0) {
+      rankEl.innerHTML = `<div class="td-hof-empty">레이드 통계에 기록이 없어요</div>`;
+      return;
+    }
+
+    // ── 역대 난이도 — 보스 × 회차 단위 (회차 안 평균 = 100%) · 3타 미만은 표본이 적어 순위에서 뺌 ──
+    const diffEntries = [];
+    list.forEach(b => b.apps.forEach(a => { if (a.diff > 0 && a.hits >= 3) diffEntries.push({ name: b.name, attr: a.attr, title: a.title, diff: a.diff, hits: a.hits }); }));
+    const diffItem = e => ({
+      name: e.name, attr: e.attr, sub: `${_bsEsc(e.title)} · ${e.hits}타`,
+      valHtml: `${e.diff.toFixed(1)}<small>%</small>`, valColor: diffColor(e.diff)
+    });
+    const hardest = [...diffEntries].sort((a, b) => b.diff - a.diff).slice(0, 5).map(diffItem);
+    const easiest = [...diffEntries].sort((a, b) => a.diff - b.diff).slice(0, 5).map(diffItem);
+
+    // ── 많이/적게 맞은 보스 — 누적 타수 또는 등장 1회당 평균 타수 ──
+    const hitVal = b => _bossHitMode === 'avg' ? b.hits / Math.max(1, b.apps.length) : b.hits;
+    const byHits = [...list].sort((a, b) => hitVal(b) - hitVal(a) || b.dmg - a.dmg);
+    const hitItem = b => ({
+      name: b.name, attr: b.attr, sub: `등장 ${b.apps.length}회 · ${formatDmg(b.dmg)}`,
+      valHtml: `${_bossHitMode === 'avg' ? hitVal(b).toFixed(1) : hitVal(b).toLocaleString()}<small>타</small>`
+    });
+    const most = byHits.slice(0, 5).map(hitItem);
+    const least = [...byHits].reverse().slice(0, 5).map(hitItem);
+    const modeToggle = `
+      <div class="bs-toggle">
+        <button class="${_bossHitMode === 'total' ? 'on' : ''}" onclick="setBossHitMode('total')">누적</button>
+        <button class="${_bossHitMode === 'avg' ? 'on' : ''}" onclick="setBossHitMode('avg')">회당 평균</button>
+      </div>`;
+
+    const section = (title, desc, body, extra) => `
+      <div class="bs-section">
+        <div class="bs-section-head">
+          <div>
+            <div class="bs-section-title">${title}</div>
+            <div class="bs-section-desc">${desc}</div>
+          </div>
+          ${extra || ''}
+        </div>
+        ${body}
+      </div>`;
+    const avgLabel = _bossHitMode === 'avg' ? '등장 1회당 평균 타수' : '누적 타수';
+    rankEl.innerHTML =
+      section('가장 어려웠던 보스', '역대 회차별 난이도 TOP 5 · 그 회차 평균 = 100% · 3타 이상', _bsTiles(hardest)) +
+      section('가장 쉬웠던 보스', '역대 회차별 난이도 하위 5 · 3타 이상', _bsTiles(easiest)) +
+      section('가장 많이 맞은 보스', avgLabel + ' TOP 5', _bsTiles(most), modeToggle) +
+      section('가장 적게 맞은 보스', avgLabel + ' 하위 5', _bsTiles(least), modeToggle);
   }
 </script>
 
