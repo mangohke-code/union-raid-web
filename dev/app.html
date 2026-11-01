@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <script>window.APP_BUILD = '261102-0351'; window.APP_CHANNEL = 'dev';</script>
+  <script>window.APP_BUILD = '261102-0459'; window.APP_CHANNEL = 'dev';</script>
   <script>window.CURRENT_SHEET_VERSION = '{{SHEET_VERSION}}'; window.__perf = { appStart: performance.now() };</script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
@@ -11,7 +11,7 @@
 
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Bebas+Neue&family=Rajdhani:wght@600;700&family=Outfit:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,600;1,500;1,600&family=Noto+Serif+KR:wght@600;700&display=swap" rel="stylesheet">
 
-  <!-- 261102 — 이스터에그 이모티콘 젤리 모양 · 니케 속성/버스트 작은 아이콘 위치 = 괄호 위치(dual-left/right) · 보스 통계 탭(.bs-* · 순위 타일) · 싱크로 분포 막대 툴팁(#uls-tip) · 작은 도로 무리 캔버스(맨 앞) / 261028 — 최신 버전 알림 타이머 3초 · 정보 창 로딩 시간 · 제목 우상단 서버 표기 · 회차 선택 전체 회차 버튼/패널 · 폭 1760px · 테마 색 변수 · Most Deployed 배치 · 토스트 · 코멘트 링크 -->
+  <!-- 261102 — 이스터에그 이모티콘 사각형 유지 + 젤리 질감 · 니케 속성/버스트 작은 아이콘 위치 = 괄호 위치(dual-left/right) · 보스 통계 탭(.bs-* · 순위 타일) · 싱크로 분포 막대 툴팁(#uls-tip) · 작은 도로 무리 캔버스(맨 앞) / 261028 — 최신 버전 알림 타이머 3초 · 정보 창 로딩 시간 · 제목 우상단 서버 표기 · 회차 선택 전체 회차 버튼/패널 · 폭 1760px · 테마 색 변수 · Most Deployed 배치 · 토스트 · 코멘트 링크 -->
 <style>
   /* ===== CSS 변수 (테마) ===== */
   :root {
@@ -4769,7 +4769,7 @@
   }
 
   /* ===== 이스터에그 랜덤 이미지 ===== */
-  /* 젤리 — 둥근 모서리 · 위쪽 반사광 · 아래쪽 두께감 · 살짝 분홍빛 겉막. 출렁임/던지기는 JS(_makeJelly) */
+  /* 원래 사각형 모양 그대로 + 젤리 질감(위쪽 반사광 · 안쪽 두께감). 출렁임/던지기는 JS(_makeJelly) */
   #easter-egg {
     position: fixed;
     width: 96px;
@@ -4778,11 +4778,13 @@
     background-position: center 25%;
     background-repeat: no-repeat;
     background-color: var(--card);
-    border-radius: 30%;
+    border: 2px solid #000;
     box-shadow:
-      inset 0 -9px 16px rgba(120, 30, 70, 0.22),
-      inset 0 7px 12px rgba(255, 255, 255, 0.6),
-      0 10px 22px rgba(0, 0, 0, 0.28);
+      inset 0 -8px 14px rgba(0, 0, 0, 0.16),
+      inset 0 6px 10px rgba(255, 255, 255, 0.55),
+      0 0 12px rgba(0, 0, 0, 0.55),
+      0 6px 20px rgba(0, 0, 0, 0.4);
+    clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
     cursor: grab;
     touch-action: none;
     user-select: none;
@@ -4791,28 +4793,22 @@
     transform-origin: center;
     animation: easter-egg-in 0.45s ease-out;
   }
-  #easter-egg::before {   /* 반사광 */
+  #easter-egg::before {   /* 젤리 반사광 */
     content: '';
-    position: absolute; left: 14%; top: 8%; width: 44%; height: 22%;
+    position: absolute; left: 10%; top: 6%; width: 50%; height: 22%;
     border-radius: 50%;
-    background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0) 70%);
-    transform: rotate(-16deg);
-    pointer-events: none; z-index: 1;
-  }
-  #easter-egg::after {    /* 젤리 겉막 */
-    content: '';
-    position: absolute; inset: 0;
-    border-radius: inherit;
-    background: linear-gradient(160deg, rgba(255, 255, 255, 0.28) 0%, rgba(255, 170, 210, 0.16) 55%, rgba(255, 110, 175, 0.24) 100%);
+    background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0) 70%);
+    transform: rotate(-12deg);
     pointer-events: none;
   }
   #easter-egg.dragging { cursor: grabbing; }
   [data-theme='dark'] #easter-egg {
+    border-color: #000;
     box-shadow:
-      inset 0 -9px 16px rgba(120, 30, 70, 0.3),
-      inset 0 7px 12px rgba(255, 255, 255, 0.5),
-      0 0 18px rgba(255, 170, 210, 0.35),
-      0 10px 22px rgba(0, 0, 0, 0.5);
+      inset 0 -8px 14px rgba(0, 0, 0, 0.22),
+      inset 0 6px 10px rgba(255, 255, 255, 0.45),
+      0 0 14px rgba(255, 255, 255, 0.35),
+      0 6px 20px rgba(0, 0, 0, 0.5);
   }
   @keyframes easter-egg-in {
     from { transform: scale(0.4) rotate(-20deg); opacity: 0; }
@@ -6328,7 +6324,7 @@
   </button>
 </div>
 
-<!-- 261102 공용 — 이스터에그 이모티콘 젤리(출렁임 · 잡아서 던지기, 살짝 누르면 터짐) · 도로 꼬리 끝 완전 투명 · 보스 통계 탭 전환 · 가이드 · 테마 전환 다시 그리기 · 날아다니는 도로: 더 크고 빠르게 · 머리를 날아가는 방향으로 · 꼬리는 일정한 굵기 띠 · 무지개 색 간격 넓게 · 구버전 테마 삭제(테마 메뉴는 유지) · 테마 메뉴 자동 닫힘 · 시험판 이스터에그 100% · 작은 도로 맨 앞 · 꼬리 몸의 2배 · 캡처에 작은 도로 합성 · 도로 홀로그램 뒤 작은 도로 무리(별똥별 꼬리 · 무지개) · 딜량 · HP 표기 숫자와 단위 사이 줄바꿈 금지 · 차트 회차 목록 chartRaidTitles(기록 없는 앞뒤 회차 제외) · 캡처 때 분포 툴팁 숨김 / 261030 공용 — dataBoss 시작일 + 1일(하드 오픈) 전 회차는 표시 안 함 · 가이드: 기록 없는 회차(NO RECORD)에서 시작하면 기록 있는 최근 회차로 이동 · 버전 확인: 마스터 '사용법' 탭 전체에서 버전 형식(v261030) 칸을 찾아 가장 큰 값 사용 / 261028 공용 — 최신 버전 알림 3초 · 버전 확인: 마스터 버전 칸이 비면 업데이트 있음으로 표시 · 데이터 일괄 읽기(getFullDataBatch, 실패 시 기존 방식) · 정보 창에 빌드 번호 · 로딩 구간별 시간(시트별 서버 읽기 포함) · 캡처 시 세이렌 그림자 제거(얼룩 방지) · 레벨 차트 좌우 폭 가득 · 캡처 시 유니온명 그라데이션 글자 · 줄바꿈 보정 · 최신 버전 읽는 칸 사용법!E10 → E8 · 테마 메뉴 구버전에 "삭제 예정" 표시 · 회차 선택(최신 5개 + 전체 회차 패널) · 세이렌/구버전 스킨 -->
+<!-- 261102 공용 — 날아다니는 캐릭터 4종(도로·시로·세로·신도롱, 색에 맞는 효과 · 세로롱은 세이렌 색 · 비눗방울) · 클릭하면 방향 꺾임 · 무지개 도로 몸 색 흐름 · 꼬리 무지개 흐름 방향 몸→꼬리 · 이스터에그 이모티콘 젤리(출렁임 · 잡아서 던지기, 살짝 누르면 터짐) · 도로 꼬리 끝 완전 투명 · 보스 통계 탭 전환 · 가이드 · 테마 전환 다시 그리기 · 날아다니는 도로: 더 크고 빠르게 · 머리를 날아가는 방향으로 · 꼬리는 일정한 굵기 띠 · 무지개 색 간격 넓게 · 구버전 테마 삭제(테마 메뉴는 유지) · 테마 메뉴 자동 닫힘 · 시험판 이스터에그 100% · 작은 도로 맨 앞 · 꼬리 몸의 2배 · 캡처에 작은 도로 합성 · 도로 홀로그램 뒤 작은 도로 무리(별똥별 꼬리 · 무지개) · 딜량 · HP 표기 숫자와 단위 사이 줄바꿈 금지 · 차트 회차 목록 chartRaidTitles(기록 없는 앞뒤 회차 제외) · 캡처 때 분포 툴팁 숨김 / 261030 공용 — dataBoss 시작일 + 1일(하드 오픈) 전 회차는 표시 안 함 · 가이드: 기록 없는 회차(NO RECORD)에서 시작하면 기록 있는 최근 회차로 이동 · 버전 확인: 마스터 '사용법' 탭 전체에서 버전 형식(v261030) 칸을 찾아 가장 큰 값 사용 / 261028 공용 — 최신 버전 알림 3초 · 버전 확인: 마스터 버전 칸이 비면 업데이트 있음으로 표시 · 데이터 일괄 읽기(getFullDataBatch, 실패 시 기존 방식) · 정보 창에 빌드 번호 · 로딩 구간별 시간(시트별 서버 읽기 포함) · 캡처 시 세이렌 그림자 제거(얼룩 방지) · 레벨 차트 좌우 폭 가득 · 캡처 시 유니온명 그라데이션 글자 · 줄바꿈 보정 · 최신 버전 읽는 칸 사용법!E10 → E8 · 테마 메뉴 구버전에 "삭제 예정" 표시 · 회차 선택(최신 5개 + 전체 회차 패널) · 세이렌/구버전 스킨 -->
 <script>
   google.charts.load('current', {'packages':['corechart', 'scatter']});
 
@@ -6738,16 +6734,79 @@
     requestAnimationFrame(shimmer);
 
     // 큰 도로가 가운데 멈춘 뒤(슬라이드 3초) 작은 도로들이 사방에서 날아다님
-    setTimeout(() => _startDoroSwarm(overlay, doroUrl), 3000);
+    setTimeout(() => _startDoroSwarm(overlay, _flyerDefs()), 3000);
   }
 
-  // 작은 도로 무리 — 별똥별 꼬리(몸 길이의 2배) · 일반/무지개 도로. 카드보다 앞(팝업보다는 뒤)에 그림
+  // 날아다니는 캐릭터 — dataIMG #기타 의 이름(키)으로 이미지를 찾음. 이미지가 없으면 그 캐릭터는 안 나옴
+  //   faces: 원본 그림이 보는 방향 ('left' 는 오른쪽으로 날 때 좌우 뒤집음 · 'front' 는 정면이라 살짝 기울이기만)
+  //   looks: 나올 때 고르는 효과 — 각자 색에 맞는 것만 (무지개는 도로롱만, 세로롱은 세이렌 테마 색)
+  const FLYER_DEFS = [
+    { key: 'doro',    name: DORO_NAME_DISPLAY,           faces: 'left',  weight: 4, looks: ['pink', 'pink', 'rainbow'] },
+    { key: 'shiro',   name: 'AADC3AAAs8QAALhc',          faces: 'left',  weight: 2, looks: ['sky'] },
+    { key: 'sero',    name: 'AADBOAAAuFwAALhx',          faces: 'front', weight: 2, looks: ['siren'] },
+    { key: 'cindoro', name: 'AADC4AAAs3AAALgQAAC4cQ==',  faces: 'front', weight: 2, looks: ['silver'] },
+  ];
+  function _etcImgUrl(name) {
+    if (!db.dataIMG || !IMG_COL.etc || IMG_COL.etc.img === undefined) return '';
+    const row = db.dataIMG.find(r => String(r[IMG_COL.etc.name] || '').trim() === name);
+    const v = row ? String(row[IMG_COL.etc.img] || '').trim() : '';
+    return /^(https?:|data:)/i.test(v) ? v : ''; // 링크 걸린 글자(예: "doro")는 주소가 아니라 못 씀
+  }
+  function _flyerDefs() {
+    return FLYER_DEFS.map(d => Object.assign({}, d, { url: _etcImgUrl(d.name) })).filter(d => d.url);
+  }
+
+  // 효과별 색 — 꼬리(t: 0 꼬리 끝 ~ 1 몸 쪽, a: 투명도) · 몸 둘레 빛 · 몸 위에 덮는 움직이는 색(있을 때만)
+  const _SIREN_TEAL = '95, 214, 207', _SIREN_LAV = '179, 156, 242', _SIREN_PEARL = '236, 246, 255';
+  const FLYER_LOOKS = {
+    pink:    { tail: (d, t, a) => `rgba(255, 196, 228, ${a})`, glow: () => 'rgba(255, 180, 220, 0.9)' },
+    // 무지개 — 꼬리 색은 몸에서 꼬리 끝 쪽으로 흘러감 (몸 쪽 색상값이 큼 · 시간에 따라 색상값 증가)
+    rainbow: {
+      tail: (d, t, a) => `hsla(${(d.hue + t * 220) % 360}, 95%, 64%, ${a})`,
+      glow: d => `hsl(${(d.hue + 220) % 360}, 95%, 65%)`,
+      body: d => [0, 1, 2, 3].map(i => `hsla(${(d.hue + 220 + i * 50) % 360}, 95%, 62%, 0.6)`),
+    },
+    sky:     { tail: (d, t, a) => `rgba(${Math.round(190 - t * 95)}, ${Math.round(228 - t * 44)}, 255, ${a})`, glow: () => 'rgba(110, 190, 255, 0.9)' },
+    // 세이렌 — 진주 · 청록 · 라벤더가 천천히 오가는 꼬리 + 몸에 은은한 진주빛 + 비눗방울
+    siren: {
+      tail: (d, t, a) => {
+        const k = (Math.sin(d.hue / 30 + t * 3) + 1) / 2;
+        const mix = (p, q) => p.split(',').map((v, i) => Math.round(+v + (+q.split(',')[i] - +v) * k)).join(', ');
+        return t > 0.85 ? `rgba(${_SIREN_PEARL}, ${a})` : `rgba(${mix(_SIREN_TEAL, _SIREN_LAV)}, ${a})`;
+      },
+      glow: () => `rgba(${_SIREN_TEAL}, 0.9)`,
+      body: d => {
+        const s = d.hue / 40;
+        return [`rgba(${_SIREN_PEARL}, 0.35)`, `rgba(${_SIREN_TEAL}, ${0.18 + 0.12 * Math.sin(s)})`, `rgba(${_SIREN_LAV}, ${0.18 + 0.12 * Math.cos(s)})`, `rgba(${_SIREN_PEARL}, 0.3)`];
+      },
+      bubbles: true,
+    },
+    silver:  { tail: (d, t, a) => `rgba(${Math.round(232 - t * 40)}, ${Math.round(232 - t * 40)}, ${Math.round(246 - t * 20)}, ${a})`, glow: () => 'rgba(255, 140, 165, 0.75)' },
+  };
+
+  // 작은 도로 무리 — 별똥별 꼬리(몸 길이의 2배) · 캐릭터마다 색에 맞는 효과. 카드보다 앞(팝업보다는 뒤)에 그림
+  //   클릭하면 그 캐릭터가 방향을 꺾음 (아래 카드는 눌리지 않음)
   //   캡처 때는 이 캔버스를 그 순간 그대로 결과 그림 위에 합성 (captureScreen)
-  function _startDoroSwarm(overlay, doroUrl) {
-    if (!overlay.isConnected) return;
+  function _startDoroSwarm(overlay, defs) {
+    if (!overlay.isConnected || !defs || defs.length === 0) return;
     if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const img = new Image();
-    img.onload = () => {
+
+    // 이미지 받기 — 외부 주소는 CORS 로 받아야 캔버스가 오염되지 않아 캡처 합성이 됨 (안 되면 그냥 받음: 화면엔 보이고 캡처엔 빠짐)
+    const load = def => new Promise(res => {
+      const img = new Image();
+      img.onload = () => res(Object.assign({}, def, { img }));
+      img.onerror = () => {
+        if (img.crossOrigin) { img.removeAttribute('crossorigin'); img.src = def.url + (def.url.includes('?') ? '&' : '?') + 'nocors=1'; }
+        else res(null);
+      };
+      if (/^https?:/i.test(def.url)) img.crossOrigin = 'anonymous';
+      img.src = def.url;
+    });
+
+    Promise.all(defs.map(load)).then(list => {
+      const kinds = list.filter(Boolean);
+      if (kinds.length === 0 || !overlay.isConnected) return;
+
       const canvas = document.createElement('canvas');
       canvas.id = 'doro-swarm';
       document.body.appendChild(canvas);
@@ -6762,28 +6821,26 @@
       resize();
       window.addEventListener('resize', resize);
 
-      // 스프라이트 미리 만들기 — 일반 1장 + 무지개 1장 (도로 모양 위에만 무지개를 덮음)
-      const SW = 120, SH = Math.round(SW * img.height / img.width) || 90;
-      const sprite = (rainbow) => {
-        const c = document.createElement('canvas');
-        c.width = SW; c.height = SH;
-        const g = c.getContext('2d');
-        g.drawImage(img, 0, 0, SW, SH);
-        if (rainbow) {
-          const gr = g.createLinearGradient(0, 0, SW, SH);
-          ['#ff6ec7', '#ffb347', '#fff37a', '#5ee5a1', '#4dc4ff', '#9b6bff'].forEach((col, i, a) => gr.addColorStop(i / (a.length - 1), col));
-          g.globalCompositeOperation = 'source-atop';
-          g.globalAlpha = 0.6;
-          g.fillStyle = gr;
-          g.fillRect(0, 0, SW, SH);
-        }
-        return c;
+      // 캐릭터별 기본 스프라이트 (가로 120px) — 몸에 움직이는 색을 덮을 땐 캐릭터마다 작업용 캔버스에 매 프레임 다시 그림
+      const SW = 120;
+      kinds.forEach(k => {
+        k.SH = Math.round(SW * k.img.height / k.img.width) || 90;
+        k.sprite = document.createElement('canvas');
+        k.sprite.width = SW; k.sprite.height = k.SH;
+        k.sprite.getContext('2d').drawImage(k.img, 0, 0, SW, k.SH);
+      });
+      const totalW = kinds.reduce((s, k) => s + k.weight, 0);
+      const pickKind = () => {
+        let r = Math.random() * totalW;
+        for (const k of kinds) { r -= k.weight; if (r <= 0) return k; }
+        return kinds[0];
       };
-      const normal = sprite(false), rainbow = sprite(true);
 
-      const doros = [];
+      const doros = [], bubbles = [];
       const MAX = window.innerWidth <= 600 ? 7 : 12;
       const spawn = () => {
+        const kind = pickKind();
+        const look = kind.looks[Math.floor(Math.random() * kind.looks.length)];
         const side = Math.floor(Math.random() * 4);
         const size = 44 + Math.random() * 56; // 44~100px
         const m = size;
@@ -6796,25 +6853,69 @@
         const tx = W * (0.2 + Math.random() * 0.6), ty = H * (0.2 + Math.random() * 0.6);
         const ang = Math.atan2(ty - y, tx - x);
         const speed = 300 + Math.random() * 300; // px/초
-        doros.push({
-          x, y, size, vx: Math.cos(ang) * speed, vy: Math.sin(ang) * speed,
+        const d = {
+          kind, look: FLYER_LOOKS[look] || FLYER_LOOKS.pink, x, y, size,
+          vx: Math.cos(ang) * speed, vy: Math.sin(ang) * speed,
           head: ang, // 실제로 움직이는 방향 (흔들림 포함, 부드럽게 따라감)
-          wob: Math.random() * Math.PI * 2, isRainbow: Math.random() < 0.4,
-          hue: Math.random() * 360, trail: []
-        });
+          wob: Math.random() * Math.PI * 2, hue: Math.random() * 360, trail: [], squash: 0
+        };
+        if (d.look.body) {
+          d.work = document.createElement('canvas');
+          d.work.width = SW; d.work.height = kind.SH;
+        }
+        doros.push(d);
       };
+
+      // 클릭으로 방향 꺾기 — 캔버스는 클릭을 통과시키므로 문서에서 위치로 맞았는지 봄. 맞으면 아래 카드 클릭은 막음
+      let swallowClick = false;
+      const onDown = e => {
+        if (!canvas.isConnected) return;
+        for (let i = doros.length - 1; i >= 0; i--) {
+          const d = doros[i];
+          if (Math.hypot(e.clientX - d.x, e.clientY - d.y) > d.size * 0.55) continue;
+          const sp = Math.hypot(d.vx, d.vy) * 1.15;
+          const turn = (Math.random() < 0.5 ? -1 : 1) * (Math.PI / 3 + Math.random() * Math.PI / 3); // 60~120도
+          const ang = Math.atan2(d.vy, d.vx) + turn;
+          d.vx = Math.cos(ang) * sp; d.vy = Math.sin(ang) * sp;
+          d.squash = 1;
+          swallowClick = true;
+          e.preventDefault(); e.stopPropagation();
+          return;
+        }
+      };
+      const onClick = e => { if (swallowClick) { swallowClick = false; e.preventDefault(); e.stopPropagation(); } };
+      document.addEventListener('pointerdown', onDown, true);
+      document.addEventListener('click', onClick, true);
 
       let last = performance.now(), nextSpawn = 0;
       const tick = (now) => {
-        if (!overlay.isConnected) { window.removeEventListener('resize', resize); canvas.remove(); return; }
+        if (!overlay.isConnected) {
+          window.removeEventListener('resize', resize);
+          document.removeEventListener('pointerdown', onDown, true);
+          document.removeEventListener('click', onClick, true);
+          canvas.remove();
+          return;
+        }
         const dt = Math.min(0.05, (now - last) / 1000);
         last = now;
         nextSpawn -= dt;
         if (nextSpawn <= 0 && doros.length < MAX) { spawn(); nextSpawn = 0.25 + Math.random() * 0.45; }
 
         ctx.clearRect(0, 0, W, H);
+
+        // 세로롱 비눗방울 — 꼬리에서 떨어져 나와 천천히 떠오르다 사라짐
+        for (let i = bubbles.length - 1; i >= 0; i--) {
+          const b = bubbles[i];
+          b.life -= dt; b.y -= 30 * dt; b.x += Math.sin(b.life * 4 + b.ph) * 12 * dt;
+          if (b.life <= 0) { bubbles.splice(i, 1); continue; }
+          const a = Math.min(1, b.life / 0.6) * 0.7;
+          ctx.beginPath(); ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+          ctx.strokeStyle = `rgba(${_SIREN_LAV}, ${a})`; ctx.lineWidth = 1.5; ctx.stroke();
+          ctx.fillStyle = `rgba(${_SIREN_PEARL}, ${a * 0.35})`; ctx.fill();
+        }
+
         for (let i = doros.length - 1; i >= 0; i--) {
-          const d = doros[i];
+          const d = doros[i], L = d.look;
           d.wob += dt * 3;
           // 진행 방향에 수직으로 살짝 흔들리며 날아감
           const nx = -d.vy, ny = d.vx, nl = Math.hypot(nx, ny) || 1;
@@ -6827,6 +6928,7 @@
           da = Math.atan2(Math.sin(da), Math.cos(da));
           d.head += da * Math.min(1, dt * 10);
           d.hue = (d.hue + dt * 60) % 360;
+          d.squash = Math.max(0, d.squash - dt * 4);
           d.trail.push({ x: d.x, y: d.y });
           // 꼬리 길이 = 몸 길이의 2배 (몸 중심에서 몸 반 + 2배 만큼 뒤까지)
           let len = 0;
@@ -6835,7 +6937,7 @@
             if (len > d.size * 2.5) { d.trail.splice(0, k - 1); break; }
           }
 
-          // 꼬리 — 굵기 일정한 띠(사각형), 끝으로 갈수록 옅게. 무지개는 꼬리 전체에 색 4~5개만 (띠 간격 넓게)
+          // 꼬리 — 굵기 일정한 띠(사각형), 끝으로 갈수록 옅게 (끝은 완전히 투명)
           const n = d.trail.length;
           if (n > 1) {
             const p0 = d.trail[0], p1 = d.trail[n - 1];
@@ -6843,10 +6945,7 @@
             const STEPS = 8;
             for (let k = 0; k <= STEPS; k++) {
               const t = k / STEPS;               // 0 = 꼬리 끝, 1 = 몸 쪽
-              const a = Math.pow(t, 1.8) * 0.8;  // 꼬리 끝(0)은 완전히 투명 → 몸 쪽으로 갈수록 진하게
-              gr.addColorStop(t, d.isRainbow
-                ? `hsla(${(d.hue + (1 - t) * 220) % 360}, 95%, 64%, ${a})`
-                : `rgba(255, 196, 228, ${a})`);
+              gr.addColorStop(t, L.tail(d, t, Math.pow(t, 1.8) * 0.8));
             }
             ctx.strokeStyle = gr;
             ctx.lineWidth = d.size * 0.42;
@@ -6856,18 +6955,46 @@
             ctx.moveTo(p0.x, p0.y);
             for (let k = 1; k < n; k++) ctx.lineTo(d.trail[k].x, d.trail[k].y);
             ctx.stroke();
+            if (L.bubbles && Math.random() < dt * 6) {
+              const q = d.trail[Math.floor(n * 0.4)];
+              bubbles.push({ x: q.x, y: q.y, r: 2 + Math.random() * 4, life: 1 + Math.random() * 0.8, ph: Math.random() * 6 });
+            }
+          }
+
+          // 몸 — 움직이는 색이 있으면 작업용 캔버스에 그림 + 그 모양 안에만 색을 덮음
+          let src = d.kind.sprite;
+          if (L.body && d.work) {
+            const g = d.work.getContext('2d');
+            g.globalCompositeOperation = 'source-over';
+            g.clearRect(0, 0, SW, d.kind.SH);
+            g.drawImage(d.kind.sprite, 0, 0);
+            const shift = (d.hue % 120) / 120; // 색 띠가 몸 위를 대각선으로 흘러감
+            const gr = g.createLinearGradient(-SW + shift * SW * 2, 0, shift * SW * 2, d.kind.SH);
+            const cols = L.body(d);
+            cols.forEach((c, k) => gr.addColorStop(k / (cols.length - 1), c));
+            g.globalCompositeOperation = 'source-atop';
+            g.fillStyle = gr;
+            g.fillRect(0, 0, SW, d.kind.SH);
+            src = d.work;
           }
 
           ctx.save();
           ctx.translate(d.x, d.y);
-          // 원본 도로는 왼쪽을 봄 — 오른쪽으로 갈 땐 좌우 뒤집고, 머리가 날아가는 쪽을 향하게 기울임 (거꾸로 뒤집히지 않게)
           const goRight = Math.cos(d.head) > 0;
-          ctx.rotate(goRight ? d.head : d.head - Math.PI);
-          if (goRight) ctx.scale(-1, 1);
-          ctx.shadowColor = d.isRainbow ? `hsl(${d.hue}, 95%, 65%)` : 'rgba(255, 180, 220, 0.9)';
+          const tilt = goRight ? d.head : d.head - Math.PI;
+          if (d.kind.faces === 'left') {
+            // 왼쪽을 보는 그림 — 오른쪽으로 갈 땐 좌우 뒤집고, 머리가 날아가는 쪽을 향하게 기울임 (거꾸로 뒤집히지 않게)
+            ctx.rotate(tilt);
+            if (goRight) ctx.scale(-1, 1);
+          } else {
+            // 정면 그림 — 날아가는 쪽으로 살짝만 기울임
+            ctx.rotate(tilt * 0.45);
+          }
+          if (d.squash > 0) ctx.scale(1 + d.squash * 0.25, 1 - d.squash * 0.2); // 클릭으로 꺾일 때 찌그러짐
+          ctx.shadowColor = L.glow(d);
           ctx.shadowBlur = 14;
-          const h = d.size * SH / SW;
-          ctx.drawImage(d.isRainbow ? rainbow : normal, -d.size / 2, -h / 2, d.size, h);
+          const h = d.size * d.kind.SH / SW;
+          ctx.drawImage(src, -d.size / 2, -h / 2, d.size, h);
           ctx.restore();
 
           const out = d.size * 2;
@@ -6876,13 +7003,7 @@
         requestAnimationFrame(tick);
       };
       requestAnimationFrame(tick);
-    };
-    // 외부 주소 이미지는 CORS 로 받아야 캔버스가 오염되지 않아 캡처 합성이 됨 — 안 되면 그냥 받음(화면엔 보이고 캡처엔 빠짐)
-    if (/^https?:/i.test(doroUrl)) {
-      img.crossOrigin = 'anonymous';
-      img.onerror = () => { img.onerror = null; img.removeAttribute('crossorigin'); img.src = doroUrl + (doroUrl.includes('?') ? '&' : '?') + 'nocors=1'; };
-    }
-    img.src = doroUrl;
+    });
   }
 
   // 클릭 이펙트 — 링 3개 + 스파클 8방향 방출
