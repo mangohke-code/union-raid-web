@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <script>window.APP_BUILD = '261102-0159';</script>
+  <script>window.APP_BUILD = '261102-0233'; window.APP_CHANNEL = 'dev';</script>
   <script>window.CURRENT_SHEET_VERSION = '{{SHEET_VERSION}}'; window.__perf = { appStart: performance.now() };</script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
@@ -11,7 +11,7 @@
 
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Bebas+Neue&family=Rajdhani:wght@600;700&family=Outfit:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,600;1,500;1,600&family=Noto+Serif+KR:wght@600;700&display=swap" rel="stylesheet">
 
-  <!-- 261102 — 싱크로 분포 막대 툴팁(#uls-tip) · 작은 도로 무리 캔버스 / 261028 — 최신 버전 알림 타이머 3초 · 정보 창 로딩 시간 · 제목 우상단 서버 표기 · 회차 선택 전체 회차 버튼/패널 · 폭 1760px · 테마 색 변수 · Most Deployed 배치 · 토스트 · 코멘트 링크 -->
+  <!-- 261102 — 싱크로 분포 막대 툴팁(#uls-tip) · 작은 도로 무리 캔버스(맨 앞) / 261028 — 최신 버전 알림 타이머 3초 · 정보 창 로딩 시간 · 제목 우상단 서버 표기 · 회차 선택 전체 회차 버튼/패널 · 폭 1760px · 테마 색 변수 · Most Deployed 배치 · 토스트 · 코멘트 링크 -->
 <style>
   /* ===== CSS 변수 (테마) ===== */
   :root {
@@ -4820,9 +4820,10 @@
     animation: doro-holo-svg-slide-in 3s linear forwards;
   }
   /* 작은 도로 무리 (큰 도로가 멈춘 뒤) — 오버레이 전체를 덮는 캔버스 */
-  .doro-swarm-canvas {
-    position: absolute; inset: 0;
-    width: 100%; height: 100%;
+  #doro-swarm {
+    position: fixed; inset: 0;
+    width: 100vw; height: 100vh;
+    z-index: 1500; /* 카드 · 차트보다 앞, 팝업(2000~)보다 뒤 */
     pointer-events: none;
   }
   @keyframes doro-holo-svg-slide-in {
@@ -6237,11 +6238,18 @@
   </button>
 </div>
 
-<!-- 261102 공용 — 도로 홀로그램 뒤 작은 도로 무리(별똥별 꼬리 · 무지개) · 딜량 · HP 표기 숫자와 단위 사이 줄바꿈 금지 · 차트 회차 목록 chartRaidTitles(기록 없는 앞뒤 회차 제외) · 캡처 때 분포 툴팁 숨김 / 261030 공용 — dataBoss 시작일 + 1일(하드 오픈) 전 회차는 표시 안 함 · 가이드: 기록 없는 회차(NO RECORD)에서 시작하면 기록 있는 최근 회차로 이동 · 버전 확인: 마스터 '사용법' 탭 전체에서 버전 형식(v261030) 칸을 찾아 가장 큰 값 사용 / 261028 공용 — 최신 버전 알림 3초 · 버전 확인: 마스터 버전 칸이 비면 업데이트 있음으로 표시 · 데이터 일괄 읽기(getFullDataBatch, 실패 시 기존 방식) · 정보 창에 빌드 번호 · 로딩 구간별 시간(시트별 서버 읽기 포함) · 캡처 시 세이렌 그림자 제거(얼룩 방지) · 레벨 차트 좌우 폭 가득 · 캡처 시 유니온명 그라데이션 글자 · 줄바꿈 보정 · 최신 버전 읽는 칸 사용법!E10 → E8 · 테마 메뉴 구버전에 "삭제 예정" 표시 · 회차 선택(최신 5개 + 전체 회차 패널) · 세이렌/구버전 스킨 -->
+<!-- 261102 공용 — 시험판 이스터에그 100% · 작은 도로 맨 앞 · 꼬리 몸의 2배 · 캡처에 작은 도로 합성 · 도로 홀로그램 뒤 작은 도로 무리(별똥별 꼬리 · 무지개) · 딜량 · HP 표기 숫자와 단위 사이 줄바꿈 금지 · 차트 회차 목록 chartRaidTitles(기록 없는 앞뒤 회차 제외) · 캡처 때 분포 툴팁 숨김 / 261030 공용 — dataBoss 시작일 + 1일(하드 오픈) 전 회차는 표시 안 함 · 가이드: 기록 없는 회차(NO RECORD)에서 시작하면 기록 있는 최근 회차로 이동 · 버전 확인: 마스터 '사용법' 탭 전체에서 버전 형식(v261030) 칸을 찾아 가장 큰 값 사용 / 261028 공용 — 최신 버전 알림 3초 · 버전 확인: 마스터 버전 칸이 비면 업데이트 있음으로 표시 · 데이터 일괄 읽기(getFullDataBatch, 실패 시 기존 방식) · 정보 창에 빌드 번호 · 로딩 구간별 시간(시트별 서버 읽기 포함) · 캡처 시 세이렌 그림자 제거(얼룩 방지) · 레벨 차트 좌우 폭 가득 · 캡처 시 유니온명 그라데이션 글자 · 줄바꿈 보정 · 최신 버전 읽는 칸 사용법!E10 → E8 · 테마 메뉴 구버전에 "삭제 예정" 표시 · 회차 선택(최신 5개 + 전체 회차 패널) · 세이렌/구버전 스킨 -->
 <script>
   google.charts.load('current', {'packages':['corechart', 'scatter']});
 
   let db = {}, rawMembers = [], displayMembers = [], headerLabels = [], currentSort = 'no', isAsc = true, selectedRaidIdx = null, expandedMember = null;
+
+  // .container(z-index:1) 안에 든 팝업은 z-index 를 아무리 높여도 종합 화면(#raid-total-content) · 작은 도로 뒤로 깔림
+  //   → body 바로 아래로 옮겨서 다른 팝업들과 같은 층에 둠 (지표 안내가 화면 뒤로 가던 문제)
+  ['metrics-info-overlay', 'growth-detail-overlay', 'nikke-squad-overlay'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el && el.parentElement !== document.body) document.body.appendChild(el);
+  });
   let _lastActiveTab = null;
   let currentViewMode = 'specific';
   // 속성 색 — 값은 스킨(테마)에 따라 applySkinPalette() 가 덮어씀. 객체는 그대로 두고 값만 바뀜
@@ -6430,8 +6438,10 @@
 
   // 이스터에그 — 지정된 이모티콘 2종만 랜덤 팝업으로 등장, 클릭 시 사라짐 / 확률로 도로 홀로그램 트리거
   // 테스트 종료 후 EASTER_EGG_CHANCE = 0.01, DORO_HOLO_CHANCE = 0.01 로 낮출 것
-  const EASTER_EGG_CHANCE = 0.01; // 1% — 페이지 로드/탭 전환 시 이모티콘 등장 확률
-  const DORO_HOLO_CHANCE  = 0.50; // 50% — 이모티콘 클릭 시 도로 홀로그램 등장 확률
+  // 시험판(?ch=dev, 배포.py 가 APP_CHANNEL='dev' 로 표시)은 확인용으로 둘 다 100%
+  const _IS_DEV_CHANNEL = window.APP_CHANNEL === 'dev';
+  const EASTER_EGG_CHANCE = _IS_DEV_CHANNEL ? 1 : 0.01; // 1% — 페이지 로드/탭 전환 시 이모티콘 등장 확률
+  const DORO_HOLO_CHANCE  = _IS_DEV_CHANNEL ? 1 : 0.50; // 50% — 이모티콘 클릭 시 도로 홀로그램 등장 확률
   // 팝업 pool 화이트리스트 (dataIMG #기타 섹션 name 값, 대소문자/기호 정확 매칭)
   const EASTER_EGG_NAMES = new Set([
     'AADHIAAAuAgAANVYAACuMAAAwusAAMW0',
@@ -6557,15 +6567,16 @@
     setTimeout(() => _startDoroSwarm(overlay, doroUrl), 3000);
   }
 
-  // 작은 도로 무리 — 별똥별 꼬리 · 일반/무지개 도로. 큰 도로와 같은 층(카드 뒤)에 그림, 캡처 때는 오버레이째로 숨김
+  // 작은 도로 무리 — 별똥별 꼬리(몸 길이의 2배) · 일반/무지개 도로. 카드보다 앞(팝업보다는 뒤)에 그림
+  //   캡처 때는 이 캔버스를 그 순간 그대로 결과 그림 위에 합성 (captureScreen)
   function _startDoroSwarm(overlay, doroUrl) {
     if (!overlay.isConnected) return;
     if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const img = new Image();
     img.onload = () => {
       const canvas = document.createElement('canvas');
-      canvas.className = 'doro-swarm-canvas';
-      overlay.appendChild(canvas);
+      canvas.id = 'doro-swarm';
+      document.body.appendChild(canvas);
       const ctx = canvas.getContext('2d');
       let W = 0, H = 0;
       const resize = () => {
@@ -6621,7 +6632,7 @@
 
       let last = performance.now(), nextSpawn = 0;
       const tick = (now) => {
-        if (!overlay.isConnected) { window.removeEventListener('resize', resize); return; }
+        if (!overlay.isConnected) { window.removeEventListener('resize', resize); canvas.remove(); return; }
         const dt = Math.min(0.05, (now - last) / 1000);
         last = now;
         nextSpawn -= dt;
@@ -6639,7 +6650,12 @@
           d.rot += d.spin * dt;
           d.hue = (d.hue + dt * 240) % 360;
           d.trail.push({ x: d.x, y: d.y });
-          if (d.trail.length > 26) d.trail.shift();
+          // 꼬리 길이 = 몸 길이의 2배 (몸 중심에서 몸 반 + 2배 만큼 뒤까지)
+          let len = 0;
+          for (let k = d.trail.length - 1; k > 0; k--) {
+            len += Math.hypot(d.trail[k].x - d.trail[k - 1].x, d.trail[k].y - d.trail[k - 1].y);
+            if (len > d.size * 2.5) { d.trail.splice(0, k - 1); break; }
+          }
 
           // 꼬리 — 뒤로 갈수록 가늘고 옅게
           const n = d.trail.length;
@@ -6670,6 +6686,11 @@
       };
       requestAnimationFrame(tick);
     };
+    // 외부 주소 이미지는 CORS 로 받아야 캔버스가 오염되지 않아 캡처 합성이 됨 — 안 되면 그냥 받음(화면엔 보이고 캡처엔 빠짐)
+    if (/^https?:/i.test(doroUrl)) {
+      img.crossOrigin = 'anonymous';
+      img.onerror = () => { img.onerror = null; img.removeAttribute('crossorigin'); img.src = doroUrl + (doroUrl.includes('?') ? '&' : '?') + 'nocors=1'; };
+    }
     img.src = doroUrl;
   }
 
@@ -7697,6 +7718,21 @@
       '#doro-holo-overlay, #easter-egg, #sheet-version-popup, #siren-sea, #uls-tip'
     );
 
+    // 날아다니는 도로(맨 앞 캔버스) — 지금 화면 그대로 떠 두었다가 결과 그림의 같은 자리에 합성 (페이지 캡처만)
+    const swarmEl = document.getElementById('doro-swarm');
+    let swarmShot = null;
+    if (swarmEl && !isPopUpOpen) {
+      try {
+        swarmEl.getContext('2d').getImageData(0, 0, 1, 1); // 다른 사이트 이미지로 오염됐으면 여기서 실패 → 합성 안 함
+        swarmShot = document.createElement('canvas');
+        swarmShot.width = swarmEl.width; swarmShot.height = swarmEl.height;
+        swarmShot.getContext('2d').drawImage(swarmEl, 0, 0);
+        const br = target.getBoundingClientRect();
+        swarmShot._x = -br.left; swarmShot._y = -br.top;
+      } catch (_) { swarmShot = null; }
+    }
+    if (swarmEl) { swarmEl.dataset.captureHidden = swarmEl.style.display || ''; swarmEl.style.display = 'none'; }
+
     btnGroups.forEach(el => el.style.display = 'none');
     overlaysToHide.forEach(el => {
       el.dataset.captureHidden = el.style.display || '';
@@ -7705,6 +7741,7 @@
     clearAllPortaledTooltips();
 
     const restoreUI = () => {
+      if (swarmEl) { swarmEl.style.display = swarmEl.dataset.captureHidden || ''; delete swarmEl.dataset.captureHidden; }
       btnGroups.forEach(el => el.style.display = 'flex');
       overlaysToHide.forEach(el => {
         el.style.display = el.dataset.captureHidden || '';
@@ -7976,6 +8013,11 @@
           }
         }).then(canvas => {
           restoreUI();
+          if (swarmShot) {
+            // html2canvas scale:2 기준 — 화면 왼쪽 위(0,0)는 캡처 그림의 (target 기준 스크롤 위치)
+            const k = 2;
+            canvas.getContext('2d').drawImage(swarmShot, swarmShot._x * k, swarmShot._y * k, window.innerWidth * k, window.innerHeight * k);
+          }
           const link = document.createElement('a');
           link.download = filename;
           link.href = canvas.toDataURL('image/png');
@@ -8961,7 +9003,7 @@
     });
   }
 </script>
-<!-- 261030 레이드 통계 — NO RECORD 덮개가 지표 안내 등 팝업 위로 올라오던 문제(z-index 9000→500) / 261023 레이드 통계 — 보스 상세 효율·기여도를 타격별로(막타 제외 평균 기준) · 요약 묶음 · Level 표기 · 코멘트 링크 · 세이렌 도넛 · 산점도 축/격자 테마 색 -->
+<!-- 261102 레이드 통계 — 멤버 효율에서 막타 제외(지표 안내와 맞춤 · 기여도는 포함) / 261030 레이드 통계 — NO RECORD 덮개가 지표 안내 등 팝업 위로 올라오던 문제(z-index 9000→500) / 261023 레이드 통계 — 보스 상세 효율·기여도를 타격별로(막타 제외 평균 기준) · 요약 묶음 · Level 표기 · 코멘트 링크 · 세이렌 도넛 · 산점도 축/격자 테마 색 -->
 <script>
   let currentRaidSort = 'dmg';
   let currentDetailSort = 'dmg';
@@ -9330,6 +9372,8 @@
     getRaidRows(raidTitle).forEach(r => {
       const bossName = String(r[RAID_COL.BOSS] || "").trim();
       if (!bossName) return; // 타격 기록만
+      // 막타 제외 — 남은 HP 만큼만 들어가 효율을 끌어내림 (지표 안내 "막타 제외" 와 맞춤, 기여도에는 포함)
+      if (String(r[RAID_COL.LAST]).trim().toUpperCase() === "O") return;
       const name = normalizeName(r[RAID_COL.NAME]);
       if (!name) return;
 
@@ -12663,7 +12707,7 @@
     });
   })();
 </script>
-<!-- 261102 싱크로 통계 — 멤버 펼친 패널 표는 최근 회차부터 · 레벨/상승량 분포 막대에 마우스 올리면 그 구간 멤버 목록(레벨 순) / 261021 싱크로 통계 — 강조/하락/라벨 색 테마 변수 · 펼친 패널 클래스(md-panel) -->
+<!-- 261102 싱크로 통계 — 멤버 펼친 패널 표는 최근 회차부터 · 레벨/상승량 분포 막대에 마우스 올리면 그 구간 멤버 목록(레벨 분포는 레벨 순 · 상승량 분포는 상승량 순) / 261021 싱크로 통계 — 강조/하락/라벨 색 테마 변수 · 펼친 패널 클래스(md-panel) -->
 <script>
   // 전체 멤버 레벨 변화 차트
   function renderFullChart() {
@@ -13181,11 +13225,12 @@
     };
     const levelBins  = buildBins(latestLevels, 20);
     const growthBins = buildBins(latestGrowths, 5);
-    // 구간별 멤버 (툴팁 — 레벨 높은 순)
+    // 구간별 멤버 (툴팁)
+    // 구간 안 순서: 레벨 분포는 레벨 높은 순, 상승량 분포는 상승량 큰 순 (같으면 레벨 · 이름)
     const membersIn = (bin, size, valOf) => Object.keys(valOf)
       .filter(n => Math.floor(valOf[n] / size) * size === bin.start)
-      .map(n => ({ name: n, lv: latestOf[n], g: growthOf[n] }))
-      .sort((a, b) => (b.lv || 0) - (a.lv || 0) || String(a.name).localeCompare(String(b.name), 'ko'));
+      .map(n => ({ name: n, lv: latestOf[n], g: growthOf[n], v: valOf[n] }))
+      .sort((a, b) => (b.v - a.v) || (b.lv || 0) - (a.lv || 0) || String(a.name).localeCompare(String(b.name), 'ko'));
     levelBins.forEach(b => { b.members = membersIn(b, 20, latestOf); b.range = b.start + '~' + (b.start + 19); });
     growthBins.forEach(b => { b.members = membersIn(b, 5, growthOf); b.range = '+' + b.start + '~' + (b.start + 4); });
     _ulsBins = { level: levelBins, growth: growthBins };
