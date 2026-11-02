@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <script>window.APP_BUILD = '261102-1733'; window.APP_CHANNEL = 'dev';</script>
+  <script>window.APP_BUILD = '261102-1738'; window.APP_CHANNEL = 'dev';</script>
   <script>window.CURRENT_SHEET_VERSION = '{{SHEET_VERSION}}'; window.__perf = { appStart: performance.now() };</script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
@@ -14433,7 +14433,7 @@
       if (!el.clientWidth) return;
       const span = el.querySelector('.ps-marquee');
       const over = (span ? span.scrollWidth : el.scrollWidth) - el.clientWidth;
-      if (over > 2) {
+      if (over > 0.5) { // 1~2px 만 넘쳐도 말줄임(…)이 생기므로 조금이라도 넘치면 스크롤
         let sp = span;
         if (!sp) {
           sp = document.createElement('span');
