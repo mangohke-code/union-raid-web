@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <script>window.APP_BUILD = '261102-0623'; window.APP_CHANNEL = 'live';</script>
+  <script>window.APP_BUILD = '261102-1948'; window.APP_CHANNEL = 'live';</script>
   <script>window.CURRENT_SHEET_VERSION = '{{SHEET_VERSION}}'; window.__perf = { appStart: performance.now() };</script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
@@ -11,7 +11,7 @@
 
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Bebas+Neue&family=Rajdhani:wght@600;700&family=Outfit:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,600;1,500;1,600&family=Noto+Serif+KR:wght@600;700&display=swap" rel="stylesheet">
 
-  <!-- 261102 — 이스터에그 이모티콘 사각형 유지 + 젤리 질감 · 니케 속성/버스트 작은 아이콘 위치 = 괄호 위치(dual-left/right) · 보스 통계 탭(.bs-* · 순위 타일) · 싱크로 분포 막대 툴팁(#uls-tip) · 작은 도로 무리 캔버스(맨 앞) / 261028 — 최신 버전 알림 타이머 3초 · 정보 창 로딩 시간 · 제목 우상단 서버 표기 · 회차 선택 전체 회차 버튼/패널 · 폭 1760px · 테마 색 변수 · Most Deployed 배치 · 토스트 · 코멘트 링크 -->
+  <!-- 261102 — 개인 기록 니케 이름 왕복 스크롤 · 보스 통계 타일 클릭 · 이스터에그 이모티콘 사각형 유지 + 젤리 질감 · 니케 속성/버스트 작은 아이콘 위치 = 괄호 위치(dual-left/right) · 보스 통계 탭(.bs-* · 순위 타일) · 싱크로 분포 막대 툴팁(#uls-tip) · 작은 도로 무리 캔버스(맨 앞) / 261028 — 최신 버전 알림 타이머 3초 · 정보 창 로딩 시간 · 제목 우상단 서버 표기 · 회차 선택 전체 회차 버튼/패널 · 폭 1760px · 테마 색 변수 · Most Deployed 배치 · 토스트 · 코멘트 링크 -->
 <style>
   /* ===== CSS 변수 (테마) ===== */
   :root {
@@ -3965,6 +3965,16 @@
     font-family: 'Noto Sans KR', sans-serif; font-size: 15px; font-weight: 700; color: var(--text);
     white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   }
+  /* 긴 이름 — 처음 · 끝에서 잠깐 멈추며 좌우 왕복 (JS _psMarqueeNames 가 넘치는 이름만 감쌈) */
+  .ps-nikke-name.is-marquee { text-overflow: clip; }
+  .ps-marquee {
+    display: inline-block;
+    animation: ps-marquee 4s ease-in-out infinite alternate;
+  }
+  @keyframes ps-marquee {
+    0%, 15%   { transform: translateX(0); }
+    85%, 100% { transform: translateX(var(--shift, 0)); }
+  }
   .ps-nikke-meta { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-width: 0; }
   .ps-nikke-icons-2x2 {
     display: grid;
@@ -4715,7 +4725,7 @@
   .bs-section-desc { font-family: 'Noto Sans KR', sans-serif; font-size: 13px; color: var(--text-dim); margin-top: 4px; }
   .bs-tiles { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
   .bs-tile {
-    position: relative; height: 250px; overflow: hidden;
+    position: relative; height: 250px; overflow: hidden; cursor: pointer;
     background: var(--card); border: 1px solid var(--border); border-bottom: 3px solid var(--ac);
   }
   .bs-tile-img {
@@ -13797,7 +13807,7 @@
   }
 </script>
 
-<!-- 261102 개인 기록 — 속성/버스트 작은 아이콘 위치를 괄호 위치로 · Damage Trend 는 기록 있는 회차 범위만 / 261021 개인 기록 — 증감 색 테마 변수 · Damage Trend 빈 회차 포함 · Most Deployed 이름 표기 -->
+<!-- 261102 개인 기록 — Most Deployed 긴 이름 자동 왕복 스크롤 · 속성/버스트 작은 아이콘 위치를 괄호 위치로 · Damage Trend 는 기록 있는 회차 범위만 / 261021 개인 기록 — 증감 색 테마 변수 · Damage Trend 빈 회차 포함 · Most Deployed 이름 표기 -->
 <script>
   let _personalCtx = null;
   let _personalSort = 'no';      // 'no' | 'name' | 'level'
@@ -14404,7 +14414,42 @@
             ${rowsHtml}
           </div>`;
       }).join('');
+    requestAnimationFrame(() => requestAnimationFrame(() => _psMarqueeNames(psNikkeContainer)));
 
+  }
+
+  // 칸보다 긴 니케 이름은 좌우로 천천히 왕복 스크롤 (짧은 이름은 그대로)
+  //   그릴 때 영역이 아직 안 보이면 너비가 0 이라 못 잼 → 영역 크기가 바뀔 때마다(보이게 될 때 · 창 크기) 다시 잼
+  function _psMarqueeNames(root) {
+    if (!root) return;
+    if (!root._mqObs && typeof ResizeObserver === 'function') {
+      root._mqObs = new ResizeObserver(() => _psMarqueeApply(root));
+      root._mqObs.observe(root);
+    }
+    _psMarqueeApply(root);
+  }
+  function _psMarqueeApply(root) {
+    root.querySelectorAll('.ps-nikke-name').forEach(el => {
+      if (!el.clientWidth) return;
+      const span = el.querySelector('.ps-marquee');
+      const over = (span ? span.scrollWidth : el.scrollWidth) - el.clientWidth;
+      if (over > 0.5) { // 1~2px 만 넘쳐도 말줄임(…)이 생기므로 조금이라도 넘치면 스크롤
+        let sp = span;
+        if (!sp) {
+          sp = document.createElement('span');
+          sp.className = 'ps-marquee';
+          sp.textContent = el.textContent;
+          el.textContent = '';
+          el.appendChild(sp);
+          el.classList.add('is-marquee');
+        }
+        sp.style.setProperty('--shift', -over + 'px');
+        sp.style.animationDuration = Math.max(3, over / 25 + 2) + 's'; // 넘치는 길이에 맞춰 속도 비슷하게
+      } else if (span) {
+        el.textContent = span.textContent; // 넓어져서 다 들어가면 원래대로
+        el.classList.remove('is-marquee');
+      }
+    });
   }
 
   function _psDrawCharts(raidPerf, strikes) {
@@ -15459,7 +15504,7 @@
   }
 </script>
 
-<!-- 261102 보스 통계 탭 — 회차 구분 없이 전체 기록을 보스 기준으로: 역대 난이도 높은/낮은 보스 · 많이/적게 맞은 보스 (큰 보스 이미지 타일 5칸) -->
+<!-- 261102 보스 통계 탭 — 타일 누르면 그 회차 보스 상세로(많이/적게 맞은 보스는 마지막 등장 회차) · 회차 구분 없이 전체 기록을 보스 기준으로: 역대 난이도 높은/낮은 보스 · 많이/적게 맞은 보스 (큰 보스 이미지 타일 5칸) -->
 <script>
   // 많이/적게 맞은 보스 기준 — 'total' 누적 타수 · 'avg' 등장 1회당 평균 타수
   let _bossHitMode = 'total';
@@ -15525,13 +15570,14 @@
   }
 
   // 순위 타일 5칸 — 보스 이미지를 크게, 이름 · 회차 · 값은 이미지 아래쪽에 겹쳐 표시
-  //   item: { name, attr, sub, valHtml, valColor }
+  //   item: { name, attr, title(누르면 열 회차), sub, valHtml, valColor }
   function _bsTiles(items) {
     if (items.length === 0) return `<div class="td-hof-empty">데이터 부족</div>`;
     return `<div class="bs-tiles">${items.map((e, i) => {
       const url = _bossImg(e.name);
       return `
-        <div class="bs-tile${i === 0 ? ' bs-tile-1' : ''}" style="--ac:${colors[e.attr] || 'var(--accent)'};">
+        <div class="bs-tile${i === 0 ? ' bs-tile-1' : ''}" style="--ac:${colors[e.attr] || 'var(--accent)'};"
+             data-boss="${_bsEsc(e.name)}" data-attr="${_bsEsc(e.attr)}" data-title="${_bsEsc(e.title)}" title="${_bsEsc(e.title)} ${_bsEsc(e.name)} 상세 보기">
           <div class="bs-tile-img"${url ? ` style="background-image:url('${_bsEsc(url)}')"` : ''}></div>
           <span class="bs-tile-rank">${i + 1}</span>
           <div class="bs-tile-info">
@@ -15559,7 +15605,7 @@
     const diffEntries = [];
     list.forEach(b => b.apps.forEach(a => { if (a.diff > 0 && a.hits >= 3) diffEntries.push({ name: b.name, attr: a.attr, title: a.title, diff: a.diff, hits: a.hits }); }));
     const diffItem = e => ({
-      name: e.name, attr: e.attr, sub: `${_bsEsc(e.title)} · ${e.hits}타`,
+      name: e.name, attr: e.attr, title: e.title, sub: `${_bsEsc(e.title)} · ${e.hits}타`,
       valHtml: `${e.diff.toFixed(1)}<small>%</small>`, valColor: diffColor(e.diff)
     });
     const hardest = [...diffEntries].sort((a, b) => b.diff - a.diff).slice(0, 5).map(diffItem);
@@ -15568,8 +15614,9 @@
     // ── 많이/적게 맞은 보스 — 누적 타수 또는 등장 1회당 평균 타수 ──
     const hitVal = b => _bossHitMode === 'avg' ? b.hits / Math.max(1, b.apps.length) : b.hits;
     const byHits = [...list].sort((a, b) => hitVal(b) - hitVal(a) || b.dmg - a.dmg);
+    // 여러 회차를 합친 순위라 누르면 그 보스가 마지막으로 나온 회차 상세로
     const hitItem = b => ({
-      name: b.name, attr: b.attr, sub: `등장 ${b.apps.length}회 · ${formatDmg(b.dmg)}`,
+      name: b.name, attr: b.apps[b.apps.length - 1].attr || b.attr, title: b.apps[b.apps.length - 1].title, sub: `등장 ${b.apps.length}회 · ${formatDmg(b.dmg)}`,
       valHtml: `${_bossHitMode === 'avg' ? hitVal(b).toFixed(1) : hitVal(b).toLocaleString()}<small>타</small>`
     });
     const most = byHits.slice(0, 5).map(hitItem);
@@ -15597,6 +15644,26 @@
       section('가장 쉬웠던 보스', '역대 회차별 난이도 하위 5 · 3타 이상', _bsTiles(easiest)) +
       section('가장 많이 맞은 보스', avgLabel + ' TOP 5', _bsTiles(most), modeToggle) +
       section('가장 적게 맞은 보스', avgLabel + ' 하위 5', _bsTiles(least), modeToggle);
+    _bindBossTileClick(rankEl);
+  }
+
+  // 타일 누르면 그 회차 · 그 보스 상세 페이지로 (레이드 통계 탭으로 넘어감)
+  function _bindBossTileClick(root) {
+    if (root._bsClickBound) return;
+    root._bsClickBound = true;
+    root.addEventListener('click', e => {
+      const tile = e.target.closest('.bs-tile');
+      if (!tile || !root.contains(tile)) return;
+      openBossDetailFromStats(tile.dataset.boss, tile.dataset.attr, tile.dataset.title);
+    });
+  }
+  function openBossDetailFromStats(bossName, attr, raidTitle) {
+    const colIdx = (db.bossData[0] || []).findIndex((t, j) => j > 0 && String(t || '').trim() === String(raidTitle || '').trim());
+    if (colIdx < 1 || typeof openRaidDetail !== 'function') return;
+    selectedRaidIdx = colIdx;
+    if (typeof currentViewMode !== 'undefined') currentViewMode = 'specific';
+    switchTab('raid');
+    setTimeout(() => { openRaidDetail(bossName, attr, colIdx); window.scrollTo(0, 0); }, 60);
   }
 </script>
 
