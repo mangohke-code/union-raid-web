@@ -1,8 +1,8 @@
-<!-- 261102 화면 원본 (배포.py 로 GitHub Pages 에 올림 · Apps Script 에는 안 올라감) — 보스 통계 탭(레이드 통계와 니케 통계 사이) · 구버전 테마 저장값 무시(세이렌 고정) · 정보 창 로딩 시간 칸 · 제목 구역 우상단 서버 표기('유니온 정보' 탭) · 세이렌 스킨(style_siren) · 저장된 테마/모드 선적용 · 테마 메뉴(라이트/다크 포함) · 상단 패널 틀(hero-wrap) -->
+<!-- 261112 화면 원본 — 서버 표기 옆 익명 버튼(멤버 이름 익명화) / 261102 화면 원본 (배포.py 로 GitHub Pages 에 올림 · Apps Script 에는 안 올라감) — 보스 통계 탭(레이드 통계와 니케 통계 사이) · 구버전 테마 저장값 무시(세이렌 고정) · 정보 창 로딩 시간 칸 · 제목 구역 우상단 서버 표기('유니온 정보' 탭) · 세이렌 스킨(style_siren) · 저장된 테마/모드 선적용 · 테마 메뉴(라이트/다크 포함) · 상단 패널 틀(hero-wrap) -->
 <!DOCTYPE html>
 <html>
 <head>
-  <script>window.APP_BUILD = '261112-0334'; window.APP_CHANNEL = 'dev';</script>
+  <script>window.APP_BUILD = '261112-0353'; window.APP_CHANNEL = 'dev';</script>
   <script>window.CURRENT_SHEET_VERSION = '{{SHEET_VERSION}}'; window.__perf = { appStart: performance.now() };</script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
@@ -4933,7 +4933,7 @@
   }
 
 </style>
-  <!-- 261102 세이렌 스킨 — 보스 통계 순위 구역 · 타일 둥글게 · 구버전 테마 견본 색 삭제 · 싱크로 분포 툴팁(#uls-tip) 모양 / 261021 세이렌 스킨 (서버 표기 · 테마 메뉴 "삭제 예정" 배지) — body[data-skin="siren"] 일 때만 style.html 을 덮어씀 (구버전은 영향 없음)
+  <!-- 261112 세이렌 스킨 — 서버 표기 알약 안 익명 버튼 · 서버 표기 flex 정렬 / 261102 세이렌 스킨 — 보스 통계 순위 구역 · 타일 둥글게 · 구버전 테마 견본 색 삭제 · 싱크로 분포 툴팁(#uls-tip) 모양 / 261021 세이렌 스킨 (서버 표기 · 테마 메뉴 "삭제 예정" 배지) — body[data-skin="siren"] 일 때만 style.html 을 덮어씀 (구버전은 영향 없음)
      캡처(html2canvas) 호환: color-mix() · conic-gradient() 사용 금지, 반투명 대신 불투명 카드 -->
 <style>
   /* ───────── 토큰: 진주 (라이트) ───────── */
@@ -5317,8 +5317,24 @@
     padding: 4px 12px; border: 1px solid var(--border); border-radius: 999px; background: var(--card);
   }
   body[data-skin="siren"] .union-server b { color: var(--accent); font-weight: 700; }
+  /* 익명 버튼 — 서버 표기 알약 안, 구분선 오른쪽. 켜지면 강조색으로 채움 */
+  body[data-skin="siren"] .union-server { display: inline-flex; align-items: center; }
+  body[data-skin="siren"] .anon-toggle {
+    display: inline-flex; align-items: center; gap: 5px;
+    margin: -1px -6px -1px 10px; padding: 2px 9px 2px 10px;
+    border: none; border-left: 1px solid var(--border-bright); border-radius: 0;
+    background: transparent; color: var(--text-dim); cursor: pointer;
+    font-family: 'Noto Sans KR', sans-serif; font-size: 11.5px; font-weight: 700;
+    letter-spacing: 0; text-transform: none; line-height: 1.5;
+    transition: color 0.15s ease, background 0.15s ease;
+  }
+  body[data-skin="siren"] .anon-toggle i { color: var(--accent); font-size: 0.95em; }
+  body[data-skin="siren"] .anon-toggle:hover { color: var(--accent); }
+  body[data-skin="siren"] .anon-toggle.on { background: var(--accent); color: #fff; border-left-color: transparent; border-radius: 999px; }
+  body[data-skin="siren"] .anon-toggle.on i { color: #fff; }
   @media (max-width: 600px) {
-    body[data-skin="siren"] .union-server { display: table; margin: 0 0 10px auto; font-size: 10.5px; }
+    body[data-skin="siren"] .union-server { display: flex; width: max-content; margin: 0 0 10px auto; font-size: 10.5px; }
+    body[data-skin="siren"] .anon-toggle { font-size: 10.5px; margin-left: 8px; padding: 1px 8px; }
   }
 
   /* 회차 칩 — 숫자와 한글을 같은 글꼴로 (Outfit + 한글 대체 글꼴은 높이가 어긋남) */
@@ -5712,7 +5728,7 @@
       <span class="sub-title">Goddess of Victory: NIKKE &nbsp;//&nbsp; Union Raid</span>
       <h1 class="union-name-display"><span class="union-name-em">{{UNION_NAME}}</span> 유니온<span class="title-break"> </span>레이드 결산</h1>
     </div>
-    <span class="union-server">Server: <b>{{UNION_SERVER}}</b></span>
+    <span class="union-server">Server: <b>{{UNION_SERVER}}</b><button type="button" id="anon-toggle" class="anon-toggle" onclick="toggleAnonymize()" aria-pressed="false" title="멤버 이름 익명화"><i class="fas fa-user-secret"></i><span>익명</span></button></span>
     <div class="header-deco">
       <span style="width:80px;"></span>
       <span style="width:50px;"></span>
@@ -6334,7 +6350,7 @@
   </button>
 </div>
 
-<!-- 261103 공용 — 니케 코어 숫자 · MAX 코어 원 가운데로(위 여백 제거 · MAX 8px) / 261102 공용 — 산데비스도로 등장 정식판 약 1%(비율 0.08) · 시험판 1 · 산데비스도로 잔상 초록·파랑·빨강 2초 · 사이색(하늘·보라·노랑) 0.3초 · 산데비스도로 잔상 초록에서 시작 · 한 색 2초(12초에 한 바퀴) · 산데비스도로 잔상 한 색 1초(6초에 한 바퀴) · 산데비스도로 경로 부드럽게(목표점으로 둥글게 돌기) · 속도 들쭉날쭉(625~1625px/초) · 산데비스도로 잔상 6색(초록·하늘·파랑·보라·빨강·노랑) 같은 길이 · 한 색 0.5초 · 산데비스도로 배경 더 어두운 회색 · 잔상 색 초록→파랑→빨강 길게 · 산데비스도로(무지개 도로 속도 · 지그재그로 화면에 3~4.5초 머묾 · 나와 있으면 나머지 1/10 속도 + 화면 회색 · 무지개 한 색씩 몸 모양 잔상 · 시험 중 비율 1) · 시도로 꼬리 사이버 네트워크(노드 · 회로선 · 전기선 · 비트 조각 · 순간이동 연결선) · 시도로 경로 위아래 순간이동(잔상 · 간격 무작위 0.08~1.3초 · 거리 몸 0.3~1.2배) · 시도로/세로롱 속도 빠름으로 · 세로롱 크게 구불구불 · 무지개 도로롱 더 빠르게(1050~1450px/초 · 색 950/초) · 슈로롱 회전 속도 = 이동 속도에 비례(1.2~2.8바퀴/초) · 캐릭터 속도 4단계(매우 빠름 무지개 · 빠름 도로/슈로 · 느림 신데렐롱) · 등장 비율 도로롱 3 · 나머지(무지개 포함) 각 1 · 무지개 도로 6색 팔레트(빨강 선명) · 머리/꼬리 색 변화 초당 600 · 슈로롱 회전 초당 2바퀴 · 신데렐롱 느리게(280~330 · 뒤뚱) · 무지개 머리색 초당 420 · 꼬리 100 · 슈로롱 추가(보라 꼬리 · 빙글빙글 회전) · 날아다니는 캐릭터 속도 원래대로(300~600) · 무지개만 750~1100 · 무지개/세로롱 색 변화 끊김 수정 · 무지개 도로: doro-mask(머리카락 · 리본)에만 빛나는 무지개 · 무지개만 빠르게(나머지 180~360px/초) · 모든 캐릭터 도로처럼 좌우 뒤집기 · 날아다니는 캐릭터 4종(도로·시로·세로·신도롱, 색에 맞는 효과 · 세로롱은 세이렌 색 · 비눗방울) · 클릭하면 방향 꺾임 · 무지개 도로 몸 색 흐름 · 꼬리 무지개 흐름 방향 몸→꼬리 · 이스터에그 이모티콘 젤리(출렁임 · 잡아서 던지기, 살짝 누르면 터짐) · 도로 꼬리 끝 완전 투명 · 보스 통계 탭 전환 · 가이드 · 테마 전환 다시 그리기 · 날아다니는 도로: 더 크고 빠르게 · 머리를 날아가는 방향으로 · 꼬리는 일정한 굵기 띠 · 무지개 색 간격 넓게 · 구버전 테마 삭제(테마 메뉴는 유지) · 테마 메뉴 자동 닫힘 · 시험판 이스터에그 100% · 작은 도로 맨 앞 · 꼬리 몸의 2배 · 캡처에 작은 도로 합성 · 도로 홀로그램 뒤 작은 도로 무리(별똥별 꼬리 · 무지개) · 딜량 · HP 표기 숫자와 단위 사이 줄바꿈 금지 · 차트 회차 목록 chartRaidTitles(기록 없는 앞뒤 회차 제외) · 캡처 때 분포 툴팁 숨김 / 261030 공용 — dataBoss 시작일 + 1일(하드 오픈) 전 회차는 표시 안 함 · 가이드: 기록 없는 회차(NO RECORD)에서 시작하면 기록 있는 최근 회차로 이동 · 버전 확인: 마스터 '사용법' 탭 전체에서 버전 형식(v261030) 칸을 찾아 가장 큰 값 사용 / 261028 공용 — 최신 버전 알림 3초 · 버전 확인: 마스터 버전 칸이 비면 업데이트 있음으로 표시 · 데이터 일괄 읽기(getFullDataBatch, 실패 시 기존 방식) · 정보 창에 빌드 번호 · 로딩 구간별 시간(시트별 서버 읽기 포함) · 캡처 시 세이렌 그림자 제거(얼룩 방지) · 레벨 차트 좌우 폭 가득 · 캡처 시 유니온명 그라데이션 글자 · 줄바꿈 보정 · 최신 버전 읽는 칸 사용법!E10 → E8 · 테마 메뉴 구버전에 "삭제 예정" 표시 · 회차 선택(최신 5개 + 전체 회차 패널) · 세이렌/구버전 스킨 -->
+<!-- 261112 공용 — 멤버 이름 익명화(toggleAnonymize: 레이드 기록 · 멤버 · 탈퇴 멤버 이름을 '~하는 + 동물' 로 바꾼 사본으로 다시 그림, 새로고침하면 실명) · 멤버 목록 가공을 _buildRawMembers 로 / 261103 공용 — 니케 코어 숫자 · MAX 코어 원 가운데로(위 여백 제거 · MAX 8px) / 261102 공용 — 산데비스도로 등장 정식판 약 1%(비율 0.08) · 시험판 1 · 산데비스도로 잔상 초록·파랑·빨강 2초 · 사이색(하늘·보라·노랑) 0.3초 · 산데비스도로 잔상 초록에서 시작 · 한 색 2초(12초에 한 바퀴) · 산데비스도로 잔상 한 색 1초(6초에 한 바퀴) · 산데비스도로 경로 부드럽게(목표점으로 둥글게 돌기) · 속도 들쭉날쭉(625~1625px/초) · 산데비스도로 잔상 6색(초록·하늘·파랑·보라·빨강·노랑) 같은 길이 · 한 색 0.5초 · 산데비스도로 배경 더 어두운 회색 · 잔상 색 초록→파랑→빨강 길게 · 산데비스도로(무지개 도로 속도 · 지그재그로 화면에 3~4.5초 머묾 · 나와 있으면 나머지 1/10 속도 + 화면 회색 · 무지개 한 색씩 몸 모양 잔상 · 시험 중 비율 1) · 시도로 꼬리 사이버 네트워크(노드 · 회로선 · 전기선 · 비트 조각 · 순간이동 연결선) · 시도로 경로 위아래 순간이동(잔상 · 간격 무작위 0.08~1.3초 · 거리 몸 0.3~1.2배) · 시도로/세로롱 속도 빠름으로 · 세로롱 크게 구불구불 · 무지개 도로롱 더 빠르게(1050~1450px/초 · 색 950/초) · 슈로롱 회전 속도 = 이동 속도에 비례(1.2~2.8바퀴/초) · 캐릭터 속도 4단계(매우 빠름 무지개 · 빠름 도로/슈로 · 느림 신데렐롱) · 등장 비율 도로롱 3 · 나머지(무지개 포함) 각 1 · 무지개 도로 6색 팔레트(빨강 선명) · 머리/꼬리 색 변화 초당 600 · 슈로롱 회전 초당 2바퀴 · 신데렐롱 느리게(280~330 · 뒤뚱) · 무지개 머리색 초당 420 · 꼬리 100 · 슈로롱 추가(보라 꼬리 · 빙글빙글 회전) · 날아다니는 캐릭터 속도 원래대로(300~600) · 무지개만 750~1100 · 무지개/세로롱 색 변화 끊김 수정 · 무지개 도로: doro-mask(머리카락 · 리본)에만 빛나는 무지개 · 무지개만 빠르게(나머지 180~360px/초) · 모든 캐릭터 도로처럼 좌우 뒤집기 · 날아다니는 캐릭터 4종(도로·시로·세로·신도롱, 색에 맞는 효과 · 세로롱은 세이렌 색 · 비눗방울) · 클릭하면 방향 꺾임 · 무지개 도로 몸 색 흐름 · 꼬리 무지개 흐름 방향 몸→꼬리 · 이스터에그 이모티콘 젤리(출렁임 · 잡아서 던지기, 살짝 누르면 터짐) · 도로 꼬리 끝 완전 투명 · 보스 통계 탭 전환 · 가이드 · 테마 전환 다시 그리기 · 날아다니는 도로: 더 크고 빠르게 · 머리를 날아가는 방향으로 · 꼬리는 일정한 굵기 띠 · 무지개 색 간격 넓게 · 구버전 테마 삭제(테마 메뉴는 유지) · 테마 메뉴 자동 닫힘 · 시험판 이스터에그 100% · 작은 도로 맨 앞 · 꼬리 몸의 2배 · 캡처에 작은 도로 합성 · 도로 홀로그램 뒤 작은 도로 무리(별똥별 꼬리 · 무지개) · 딜량 · HP 표기 숫자와 단위 사이 줄바꿈 금지 · 차트 회차 목록 chartRaidTitles(기록 없는 앞뒤 회차 제외) · 캡처 때 분포 툴팁 숨김 / 261030 공용 — dataBoss 시작일 + 1일(하드 오픈) 전 회차는 표시 안 함 · 가이드: 기록 없는 회차(NO RECORD)에서 시작하면 기록 있는 최근 회차로 이동 · 버전 확인: 마스터 '사용법' 탭 전체에서 버전 형식(v261030) 칸을 찾아 가장 큰 값 사용 / 261028 공용 — 최신 버전 알림 3초 · 버전 확인: 마스터 버전 칸이 비면 업데이트 있음으로 표시 · 데이터 일괄 읽기(getFullDataBatch, 실패 시 기존 방식) · 정보 창에 빌드 번호 · 로딩 구간별 시간(시트별 서버 읽기 포함) · 캡처 시 세이렌 그림자 제거(얼룩 방지) · 레벨 차트 좌우 폭 가득 · 캡처 시 유니온명 그라데이션 글자 · 줄바꿈 보정 · 최신 버전 읽는 칸 사용법!E10 → E8 · 테마 메뉴 구버전에 "삭제 예정" 표시 · 회차 선택(최신 5개 + 전체 회차 패널) · 세이렌/구버전 스킨 -->
 <script>
   google.charts.load('current', {'packages':['corechart', 'scatter']});
 
@@ -6492,18 +6508,7 @@
       }
 
       // 멤버 데이터 가공
-      rawMembers = res.members.slice(1).map(m => {
-        const levelsOnly = m.slice(MEMBER_COL.LEVEL_START);
-        const curr = Number(levelsOnly[levelsOnly.length - 1]) || 0;
-        const prev = Number(levelsOnly[levelsOnly.length - 2]) || 0;
-
-        return {
-          no: Number(m[MEMBER_COL.NO]),
-          name: m[MEMBER_COL.NAME],
-          levels: levelsOnly,
-          growth: prev === 0 ? -999 : (curr - prev)
-        };
-      });
+      rawMembers = _buildRawMembers(res.members);
       
       displayMembers = [...rawMembers];
       
@@ -6518,6 +6523,123 @@
       spawnEasterEgg();
       checkSheetVersion();
     });
+  }
+
+  // 멤버 시트 → 멤버 목록 (처음 불러올 때 · 익명화 전환 때)
+  function _buildRawMembers(members) {
+    return (members || []).slice(1).map(m => {
+      const levelsOnly = m.slice(MEMBER_COL.LEVEL_START);
+      const curr = Number(levelsOnly[levelsOnly.length - 1]) || 0;
+      const prev = Number(levelsOnly[levelsOnly.length - 2]) || 0;
+      return {
+        no: Number(m[MEMBER_COL.NO]),
+        name: m[MEMBER_COL.NAME],
+        levels: levelsOnly,
+        growth: prev === 0 ? -999 : (curr - prev)
+      };
+    });
+  }
+
+  // ── 멤버 이름 익명화 ──
+  // 이름이 든 시트 3장(레이드 기록 · 멤버 · 탈퇴 멤버)의 닉네임 칸만 바꾼 사본으로 갈아끼우고 지금 탭을 다시 그림.
+  // 이름 짝은 페이지를 열 때마다 무작위, 열려 있는 동안은 같은 이름. 상태는 저장하지 않음(새로고침하면 실명).
+  // 머장 한줄평 같은 자유 글은 바꾸지 않음.
+  const _ANON_ADJ = ['춤추는', '노래하는', '잠자는', '달리는', '웃는', '꿈꾸는', '반짝이는', '수영하는',
+    '구르는', '산책하는', '요리하는', '하품하는', '뒹구는', '낚시하는', '책 읽는', '미소짓는',
+    '깡충대는', '졸고 있는', '간식 먹는', '별 보는', '노을 보는', '휘파람 부는', '그림 그리는', '박수 치는',
+    '고민하는', '수줍은', '용감한', '느긋한', '씩씩한', '배고픈', '신난', '조용한',
+    '빛나는', '날쌘', '포근한', '다정한'];
+  const _ANON_NOUN = ['고래', '펭귄', '수달', '고양이', '강아지', '여우', '토끼', '다람쥐',
+    '판다', '부엉이', '해파리', '문어', '거북이', '햄스터', '코알라', '알파카',
+    '너구리', '돌고래', '참새', '오리', '북극곰', '사슴', '고슴도치', '미어캣',
+    '카피바라', '물개', '앵무새', '두더지', '라쿤', '병아리', '해달', '치타',
+    '기린', '코끼리', '플라밍고', '청설모'];
+  let _anonOn = false, _anonReal = null, _anonMap = null;
+
+  function _anonNameKeys() {
+    const keys = new Set();
+    const add = (sheet, col) => {
+      if (!sheet || col === undefined) return;
+      for (let i = 1; i < sheet.length; i++) {
+        const k = normalizeName(sheet[i][col]);
+        if (k) keys.add(k);
+      }
+    };
+    add(_anonReal.members, MEMBER_COL.NAME);
+    add(_anonReal.quitMembers, QUIT_MEMBER_COL.NAME);
+    add(_anonReal.raidStats, RAID_COL.NAME);
+    return [...keys];
+  }
+  function _buildAnonMap() {
+    const pairs = [];
+    _ANON_ADJ.forEach(a => _ANON_NOUN.forEach(n => pairs.push(a + ' ' + n)));
+    for (let i = pairs.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [pairs[i], pairs[j]] = [pairs[j], pairs[i]];
+    }
+    const map = new Map();
+    _anonNameKeys().forEach((k, i) => {
+      const base = pairs[i % pairs.length];
+      map.set(k, i < pairs.length ? base : base + ' ' + (Math.floor(i / pairs.length) + 1));
+    });
+    return map;
+  }
+  // 시트 사본 — 머리글 행은 그대로, 닉네임 칸만 익명 이름으로
+  function _anonSheet(sheet, col) {
+    if (!sheet || col === undefined) return sheet;
+    return sheet.map((row, i) => {
+      if (i === 0) return row;
+      const k = normalizeName(row[col]);
+      if (!k || !_anonMap.has(k)) return row;
+      const copy = row.slice();
+      copy[col] = _anonMap.get(k);
+      return copy;
+    });
+  }
+
+  function toggleAnonymize() {
+    if (!db.raidStats || !db.members) return; // 아직 불러오는 중
+    if (!_anonReal) _anonReal = { raidStats: db.raidStats, members: db.members, quitMembers: db.quitMembers };
+    _anonOn = !_anonOn;
+    if (_anonOn) {
+      if (!_anonMap) _anonMap = _buildAnonMap();
+      db.raidStats   = _anonSheet(_anonReal.raidStats, RAID_COL.NAME);
+      db.members     = _anonSheet(_anonReal.members, MEMBER_COL.NAME);
+      db.quitMembers = _anonSheet(_anonReal.quitMembers, QUIT_MEMBER_COL.NAME);
+    } else {
+      db.raidStats   = _anonReal.raidStats;
+      db.members     = _anonReal.members;
+      db.quitMembers = _anonReal.quitMembers;
+    }
+    // 배열이 바뀌면 조회 캐시(_raidRowsIdx · _levelIdx · _raidCached)는 다음 호출 때 알아서 새로 만듦
+
+    // 이름이 든 팝업 · 상세 화면은 닫고, 이름 검색칸은 비움
+    if (typeof closeMemberDetail === 'function') closeMemberDetail();
+    if (typeof closeGrowthDetail === 'function') closeGrowthDetail();
+    if (typeof closeNikkeSquadDetail === 'function') closeNikkeSquadDetail();
+    if (typeof _personalCtx !== 'undefined' && _personalCtx) {
+      _personalCtx = null;
+      const pd = document.getElementById('personal-detail-view');
+      const pg = document.getElementById('personal-grid-view');
+      if (pd) pd.style.display = 'none';
+      if (pg) pg.style.display = 'block';
+    }
+    expandedMember = null;
+    ['searchInput', 'raidSearchInput', 'personalSearchInput', 'detailSearchInput'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.value = '';
+    });
+
+    rawMembers = _buildRawMembers(db.members);
+    filterAndRender();
+    switchTab(_lastActiveTab || 'raid');
+
+    const btn = document.getElementById('anon-toggle');
+    if (btn) {
+      btn.classList.toggle('on', _anonOn);
+      btn.setAttribute('aria-pressed', _anonOn ? 'true' : 'false');
+      btn.title = _anonOn ? '실명으로 보기' : '멤버 이름 익명화';
+    }
   }
 
   // 시트 데이터 받기 — 일괄 읽기(getFullDataBatch, Sheets API 한 번)가 있으면 그걸로, 없거나 실패하면 기존 getFullData
