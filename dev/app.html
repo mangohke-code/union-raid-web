@@ -1,8 +1,8 @@
-<!-- 261112 화면 원본 — 서버 표기 옆 익명 버튼(멤버 이름 익명화) / 261102 화면 원본 (배포.py 로 GitHub Pages 에 올림 · Apps Script 에는 안 올라감) — 보스 통계 탭(레이드 통계와 니케 통계 사이) · 구버전 테마 저장값 무시(세이렌 고정) · 정보 창 로딩 시간 칸 · 제목 구역 우상단 서버 표기('유니온 정보' 탭) · 세이렌 스킨(style_siren) · 저장된 테마/모드 선적용 · 테마 메뉴(라이트/다크 포함) · 상단 패널 틀(hero-wrap) -->
+<!-- 261112 화면 원본 — 서버 표기 바로 아래 익명 버튼(멤버 이름 익명화 · 눈 아이콘) / 261102 화면 원본 (배포.py 로 GitHub Pages 에 올림 · Apps Script 에는 안 올라감) — 보스 통계 탭(레이드 통계와 니케 통계 사이) · 구버전 테마 저장값 무시(세이렌 고정) · 정보 창 로딩 시간 칸 · 제목 구역 우상단 서버 표기('유니온 정보' 탭) · 세이렌 스킨(style_siren) · 저장된 테마/모드 선적용 · 테마 메뉴(라이트/다크 포함) · 상단 패널 틀(hero-wrap) -->
 <!DOCTYPE html>
 <html>
 <head>
-  <script>window.APP_BUILD = '261112-0355'; window.APP_CHANNEL = 'dev';</script>
+  <script>window.APP_BUILD = '261112-0425'; window.APP_CHANNEL = 'dev';</script>
   <script>window.CURRENT_SHEET_VERSION = '{{SHEET_VERSION}}'; window.__perf = { appStart: performance.now() };</script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
@@ -4933,7 +4933,7 @@
   }
 
 </style>
-  <!-- 261112 세이렌 스킨 — 서버 표기 알약 안 익명 버튼 · 서버 표기 flex 정렬 / 261102 세이렌 스킨 — 보스 통계 순위 구역 · 타일 둥글게 · 구버전 테마 견본 색 삭제 · 싱크로 분포 툴팁(#uls-tip) 모양 / 261021 세이렌 스킨 (서버 표기 · 테마 메뉴 "삭제 예정" 배지) — body[data-skin="siren"] 일 때만 style.html 을 덮어씀 (구버전은 영향 없음)
+  <!-- 261112 세이렌 스킨 — 서버 표기 바로 아래 익명 버튼(같은 알약 모양) / 261102 세이렌 스킨 — 보스 통계 순위 구역 · 타일 둥글게 · 구버전 테마 견본 색 삭제 · 싱크로 분포 툴팁(#uls-tip) 모양 / 261021 세이렌 스킨 (서버 표기 · 테마 메뉴 "삭제 예정" 배지) — body[data-skin="siren"] 일 때만 style.html 을 덮어씀 (구버전은 영향 없음)
      캡처(html2canvas) 호환: color-mix() · conic-gradient() 사용 금지, 반투명 대신 불투명 카드 -->
 <style>
   /* ───────── 토큰: 진주 (라이트) ───────── */
@@ -5317,24 +5317,26 @@
     padding: 4px 12px; border: 1px solid var(--border); border-radius: 999px; background: var(--card);
   }
   body[data-skin="siren"] .union-server b { color: var(--accent); font-weight: 700; }
-  /* 익명 버튼 — 서버 표기 알약 안, 구분선 오른쪽. 켜지면 강조색으로 채움 */
-  body[data-skin="siren"] .union-server { display: inline-flex; align-items: center; }
-  body[data-skin="siren"] .anon-toggle {
-    display: inline-flex; align-items: center; gap: 5px;
-    margin: -1px -6px -1px 10px; padding: 2px 9px 2px 10px;
-    border: none; border-left: 1px solid var(--border-bright); border-radius: 0;
-    background: transparent; color: var(--text-dim); cursor: pointer;
-    font-family: 'Noto Sans KR', sans-serif; font-size: 11.5px; font-weight: 700;
-    letter-spacing: 0; text-transform: none; line-height: 1.5;
-    transition: color 0.15s ease, background 0.15s ease;
+  @media (max-width: 600px) {
+    body[data-skin="siren"] .union-server { display: table; margin: 0 0 10px auto; font-size: 10.5px; }
   }
-  body[data-skin="siren"] .anon-toggle i { color: var(--accent); font-size: 0.95em; }
-  body[data-skin="siren"] .anon-toggle:hover { color: var(--accent); }
-  body[data-skin="siren"] .anon-toggle.on { background: var(--accent); color: #fff; border-left-color: transparent; border-radius: 999px; }
+  /* 익명 버튼 — 서버 표기 바로 아래, 같은 알약 모양. 켜지면 강조색으로 채움 */
+  body[data-skin="siren"] .anon-toggle {
+    position: absolute; top: 38px; right: 0;
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 4px 12px; border: 1px solid var(--border); border-radius: 999px;
+    background: var(--card); color: var(--text-dim); cursor: pointer;
+    font-family: 'Noto Sans KR', sans-serif; font-size: 12px; font-weight: 700;
+    letter-spacing: 0; line-height: 1.5;
+    transition: color 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+  }
+  body[data-skin="siren"] .anon-toggle i { color: var(--accent); }
+  body[data-skin="siren"] .anon-toggle:hover { color: var(--accent); border-color: var(--accent); }
+  body[data-skin="siren"] .anon-toggle.on { background: var(--accent); border-color: var(--accent); color: #fff; }
   body[data-skin="siren"] .anon-toggle.on i { color: #fff; }
   @media (max-width: 600px) {
-    body[data-skin="siren"] .union-server { display: flex; width: max-content; margin: 0 0 10px auto; font-size: 10.5px; }
-    body[data-skin="siren"] .anon-toggle { font-size: 10.5px; margin-left: 8px; padding: 1px 8px; }
+    body[data-skin="siren"] .anon-toggle { position: static; display: table; margin: -4px 0 10px auto; padding: 3px 10px; font-size: 10.5px; }
+    body[data-skin="siren"] .anon-toggle i { margin-right: 5px; }
   }
 
   /* 회차 칩 — 숫자와 한글을 같은 글꼴로 (Outfit + 한글 대체 글꼴은 높이가 어긋남) */
@@ -5728,7 +5730,8 @@
       <span class="sub-title">Goddess of Victory: NIKKE &nbsp;//&nbsp; Union Raid</span>
       <h1 class="union-name-display"><span class="union-name-em">{{UNION_NAME}}</span> 유니온<span class="title-break"> </span>레이드 결산</h1>
     </div>
-    <span class="union-server">Server: <b>{{UNION_SERVER}}</b><button type="button" id="anon-toggle" class="anon-toggle" onclick="toggleAnonymize()" aria-pressed="false" title="멤버 이름 익명화"><i class="fas fa-user-secret"></i><span>익명</span></button></span>
+    <span class="union-server">Server: <b>{{UNION_SERVER}}</b></span>
+    <button type="button" id="anon-toggle" class="anon-toggle" onclick="toggleAnonymize()" aria-pressed="false" title="멤버 이름 익명화"><i class="fas fa-eye"></i><span>익명</span></button>
     <div class="header-deco">
       <span style="width:80px;"></span>
       <span style="width:50px;"></span>
@@ -6350,7 +6353,7 @@
   </button>
 </div>
 
-<!-- 261112 공용 — 멤버 이름 익명화(toggleAnonymize: 레이드 기록 · 멤버 · 탈퇴 멤버 이름을 '~하는 + 동물' 로 바꾼 사본으로 다시 그림, 새로고침하면 실명) · 멤버 목록 가공을 _buildRawMembers 로 / 261103 공용 — 니케 코어 숫자 · MAX 코어 원 가운데로(위 여백 제거 · MAX 8px) / 261102 공용 — 산데비스도로 등장 정식판 약 1%(비율 0.08) · 시험판 1 · 산데비스도로 잔상 초록·파랑·빨강 2초 · 사이색(하늘·보라·노랑) 0.3초 · 산데비스도로 잔상 초록에서 시작 · 한 색 2초(12초에 한 바퀴) · 산데비스도로 잔상 한 색 1초(6초에 한 바퀴) · 산데비스도로 경로 부드럽게(목표점으로 둥글게 돌기) · 속도 들쭉날쭉(625~1625px/초) · 산데비스도로 잔상 6색(초록·하늘·파랑·보라·빨강·노랑) 같은 길이 · 한 색 0.5초 · 산데비스도로 배경 더 어두운 회색 · 잔상 색 초록→파랑→빨강 길게 · 산데비스도로(무지개 도로 속도 · 지그재그로 화면에 3~4.5초 머묾 · 나와 있으면 나머지 1/10 속도 + 화면 회색 · 무지개 한 색씩 몸 모양 잔상 · 시험 중 비율 1) · 시도로 꼬리 사이버 네트워크(노드 · 회로선 · 전기선 · 비트 조각 · 순간이동 연결선) · 시도로 경로 위아래 순간이동(잔상 · 간격 무작위 0.08~1.3초 · 거리 몸 0.3~1.2배) · 시도로/세로롱 속도 빠름으로 · 세로롱 크게 구불구불 · 무지개 도로롱 더 빠르게(1050~1450px/초 · 색 950/초) · 슈로롱 회전 속도 = 이동 속도에 비례(1.2~2.8바퀴/초) · 캐릭터 속도 4단계(매우 빠름 무지개 · 빠름 도로/슈로 · 느림 신데렐롱) · 등장 비율 도로롱 3 · 나머지(무지개 포함) 각 1 · 무지개 도로 6색 팔레트(빨강 선명) · 머리/꼬리 색 변화 초당 600 · 슈로롱 회전 초당 2바퀴 · 신데렐롱 느리게(280~330 · 뒤뚱) · 무지개 머리색 초당 420 · 꼬리 100 · 슈로롱 추가(보라 꼬리 · 빙글빙글 회전) · 날아다니는 캐릭터 속도 원래대로(300~600) · 무지개만 750~1100 · 무지개/세로롱 색 변화 끊김 수정 · 무지개 도로: doro-mask(머리카락 · 리본)에만 빛나는 무지개 · 무지개만 빠르게(나머지 180~360px/초) · 모든 캐릭터 도로처럼 좌우 뒤집기 · 날아다니는 캐릭터 4종(도로·시로·세로·신도롱, 색에 맞는 효과 · 세로롱은 세이렌 색 · 비눗방울) · 클릭하면 방향 꺾임 · 무지개 도로 몸 색 흐름 · 꼬리 무지개 흐름 방향 몸→꼬리 · 이스터에그 이모티콘 젤리(출렁임 · 잡아서 던지기, 살짝 누르면 터짐) · 도로 꼬리 끝 완전 투명 · 보스 통계 탭 전환 · 가이드 · 테마 전환 다시 그리기 · 날아다니는 도로: 더 크고 빠르게 · 머리를 날아가는 방향으로 · 꼬리는 일정한 굵기 띠 · 무지개 색 간격 넓게 · 구버전 테마 삭제(테마 메뉴는 유지) · 테마 메뉴 자동 닫힘 · 시험판 이스터에그 100% · 작은 도로 맨 앞 · 꼬리 몸의 2배 · 캡처에 작은 도로 합성 · 도로 홀로그램 뒤 작은 도로 무리(별똥별 꼬리 · 무지개) · 딜량 · HP 표기 숫자와 단위 사이 줄바꿈 금지 · 차트 회차 목록 chartRaidTitles(기록 없는 앞뒤 회차 제외) · 캡처 때 분포 툴팁 숨김 / 261030 공용 — dataBoss 시작일 + 1일(하드 오픈) 전 회차는 표시 안 함 · 가이드: 기록 없는 회차(NO RECORD)에서 시작하면 기록 있는 최근 회차로 이동 · 버전 확인: 마스터 '사용법' 탭 전체에서 버전 형식(v261030) 칸을 찾아 가장 큰 값 사용 / 261028 공용 — 최신 버전 알림 3초 · 버전 확인: 마스터 버전 칸이 비면 업데이트 있음으로 표시 · 데이터 일괄 읽기(getFullDataBatch, 실패 시 기존 방식) · 정보 창에 빌드 번호 · 로딩 구간별 시간(시트별 서버 읽기 포함) · 캡처 시 세이렌 그림자 제거(얼룩 방지) · 레벨 차트 좌우 폭 가득 · 캡처 시 유니온명 그라데이션 글자 · 줄바꿈 보정 · 최신 버전 읽는 칸 사용법!E10 → E8 · 테마 메뉴 구버전에 "삭제 예정" 표시 · 회차 선택(최신 5개 + 전체 회차 패널) · 세이렌/구버전 스킨 -->
+<!-- 261112 공용 — 멤버 이름 익명화(toggleAnonymize: 레이드 기록 · 멤버 · 탈퇴 멤버 이름을 엉뚱한 '형용사 명사' 로 바꾼 사본으로 다시 그림, 화면에만 띄어쓰기 · 새로고침하면 실명) · 멤버 목록 가공을 _buildRawMembers 로 / 261103 공용 — 니케 코어 숫자 · MAX 코어 원 가운데로(위 여백 제거 · MAX 8px) / 261102 공용 — 산데비스도로 등장 정식판 약 1%(비율 0.08) · 시험판 1 · 산데비스도로 잔상 초록·파랑·빨강 2초 · 사이색(하늘·보라·노랑) 0.3초 · 산데비스도로 잔상 초록에서 시작 · 한 색 2초(12초에 한 바퀴) · 산데비스도로 잔상 한 색 1초(6초에 한 바퀴) · 산데비스도로 경로 부드럽게(목표점으로 둥글게 돌기) · 속도 들쭉날쭉(625~1625px/초) · 산데비스도로 잔상 6색(초록·하늘·파랑·보라·빨강·노랑) 같은 길이 · 한 색 0.5초 · 산데비스도로 배경 더 어두운 회색 · 잔상 색 초록→파랑→빨강 길게 · 산데비스도로(무지개 도로 속도 · 지그재그로 화면에 3~4.5초 머묾 · 나와 있으면 나머지 1/10 속도 + 화면 회색 · 무지개 한 색씩 몸 모양 잔상 · 시험 중 비율 1) · 시도로 꼬리 사이버 네트워크(노드 · 회로선 · 전기선 · 비트 조각 · 순간이동 연결선) · 시도로 경로 위아래 순간이동(잔상 · 간격 무작위 0.08~1.3초 · 거리 몸 0.3~1.2배) · 시도로/세로롱 속도 빠름으로 · 세로롱 크게 구불구불 · 무지개 도로롱 더 빠르게(1050~1450px/초 · 색 950/초) · 슈로롱 회전 속도 = 이동 속도에 비례(1.2~2.8바퀴/초) · 캐릭터 속도 4단계(매우 빠름 무지개 · 빠름 도로/슈로 · 느림 신데렐롱) · 등장 비율 도로롱 3 · 나머지(무지개 포함) 각 1 · 무지개 도로 6색 팔레트(빨강 선명) · 머리/꼬리 색 변화 초당 600 · 슈로롱 회전 초당 2바퀴 · 신데렐롱 느리게(280~330 · 뒤뚱) · 무지개 머리색 초당 420 · 꼬리 100 · 슈로롱 추가(보라 꼬리 · 빙글빙글 회전) · 날아다니는 캐릭터 속도 원래대로(300~600) · 무지개만 750~1100 · 무지개/세로롱 색 변화 끊김 수정 · 무지개 도로: doro-mask(머리카락 · 리본)에만 빛나는 무지개 · 무지개만 빠르게(나머지 180~360px/초) · 모든 캐릭터 도로처럼 좌우 뒤집기 · 날아다니는 캐릭터 4종(도로·시로·세로·신도롱, 색에 맞는 효과 · 세로롱은 세이렌 색 · 비눗방울) · 클릭하면 방향 꺾임 · 무지개 도로 몸 색 흐름 · 꼬리 무지개 흐름 방향 몸→꼬리 · 이스터에그 이모티콘 젤리(출렁임 · 잡아서 던지기, 살짝 누르면 터짐) · 도로 꼬리 끝 완전 투명 · 보스 통계 탭 전환 · 가이드 · 테마 전환 다시 그리기 · 날아다니는 도로: 더 크고 빠르게 · 머리를 날아가는 방향으로 · 꼬리는 일정한 굵기 띠 · 무지개 색 간격 넓게 · 구버전 테마 삭제(테마 메뉴는 유지) · 테마 메뉴 자동 닫힘 · 시험판 이스터에그 100% · 작은 도로 맨 앞 · 꼬리 몸의 2배 · 캡처에 작은 도로 합성 · 도로 홀로그램 뒤 작은 도로 무리(별똥별 꼬리 · 무지개) · 딜량 · HP 표기 숫자와 단위 사이 줄바꿈 금지 · 차트 회차 목록 chartRaidTitles(기록 없는 앞뒤 회차 제외) · 캡처 때 분포 툴팁 숨김 / 261030 공용 — dataBoss 시작일 + 1일(하드 오픈) 전 회차는 표시 안 함 · 가이드: 기록 없는 회차(NO RECORD)에서 시작하면 기록 있는 최근 회차로 이동 · 버전 확인: 마스터 '사용법' 탭 전체에서 버전 형식(v261030) 칸을 찾아 가장 큰 값 사용 / 261028 공용 — 최신 버전 알림 3초 · 버전 확인: 마스터 버전 칸이 비면 업데이트 있음으로 표시 · 데이터 일괄 읽기(getFullDataBatch, 실패 시 기존 방식) · 정보 창에 빌드 번호 · 로딩 구간별 시간(시트별 서버 읽기 포함) · 캡처 시 세이렌 그림자 제거(얼룩 방지) · 레벨 차트 좌우 폭 가득 · 캡처 시 유니온명 그라데이션 글자 · 줄바꿈 보정 · 최신 버전 읽는 칸 사용법!E10 → E8 · 테마 메뉴 구버전에 "삭제 예정" 표시 · 회차 선택(최신 5개 + 전체 회차 패널) · 세이렌/구버전 스킨 -->
 <script>
   google.charts.load('current', {'packages':['corechart', 'scatter']});
 
@@ -6543,18 +6546,20 @@
   // ── 멤버 이름 익명화 ──
   // 이름이 든 시트 3장(레이드 기록 · 멤버 · 탈퇴 멤버)의 닉네임 칸만 바꾼 사본으로 갈아끼우고 지금 탭을 다시 그림.
   // 이름 짝은 페이지를 열 때마다 무작위, 열려 있는 동안은 같은 이름. 상태는 저장하지 않음(새로고침하면 실명).
-  // 머장 한줄평 같은 자유 글은 바꾸지 않음. 이름은 띄어쓰기 없이(일부 표는 이름을 공백 빼고 보여 줌 — 탭마다 다르게 보이지 않게).
-  const _ANON_ADJ = ['춤추는', '노래하는', '잠자는', '달리는', '웃는', '꿈꾸는', '반짝이는', '수영하는',
-    '구르는', '산책하는', '요리하는', '하품하는', '뒹구는', '낚시하는', '책읽는', '미소짓는',
-    '깡충대는', '졸고있는', '간식먹는', '별보는', '노을보는', '휘파람부는', '그림그리는', '박수치는',
-    '고민하는', '수줍은', '용감한', '느긋한', '씩씩한', '배고픈', '신난', '조용한',
-    '빛나는', '날쌘', '포근한', '다정한'];
-  const _ANON_NOUN = ['고래', '펭귄', '수달', '고양이', '강아지', '여우', '토끼', '다람쥐',
-    '판다', '부엉이', '해파리', '문어', '거북이', '햄스터', '코알라', '알파카',
-    '너구리', '돌고래', '참새', '오리', '북극곰', '사슴', '고슴도치', '미어캣',
-    '카피바라', '물개', '앵무새', '두더지', '라쿤', '병아리', '해달', '치타',
-    '기린', '코끼리', '플라밍고', '청설모'];
-  let _anonOn = false, _anonReal = null, _anonMap = null;
+  // 머장 한줄평 같은 자유 글은 바꾸지 않음.
+  const _ANON_ADJ = ['철학하는', '야근하는', '출근하는', '세금내는', '월세밀린', '로또맞은', '명상하는', '랩하는',
+    '삐친', '억울한', '킹받는', '수상한', '진지한', '건방진', '소심한', '우아한',
+    '느끼한', '고독한', '방황하는', '현타온', '멍때리는', '눈치없는', '의심많은', '트림하는',
+    '급발진한', '오열하는', '광기어린', '반항하는', '다이어트중인', '갓생사는', '허세부리는', '잠수탄',
+    '각성한', '흑화한', '재채기하는', '비밀많은', '중2병걸린', '은퇴한', '전생한', '반성하는'];
+  const _ANON_NOUN = ['양말', '냉장고', '단무지', '고무장갑', '슬리퍼', '전기장판', '붕어빵', '택배상자',
+    '형광펜', '호떡', '리모컨', '효자손', '선풍기', '청국장', '계란말이', '돌하르방',
+    '삼각김밥', '방울토마토', '고등어', '자판기', '우체통', '솜사탕', '주전자', '빨래집게',
+    '뿅망치', '형광등', '탬버린', '김치전', '오징어땅콩', '프린터', '압력밥솥', '이불킥',
+    '체크셔츠', '대걸레', '소금빵', '민트초코', '감자칩', '볼링공', '가습기', '물파스'];
+  // _anonMap: 실명(공백 뺀 것) → 데이터용 익명 이름(공백 없음 — 표 id · 선택자에 그대로 들어가는 곳이 있어서)
+  // _anonPretty: 데이터용 익명 이름 → 화면용 '형용사 명사' (displayName · _anonLabel 이 돌려줌)
+  let _anonOn = false, _anonReal = null, _anonMap = null, _anonPretty = null;
 
   function _anonNameKeys() {
     const keys = new Set();
@@ -6571,16 +6576,20 @@
     return [...keys];
   }
   function _buildAnonMap() {
+    // 앞말 · 뒷말 쌍을 전부 만든 뒤 섞어서 나눔 → 두 사람이 앞뒤 모두 같은 이름을 받는 일은 없음(한쪽만 같은 건 허용)
     const pairs = [];
-    _ANON_ADJ.forEach(a => _ANON_NOUN.forEach(n => pairs.push(a + n)));
+    _ANON_ADJ.forEach(a => _ANON_NOUN.forEach(n => pairs.push([a, n])));
     for (let i = pairs.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [pairs[i], pairs[j]] = [pairs[j], pairs[i]];
     }
     const map = new Map();
+    _anonPretty = new Map();
     _anonNameKeys().forEach((k, i) => {
-      const base = pairs[i % pairs.length];
-      map.set(k, i < pairs.length ? base : base + (Math.floor(i / pairs.length) + 1));
+      const [a, n] = pairs[i % pairs.length];
+      const extra = i < pairs.length ? '' : String(Math.floor(i / pairs.length) + 1);
+      map.set(k, a + n + extra);
+      _anonPretty.set(a + n + extra, a + ' ' + n + extra);
     });
     return map;
   }
@@ -6595,6 +6604,15 @@
       copy[col] = _anonMap.get(k);
       return copy;
     });
+  }
+
+  // 화면에 찍을 이름 — 익명일 때만 '형용사 명사' 로 띄어 씀, 아니면 받은 그대로
+  function _anonLabel(name) {
+    if (_anonOn && _anonPretty) {
+      const p = _anonPretty.get(normalizeName(name));
+      if (p) return p;
+    }
+    return name;
   }
 
   function toggleAnonymize() {
@@ -6637,6 +6655,8 @@
     const btn = document.getElementById('anon-toggle');
     if (btn) {
       btn.classList.toggle('on', _anonOn);
+      const icon = btn.querySelector('i');
+      if (icon) icon.className = _anonOn ? 'fas fa-eye-slash' : 'fas fa-eye';
       btn.setAttribute('aria-pressed', _anonOn ? 'true' : 'false');
       btn.title = _anonOn ? '실명으로 보기' : '멤버 이름 익명화';
     }
@@ -8873,6 +8893,8 @@
 
   // 화면 표시용 — 동명이인 구별 suffix ` (N)` 을 벗김 (매칭/저장에는 원본 그대로 사용)
   function displayName(name) {
+    const anon = _anonLabel(name);
+    if (anon !== name) return anon; // 익명일 때 — '형용사 명사'
     return String(name || '').replace(/\s*\(\d+\)\s*$/, '').trim();
   }
 
@@ -12055,7 +12077,7 @@
     }
   }
 </script>
-<!-- 261102 종합 뷰 — 차트는 기록 있는 회차 범위만 · Member DMG Trend 왼쪽 눈금 잘림 수정 / 261021 종합 뷰 — Raid History 이동 시 칩 줄 갱신 · 증감/선 색 테마 변수 · ∞ 타일 4단계 딜량 · 빈 회차 표시 -->
+<!-- 261112 종합 뷰 — 멤버 딜 차트 범례 · 말풍선 · 이름 칩을 익명 화면용 이름으로(_anonLabel) / 261102 종합 뷰 — 차트는 기록 있는 회차 범위만 · Member DMG Trend 왼쪽 눈금 잘림 수정 / 261021 종합 뷰 — Raid History 이동 시 칩 줄 갱신 · 증감/선 색 테마 변수 · ∞ 타일 4단계 딜량 · 빈 회차 표시 -->
 <script>
   let totalDmgChart = null;
   let totalDmgData = null;
@@ -13014,7 +13036,7 @@
     totalDmgData = new google.visualization.DataTable();
     totalDmgData.addColumn('string', '회차');
     allMemberNames.forEach(name => {
-      totalDmgData.addColumn('number', name);
+      totalDmgData.addColumn('number', _anonLabel(name));
       totalDmgData.addColumn({type: 'string', role: 'tooltip', p: {html: true}});
     });
 
@@ -13030,7 +13052,7 @@
           } else {
             const tooltip = `
               <div class="google-visualization-tooltip">
-                <div style="font-family:'Rajdhani',sans-serif; font-weight:700; letter-spacing:1px; color:var(--accent); margin-bottom:5px; border-bottom:1px solid var(--border); padding-bottom:4px;">${name}</div>
+                <div style="font-family:'Rajdhani',sans-serif; font-weight:700; letter-spacing:1px; color:var(--accent); margin-bottom:5px; border-bottom:1px solid var(--border); padding-bottom:4px;">${_anonLabel(name)}</div>
                 <div style="font-size:12px; color:var(--text-dim);">${title} 총 합산 딜량</div>
                 <div style="font-size:15px; font-weight:bold; margin-top:3px; color:var(--text);">${formatDmg(totalSum)}</div>
               </div>`;
@@ -13059,7 +13081,7 @@
     allMemberNames.forEach(name => {
       const chip = document.createElement('div');
       chip.className = 'member-chip';
-      chip.innerText = name;
+      chip.innerText = _anonLabel(name);
       chip.onclick = () => updateChartHighlight(name, chip);
       container.appendChild(chip);
     });
