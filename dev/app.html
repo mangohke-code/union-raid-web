@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <script>window.APP_BUILD = '261112-0353'; window.APP_CHANNEL = 'dev';</script>
+  <script>window.APP_BUILD = '261112-0355'; window.APP_CHANNEL = 'dev';</script>
   <script>window.CURRENT_SHEET_VERSION = '{{SHEET_VERSION}}'; window.__perf = { appStart: performance.now() };</script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
@@ -6543,10 +6543,10 @@
   // ── 멤버 이름 익명화 ──
   // 이름이 든 시트 3장(레이드 기록 · 멤버 · 탈퇴 멤버)의 닉네임 칸만 바꾼 사본으로 갈아끼우고 지금 탭을 다시 그림.
   // 이름 짝은 페이지를 열 때마다 무작위, 열려 있는 동안은 같은 이름. 상태는 저장하지 않음(새로고침하면 실명).
-  // 머장 한줄평 같은 자유 글은 바꾸지 않음.
+  // 머장 한줄평 같은 자유 글은 바꾸지 않음. 이름은 띄어쓰기 없이(일부 표는 이름을 공백 빼고 보여 줌 — 탭마다 다르게 보이지 않게).
   const _ANON_ADJ = ['춤추는', '노래하는', '잠자는', '달리는', '웃는', '꿈꾸는', '반짝이는', '수영하는',
-    '구르는', '산책하는', '요리하는', '하품하는', '뒹구는', '낚시하는', '책 읽는', '미소짓는',
-    '깡충대는', '졸고 있는', '간식 먹는', '별 보는', '노을 보는', '휘파람 부는', '그림 그리는', '박수 치는',
+    '구르는', '산책하는', '요리하는', '하품하는', '뒹구는', '낚시하는', '책읽는', '미소짓는',
+    '깡충대는', '졸고있는', '간식먹는', '별보는', '노을보는', '휘파람부는', '그림그리는', '박수치는',
     '고민하는', '수줍은', '용감한', '느긋한', '씩씩한', '배고픈', '신난', '조용한',
     '빛나는', '날쌘', '포근한', '다정한'];
   const _ANON_NOUN = ['고래', '펭귄', '수달', '고양이', '강아지', '여우', '토끼', '다람쥐',
@@ -6572,7 +6572,7 @@
   }
   function _buildAnonMap() {
     const pairs = [];
-    _ANON_ADJ.forEach(a => _ANON_NOUN.forEach(n => pairs.push(a + ' ' + n)));
+    _ANON_ADJ.forEach(a => _ANON_NOUN.forEach(n => pairs.push(a + n)));
     for (let i = pairs.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [pairs[i], pairs[j]] = [pairs[j], pairs[i]];
@@ -6580,7 +6580,7 @@
     const map = new Map();
     _anonNameKeys().forEach((k, i) => {
       const base = pairs[i % pairs.length];
-      map.set(k, i < pairs.length ? base : base + ' ' + (Math.floor(i / pairs.length) + 1));
+      map.set(k, i < pairs.length ? base : base + (Math.floor(i / pairs.length) + 1));
     });
     return map;
   }
