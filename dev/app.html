@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <script>window.APP_BUILD = '261113-0406'; window.APP_CHANNEL = 'dev';</script>
+  <script>window.APP_BUILD = '261113-0409'; window.APP_CHANNEL = 'dev';</script>
   <script>window.CURRENT_SHEET_VERSION = '{{SHEET_VERSION}}'; window.__perf = { appStart: performance.now() };</script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
@@ -5822,7 +5822,10 @@
   /* 제목 앞 세로 막대 → 사파이어 보석 */
   body[data-skin="marian"] [style*="width:3px; height:16px; background:var(--accent)"],
   body[data-skin="marian"] [style*="width:3px; height:14px; background:var(--accent)"],
-  body[data-skin="marian"] .ps-section-bar {
+  body[data-skin="marian"] [style*="width:3px; height:12px; background:var(--accent)"],
+  body[data-skin="marian"] [style*="width:3px; height:18px; background:var(--accent)"],
+  body[data-skin="marian"] .ps-section-bar,
+  body[data-skin="marian"] .growth-head .accent-bar {
     width: 9px !important; height: 9px !important;
     transform: rotate(45deg);
     background: var(--gem) !important;
@@ -5914,7 +5917,7 @@
     body[data-skin="marian"] .hero-wrap .header {
       position: fixed; left: 0; top: 0; bottom: 0; width: var(--side-w); box-sizing: border-box;
       display: flex; flex-direction: column; align-items: stretch; justify-content: flex-start;
-      margin: 0; padding: 112px 26px 150px; gap: 0;
+      margin: 0; padding: 112px 26px 120px; gap: 0;
       background: var(--bg); border-bottom: none; border-right: 1px solid var(--border);
       z-index: 40; overflow-y: auto; counter-reset: mtab;
     }
@@ -5924,12 +5927,12 @@
       transform: rotate(45deg); background: var(--gem);
     }
     body[data-skin="marian"] .hero-wrap .header::after {
-      content: 'Marian'; position: absolute; left: 60px; top: 28px; width: auto; height: auto;
+      content: 'Marian'; display: block; position: absolute; left: 60px; top: 28px; bottom: auto; width: auto; height: auto;
       background: none; font-family: var(--f-display); font-size: 31px; line-height: 1.2; color: var(--text);
     }
     body[data-skin="marian"] .hero-wrap .tabs::before {
       content: 'UNION RAID LOOKBOOK'; display: block; margin: -40px 0 30px; padding-bottom: 14px;
-      font: 500 10px/1 'Noto Sans KR', sans-serif; letter-spacing: 0.35em; color: var(--text-dim);
+      font: 500 9.5px/1 'Noto Sans KR', sans-serif; letter-spacing: 0.28em; white-space: nowrap; color: var(--text-dim);
       background: var(--grad) left bottom / 100% 2px no-repeat;
     }
     body[data-skin="marian"] .hero-wrap .tabs { flex-direction: column; gap: 0; }
@@ -5942,14 +5945,14 @@
       content: ''; display: block; position: static; width: 9px; height: 9px; transform: rotate(45deg);
       background: var(--gem); opacity: 1; justify-self: end;
     }
-    /* 서버 · 익명 — 목차 아래쪽에 고정 (맨 아래 동작 메뉴 버튼 위) */
+    /* 서버 · 익명 — 목차 바로 아래에 고정 (맨 아래 동작 메뉴가 펼쳐지는 자리와 안 겹치게) */
     body[data-skin="marian"] .union-server,
     body[data-skin="marian"] .anon-toggle {
       position: fixed; left: 26px; right: auto; top: auto; width: calc(var(--side-w) - 52px); box-sizing: border-box; z-index: 41;
       display: flex; align-items: center; justify-content: center; gap: 6px;
     }
-    body[data-skin="marian"] .union-server { bottom: 118px; }
-    body[data-skin="marian"] .anon-toggle { bottom: 78px; }
+    body[data-skin="marian"] .union-server { top: 462px; bottom: auto; }
+    body[data-skin="marian"] .anon-toggle { top: 504px; bottom: auto; }
     /* 동작 메뉴 · 맨 위/아래 버튼이 목차를 가리지 않게 */
     body[data-skin="marian"] .scroll-buttons-left { left: 26px; }
   }
@@ -6365,12 +6368,16 @@
   body[data-skin="marian"] .nikke-filter-title { font-family: var(--f-display) !important; font-style: italic; font-size: 17px; letter-spacing: 0.02em !important; color: var(--lav); text-transform: none; }
   body[data-skin="marian"] .nikke-filter-option { border-radius: 0; padding-left: 12px; padding-right: 12px; }
   body[data-skin="marian"] .nikke-filter-option.checked { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
+  body[data-skin="marian"] .growth-title { font-family: 'Noto Sans KR', sans-serif !important; font-size: 12px; letter-spacing: 0.2em !important; }
+  body[data-skin="marian"] .gstat { border-left: 2px solid var(--lav); }
   body[data-skin="marian"] .popup-member-name { font-family: var(--f-title) !important; font-weight: 900 !important; letter-spacing: -0.01em !important; }
 
   /* 보스 상세 Phase Distribution 링 (style_siren 의 .pd-* 를 같이 씀) */
   body[data-skin="marian"] .pd-center b { font-family: var(--f-display); font-weight: 500; }
   body[data-skin="marian"] .pd-item b { font-family: var(--f-display); font-weight: 500; }
   body[data-skin="marian"] .pd-item i { border-radius: 0; transform: rotate(45deg) scale(0.85); }
+  body[data-skin="marian"] .pd-item { gap: 8px; }
+  body[data-skin="marian"] .pd-item .pd-label { white-space: nowrap; }
 
   /* 로딩 화면 */
   body[data-skin="marian"] #loading-overlay { gap: 34px; background: var(--bg); }
