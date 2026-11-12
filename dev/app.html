@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <script>window.APP_BUILD = '261113-0402'; window.APP_CHANNEL = 'dev';</script>
+  <script>window.APP_BUILD = '261113-0406'; window.APP_CHANNEL = 'dev';</script>
   <script>window.CURRENT_SHEET_VERSION = '{{SHEET_VERSION}}'; window.__perf = { appStart: performance.now() };</script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
@@ -5912,7 +5912,7 @@
   @media (min-width: 1101px) {
     body[data-skin="marian"] { padding-left: calc(var(--side-w) + 34px); }
     body[data-skin="marian"] .hero-wrap .header {
-      position: fixed; left: 0; top: 0; bottom: 0; width: var(--side-w);
+      position: fixed; left: 0; top: 0; bottom: 0; width: var(--side-w); box-sizing: border-box;
       display: flex; flex-direction: column; align-items: stretch; justify-content: flex-start;
       margin: 0; padding: 112px 26px 150px; gap: 0;
       background: var(--bg); border-bottom: none; border-right: 1px solid var(--border);
@@ -5945,7 +5945,7 @@
     /* 서버 · 익명 — 목차 아래쪽에 고정 (맨 아래 동작 메뉴 버튼 위) */
     body[data-skin="marian"] .union-server,
     body[data-skin="marian"] .anon-toggle {
-      position: fixed; left: 26px; right: auto; top: auto; width: calc(var(--side-w) - 52px); z-index: 41;
+      position: fixed; left: 26px; right: auto; top: auto; width: calc(var(--side-w) - 52px); box-sizing: border-box; z-index: 41;
       display: flex; align-items: center; justify-content: center; gap: 6px;
     }
     body[data-skin="marian"] .union-server { bottom: 118px; }
