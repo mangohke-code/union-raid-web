@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <script>window.APP_BUILD = '261113-1545'; window.APP_CHANNEL = 'dev';</script>
+  <script>window.APP_BUILD = '261113-1600'; window.APP_CHANNEL = 'dev';</script>
   <script>window.CURRENT_SHEET_VERSION = '{{SHEET_VERSION}}'; window.__perf = { appStart: performance.now() };</script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
@@ -5671,7 +5671,8 @@
   }
 </style>
 
-  <!-- 261113 마리안 스킨 3차 — 왼쪽 목차 브랜드 Marian → Union Raid(테마 이름은 테마 메뉴에만) · 니케 통계 아이콘/속성 칸/머리 · 필터창 · 막대(속성 표 가는 막대 + 비중 밖으로 · 개인 속성 막대 겹침) · 차트 글자 · 명예의 전당 받침대
+  <!-- 261113 마리안 스킨 4차 — 개인 기록 닉네임 카드(좌석 카드: 이중 테두리 + 위 보석 + 세리프 이름) · 개인 보스 팝업 · growth 팝업 · 싱크로 개인 상세 · 종합 회차 순위 카드(가는 선 격자) · 보스 그림 어둡게 하던 필터 제거
+     261113 마리안 스킨 3차 — 왼쪽 목차 브랜드 Marian → Union Raid(테마 이름은 테마 메뉴에만) · 니케 통계 아이콘/속성 칸/머리 · 필터창 · 막대(속성 표 가는 막대 + 비중 밖으로 · 개인 속성 막대 겹침) · 차트 글자 · 명예의 전당 받침대
      261113 마리안 스킨 2차 — 숫자/영문 글꼴 Source Serif 4(가는 획이 덜 가늘게) · LOOKBOOK/the looks 문구 삭제 · 순위 마름모 삭제 · 보스 속성 아이콘 · CLEAR 원형 인장 · 모든 탭 표/카드 통일
      261113 마리안 스킨(기본 테마) — body[data-skin="marian"] 일 때만 style.html 을 덮어씀 (세이렌은 영향 없음)
      진주 종이 · 사파이어 먹색 · 라벤더 · 머리색 그라데이션 선 / 직각 모서리 · 가는 선 · 보도니 숫자 · 왼쪽 번호 목차(1101px 이상)
@@ -6476,6 +6477,9 @@
   /* 구글 차트 글자 — 옛 글꼴(Bebas · Rajdhani) 지정을 테마 글꼴로 (숫자 라벨은 세리프, 축 · 범례는 고딕) */
   body[data-skin="marian"] svg text[font-family="Bebas Neue"] { font-family: 'Source Serif 4', 'Noto Serif KR', serif !important; font-weight: 600 !important; }
   body[data-skin="marian"] svg text[font-family="Rajdhani"] { font-family: 'Noto Sans KR', sans-serif !important; font-weight: 500 !important; }
+  /* 글꼴 지정 없는 차트(기본 Arial) — 굵은 숫자 라벨은 세리프, 나머지는 고딕 */
+  body[data-skin="marian"] svg text[font-family="Arial"] { font-family: 'Noto Sans KR', sans-serif !important; }
+  body[data-skin="marian"] svg text[font-family="Arial"][font-weight="bold"] { font-family: 'Source Serif 4', 'Noto Serif KR', serif !important; font-weight: 600 !important; }
 
   /* 명예의 전당 — 원색 덩어리 받침대 → 옅은 금 · 은 · 동 바탕 + 위쪽 순위색 선 + 세리프 이탤릭 순위 */
   body[data-skin="marian"] .td-hof-head { padding-bottom: 16px; border-bottom: 1px solid var(--border); }
@@ -6493,6 +6497,160 @@
   body[data-skin="marian"] .td-pod-step.step-3 { height: 78px;  background: linear-gradient(180deg, rgba(173, 115, 86, 0.20), rgba(173, 115, 86, 0.04)); color: var(--rk3); }
   body[data-skin="marian"] .td-pod-step .td-pod-step-num { font-size: 34px !important; font-weight: 600 !important; }
   body[data-skin="marian"] .td-pod.pod-1 .td-pod-step-num { font-size: 44px !important; }
+
+  /* ═════════ 4차 — 닉네임 카드 · 개인 보스 팝업 · growth 팝업 · 싱크로 개인 상세 · 회차 순위 카드 ═════════ */
+  /* 개인 기록 닉네임 — 좌석 카드: 바깥 가는 선 + 안쪽 라벤더 선, 위 가운데 작은 보석, 세리프 이름, 레벨은 짧은 선 아래 이탤릭 */
+  body[data-skin="marian"] #personal-member-grid { grid-template-columns: repeat(auto-fill, minmax(176px, 1fr)); gap: 18px 14px; padding-top: 6px; }
+  body[data-skin="marian"] .personal-card { position: relative; padding: 22px 12px 16px; overflow: visible; }
+  body[data-skin="marian"] .personal-card::before {
+    content: ''; position: absolute; inset: 4px; border: 1px solid var(--lav-line); opacity: .6; pointer-events: none; transition: opacity .15s;
+  }
+  body[data-skin="marian"] .personal-card::after {
+    content: ''; position: absolute; left: 50%; top: -5px; width: 8px; height: 8px; margin-left: -4px; transform: rotate(45deg);
+    background: var(--card); border: 1px solid var(--lav-line); transition: background .15s, border-color .15s;
+  }
+  body[data-skin="marian"] .personal-card:hover::before { opacity: 1; }
+  body[data-skin="marian"] .personal-card:hover::after { background: var(--gem); border-color: transparent; }
+  body[data-skin="marian"] .personal-card-name { font-family: var(--f-title) !important; font-weight: 700 !important; font-size: 16px; margin-bottom: 9px; }
+  body[data-skin="marian"] .personal-card-lv {
+    display: inline-block; padding-top: 7px; border-top: 1px solid var(--lav-line);
+    font-family: var(--f-num) !important; font-style: italic; font-weight: 500; font-size: 13.5px !important; color: var(--text-dim) !important;
+  }
+  @media (max-width: 600px) {
+    body[data-skin="marian"] #personal-member-grid { grid-template-columns: repeat(2, 1fr); gap: 14px 10px; }
+    body[data-skin="marian"] .personal-card { padding: 18px 8px 13px; }
+    body[data-skin="marian"] .personal-card-name { font-size: 14px; }
+  }
+
+  /* 팝업 공통 — 회차 표시: 평행사변형 테두리 → 세리프 이탤릭 + 라벤더 밑줄 */
+  body[data-skin="marian"] .popup-raid-badge {
+    clip-path: none; border: none; border-bottom: 1px solid var(--lav-line); padding: 0 6px 5px;
+    font-family: var(--f-display) !important; font-style: italic; font-size: 19px !important; font-weight: 500; letter-spacing: 0.02em !important; color: var(--lav);
+    text-transform: none;
+  }
+  body[data-skin="marian"] .popup-member-name { font-size: 46px; }
+  /* 보스 그림 — 사이트 전체 기준대로 색을 바꾸지 않음(예전 어둡게 필터 제거), 빈 곳은 밤하늘색 */
+  body[data-skin="marian"] :is(.strike-boss-img, .gd-hero-img) { filter: none !important; background-color: var(--night) !important; }
+  body[data-skin="marian"] .gd-hero-imgwrap { background: var(--night); clip-path: none; }
+
+  /* 개인 보스 팝업 — 타격 카드 */
+  body[data-skin="marian"] :is(.strike-card, .nikke-icon-w, .kill-badge-l, .gd-strike-kill) { clip-path: none !important; }
+  body[data-skin="marian"] .strike-card { background: var(--card); }
+  body[data-skin="marian"] .strike-tag {
+    background: rgba(13, 16, 40, 0.74) !important; border: none !important; color: #fff;
+    font-family: 'Noto Sans KR', sans-serif !important; font-size: 11px !important; font-weight: 700 !important; letter-spacing: 0.08em !important; padding: 3px 9px !important;
+  }
+  body[data-skin="marian"] .strike-tier { color: #fff !important; }
+  body[data-skin="marian"] .strike-info { background: transparent !important; border-bottom: 1px solid var(--border); padding: 16px 16px 14px; }
+  body[data-skin="marian"] .strike-attr { font-family: 'Noto Sans KR', sans-serif !important; font-size: 12px !important; letter-spacing: 0.14em !important; }
+  body[data-skin="marian"] .strike-info .boss-name-lg { font-family: var(--f-title) !important; font-weight: 900 !important; font-size: 24px; letter-spacing: -0.01em !important; }
+  body[data-skin="marian"] .strike-dmg { font-family: var(--f-num) !important; font-size: 27px !important; font-weight: 500; letter-spacing: 0 !important; }
+  body[data-skin="marian"] .strike-dmg-sub { font-family: var(--f-num) !important; font-size: 15px !important; font-weight: 500 !important; letter-spacing: 0 !important; }
+  body[data-skin="marian"] .strike-deck-w { background: var(--card); }
+  body[data-skin="marian"] .nikke-icon-w { border-color: var(--border-bright); background: var(--card2); }
+  body[data-skin="marian"] :is(.kill-badge-l, .gd-strike-kill) {
+    border-color: var(--coral) !important; color: var(--coral) !important; font-family: 'Noto Sans KR', sans-serif !important; font-size: 10.5px !important; letter-spacing: 0.04em !important; padding: 1px 6px !important;
+  }
+  /* 아래 두 칸 — 한글 제목은 세리프(기울이지 않음) + 보석, 속성 줄은 가는 선 표 */
+  body[data-skin="marian"] .m-bottom-grid > .card { border: 1px solid var(--border); box-shadow: none; }
+  body[data-skin="marian"] .m-sec-title {
+    display: flex; align-items: center; gap: 10px; font-family: var(--f-title) !important; font-weight: 700 !important;
+    font-size: 17px !important; color: var(--text); letter-spacing: -0.01em !important;
+  }
+  body[data-skin="marian"] .m-sec-title::before { content: ''; width: 8px; height: 8px; transform: rotate(45deg); background: var(--gem); flex-shrink: 0; }
+  body[data-skin="marian"] .m-sec-sub { font-style: normal; font-family: 'Noto Sans KR', sans-serif; }
+  body[data-skin="marian"] .m-attr-row {
+    background: transparent !important; border: none !important; border-bottom: 1px solid var(--border) !important; margin-bottom: 0 !important; padding: 11px 4px !important;
+  }
+  body[data-skin="marian"] .m-attr-name { font-family: 'Noto Sans KR', sans-serif !important; font-size: 13px !important; letter-spacing: 0.1em !important; }
+  body[data-skin="marian"] .m-attr-count { font-family: var(--f-num) !important; font-size: 21px !important; font-weight: 500; letter-spacing: 0 !important; }
+  body[data-skin="marian"] .m-attr-pct { font-family: var(--f-num) !important; font-size: 13px !important; font-weight: 500 !important; }
+  body[data-skin="marian"] .m-attr-total { border-top: 2px solid var(--text) !important; margin-top: 0 !important; }
+  body[data-skin="marian"] .m-attr-total-label { font-family: 'Noto Sans KR', sans-serif !important; font-size: 11px !important; letter-spacing: 0.16em !important; }
+  body[data-skin="marian"] .m-attr-total-val { font-family: var(--f-num) !important; font-size: 24px !important; font-weight: 600; letter-spacing: 0 !important; }
+
+  /* growth 팝업 */
+  body[data-skin="marian"] .gd-hero-attr-badge { font-family: 'Noto Sans KR', sans-serif !important; font-size: 12px !important; padding: 4px 11px; }
+  body[data-skin="marian"] .gd-hero-tier-badge {
+    background: rgba(13, 16, 40, 0.74); border: none; color: #fff !important; font-family: 'Noto Sans KR', sans-serif !important; font-size: 12px !important; letter-spacing: 0.08em !important; padding: 4px 11px;
+  }
+  body[data-skin="marian"] .gd-hero-boss { font-family: var(--f-title) !important; font-weight: 900 !important; font-size: 40px; letter-spacing: -0.01em !important; }
+  body[data-skin="marian"] .gd-hero-member-name { font-family: var(--f-title); font-weight: 700; font-size: 26px; }
+  body[data-skin="marian"] .gd-diff-bar {
+    background: transparent; border: none !important; border-top: 1px solid var(--border) !important; border-bottom: 1px solid var(--border) !important;
+    padding: 22px 0; gap: 28px;
+  }
+  body[data-skin="marian"] .gd-diff-pct { font-size: 68px !important; font-weight: 400 !important; letter-spacing: -0.01em !important; }
+  body[data-skin="marian"] .gd-diff-abs { font-size: 30px !important; font-weight: 400 !important; letter-spacing: 0 !important; }
+  body[data-skin="marian"] .gd-chart { background: transparent; border: none; padding: 0 0 6px; }
+  body[data-skin="marian"] .gd-chart-row { padding: 9px 0; }
+  body[data-skin="marian"] .gd-chart-label { min-width: 64px; font-family: var(--f-display) !important; font-style: italic; font-size: 16px !important; font-weight: 500; letter-spacing: 0 !important; color: var(--text-dim); }
+  body[data-skin="marian"] .gd-chart-bar-wrap {
+    height: 10px; border: none; background: linear-gradient(var(--border), var(--border)) left center / 100% 1px no-repeat;
+  }
+  body[data-skin="marian"] .gd-chart-bar.prev { background: var(--border-bright); }
+  body[data-skin="marian"] .gd-chart-bar.current { background: var(--accent); }
+  body[data-skin="marian"] .gd-chart-value { font-size: 22px !important; font-weight: 500; letter-spacing: 0 !important; min-width: 108px; }
+  body[data-skin="marian"] .gd-col, body[data-skin="marian"] .gd-col-current, body[data-skin="marian"] .gd-col-prev {
+    background: var(--card) !important; border: 1px solid var(--border) !important; padding: 16px 16px 18px; gap: 12px;
+  }
+  body[data-skin="marian"] .gd-col-current { border-top: 2px solid var(--accent) !important; }
+  body[data-skin="marian"] .gd-col-prev { border-top: 2px solid var(--border-bright) !important; }
+  body[data-skin="marian"] .gd-col-label { font-family: 'Noto Sans KR', sans-serif !important; font-size: 11px !important; letter-spacing: 0.14em !important; }
+  body[data-skin="marian"] .gd-col-title { font-size: 26px !important; font-weight: 500; letter-spacing: 0 !important; }
+  body[data-skin="marian"] .gd-col-lv { font-family: var(--f-num) !important; font-size: 18px !important; font-weight: 600 !important; }
+  body[data-skin="marian"] .gd-col-lv-diff { font-family: var(--f-num) !important; font-size: 13px !important; }
+  body[data-skin="marian"] .gd-strike-header {
+    background: transparent; border: none !important; border-bottom: 1px solid var(--border) !important; padding: 4px 2px 8px;
+  }
+  body[data-skin="marian"] .gd-strike-phase { font-family: 'Noto Sans KR', sans-serif !important; font-size: 13px !important; letter-spacing: 0.06em !important; }
+  body[data-skin="marian"] .gd-strike-dmg { font-size: 26px !important; font-weight: 500; letter-spacing: 0 !important; text-shadow: none !important; }
+  body[data-skin="marian"] .gd-strike { background: transparent; border: none; padding: 4px 0 0; }
+  body[data-skin="marian"] .gd-squad-slot { border-width: 1px; }
+
+  /* 싱크로 통계 · 개인 상세 — 요약 수치는 본문색 세리프(현재 레벨만 사파이어), 칸 사이 가는 세로선 */
+  body[data-skin="marian"] .md-kpis { gap: 0 !important; margin-bottom: 20px !important; }
+  body[data-skin="marian"] .md-kpis > div { padding: 0 26px; border-left: 1px solid var(--border); }
+  body[data-skin="marian"] .md-kpis > div:first-child { padding-left: 0; border-left: none; }
+  body[data-skin="marian"] .md-kpi-label { font-family: 'Noto Sans KR', sans-serif !important; font-size: 11px !important; letter-spacing: 0.12em !important; margin-bottom: 6px; }
+  body[data-skin="marian"] .md-kpi-value { font-family: var(--f-num) !important; font-size: 30px !important; font-weight: 500; color: var(--text) !important; }
+  body[data-skin="marian"] .md-kpis > div:first-child .md-kpi-value { color: var(--accent) !important; }
+  body[data-skin="marian"] .md-history { border-color: var(--border) !important; }
+  body[data-skin="marian"] .md-history thead tr { background: var(--card) !important; }
+  body[data-skin="marian"] .md-history th { font-family: 'Noto Sans KR', sans-serif !important; font-size: 11px !important; letter-spacing: 0.12em !important; }
+  body[data-skin="marian"] .md-history td { border-bottom: 1px solid var(--border); }
+  /* 상승 표시 빨강(#ff4757) → 테마 상승색 */
+  body[data-skin="marian"] #section-growth span[style*="#ff4757"] { color: var(--c-up) !important; }
+  body[data-skin="marian"] #section-growth tr[id^="member-row-"][style*="border-left"] { border-left: none !important; box-shadow: inset 2px 0 0 var(--lav); background: var(--accent-soft) !important; }
+
+  /* 종합 결과 · 회차 순위 카드 — 떨어진 상자 → 가는 선 격자 (마지막 줄 폭도 같게) */
+  body[data-skin="marian"] .timeline-container {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(112px, 1fr)); gap: 0; padding: 0;
+    border-top: 1px solid var(--border); border-left: 1px solid var(--border);
+  }
+  body[data-skin="marian"] .rank-badge-card {
+    max-width: none; min-width: 0; clip-path: none; background: var(--card) !important; opacity: 1;
+    border: none !important; border-right: 1px solid var(--border) !important; border-bottom: 1px solid var(--border) !important;
+    padding: 16px 6px 15px; display: flex; flex-direction: column; align-items: center; gap: 0;
+    transition: background .15s, box-shadow .15s;
+  }
+  body[data-skin="marian"] .rank-badge-card:hover { transform: none; background: var(--card2) !important; box-shadow: inset 0 2px 0 var(--lav); }
+  body[data-skin="marian"] .rank-title {
+    font-family: var(--f-display) !important; font-style: italic; font-size: 15px !important; font-weight: 500 !important;
+    letter-spacing: 0 !important; text-transform: none; color: var(--text-dim); margin-bottom: 10px;
+  }
+  body[data-skin="marian"] .badge-img { width: 38px; height: 38px; }
+  body[data-skin="marian"] .rank-value { font-size: 25px !important; font-weight: 500 !important; letter-spacing: 0 !important; color: var(--text) !important; margin-top: 8px; }
+  body[data-skin="marian"] .rank-tier { font-family: 'Noto Sans KR', sans-serif; font-size: 11px !important; font-weight: 700 !important; letter-spacing: 0.12em; color: var(--lav) !important; margin-top: 6px !important; }
+  body[data-skin="marian"] .rank-badge-card.no-data { background: var(--card) !important; }
+  body[data-skin="marian"] .rank-badge-card.no-data:hover { opacity: 1; }
+  body[data-skin="marian"] .rank-nodata-mark { font-family: var(--f-display) !important; font-style: italic; font-size: 30px !important; letter-spacing: 0 !important; color: var(--border-bright); }
+  body[data-skin="marian"] .rank-nodata-sub { font-size: 11px !important; letter-spacing: 0.06em !important; }
+  @media (max-width: 600px) {
+    body[data-skin="marian"] .timeline-container { grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); }
+    body[data-skin="marian"] .rank-badge-card { padding: 12px 4px 11px; }
+    body[data-skin="marian"] .rank-value { font-size: 21px !important; }
+  }
 
   /* 보스 상세 Phase Distribution 링 (style_siren 의 .pd-* 를 같이 씀) */
   body[data-skin="marian"] .pd-center b { font-family: var(--f-display); font-weight: 500; }
@@ -13104,7 +13262,7 @@
     }
   }
 </script>
-<!-- 261112 종합 뷰 — 멤버 딜 차트 범례 · 말풍선 · 이름 칩을 익명 화면용 이름으로(_anonLabel) / 261102 종합 뷰 — 차트는 기록 있는 회차 범위만 · Member DMG Trend 왼쪽 눈금 잘림 수정 / 261021 종합 뷰 — Raid History 이동 시 칩 줄 갱신 · 증감/선 색 테마 변수 · ∞ 타일 4단계 딜량 · 빈 회차 표시 -->
+<!-- 261113 종합 — 회차 순위 카드 등급 이름에 rank-tier 클래스 / 261112 종합 뷰 — 멤버 딜 차트 범례 · 말풍선 · 이름 칩을 익명 화면용 이름으로(_anonLabel) / 261102 종합 뷰 — 차트는 기록 있는 회차 범위만 · Member DMG Trend 왼쪽 눈금 잘림 수정 / 261021 종합 뷰 — Raid History 이동 시 칩 줄 갱신 · 증감/선 색 테마 변수 · ∞ 타일 4단계 딜량 · 빈 회차 표시 -->
 <script>
   let totalDmgChart = null;
   let totalDmgData = null;
@@ -13820,7 +13978,7 @@
             ${tierImgUrl ? `<img src="${tierImgUrl}" class="badge-img">` : '<div style="height:44px;"></div>'}
           </div>
           <div class="rank-value">${rankStr + (rankStr.includes('%') ? '' : '위')}</div>
-          <div style="font-size: 16px; color: var(--accent); font-weight: bold; margin-top: 3px;">${tierName}</div>
+          <div class="rank-tier" style="font-size: 16px; color: var(--accent); font-weight: bold; margin-top: 3px;">${tierName}</div>
         `;
       } else {
         // 데이터 없음 — ? 만 카드 정중앙에 배치
@@ -14173,7 +14331,7 @@
     totalDmgChart.draw(totalDmgData, options);
   }
 </script>
-<!-- 261102 멤버 상세 — 딜량 추이는 기록 있는 회차 범위만 / 261021 멤버 상세 — 딜량 추이 빈 회차 표시/좌우 꽉 채움 · 증감·축 색 테마 변수 · 속성 행 클래스(m-attr-row) -->
+<!-- 261113 멤버 상세 — 칸마다 클래스 이름(m-sec-title · m-attr-* · strike-tag/attr/dmg · 타격 카드 --c 속성색) 붙임, 모양은 그대로(마리안 테마용) / 261102 멤버 상세 — 딜량 추이는 기록 있는 회차 범위만 / 261021 멤버 상세 — 딜량 추이 빈 회차 표시/좌우 꽉 채움 · 증감·축 색 테마 변수 · 속성 행 클래스(m-attr-row) -->
 <div id="member-detail-overlay" onclick="closeMemberDetail(event)">
   <button id="m-nav-prev" class="member-nav-btn left" onclick="navigateMember(-1, event)" aria-label="이전 멤버">‹</button>
   <button id="m-nav-next" class="member-nav-btn right" onclick="navigateMember(1, event)" aria-label="다음 멤버">›</button>
@@ -14201,11 +14359,11 @@
     <!-- 하단: 좌(2/3) 역대 딜량 그래프 + 우(1/3) 속성별 타수 -->
     <div class="m-bottom-grid" style="margin-top:30px; display:grid; grid-template-columns:2fr 1fr; gap:20px; align-items:stretch;">
       <div class="card" style="margin-bottom:0;">
-        <h4 style="margin-bottom:15px;">역대 레이드 딜량 추이</h4>
+        <h4 class="m-sec-title" style="margin-bottom:15px;">역대 레이드 딜량 추이</h4>
         <div id="m-history-chart" style="width:100%; height:300px;"></div>
       </div>
       <div class="card" style="margin-bottom:0;">
-        <h4 style="margin-bottom:15px;">속성별 타수 <span style="font-size:11px; color:var(--text-dim); font-weight:400; margin-left:6px;">(현재 회차까지)</span></h4>
+        <h4 class="m-sec-title" style="margin-bottom:15px;">속성별 타수 <span class="m-sec-sub" style="font-size:11px; color:var(--text-dim); font-weight:400; margin-left:6px;">(현재 회차까지)</span></h4>
         <div id="m-attr-stats"></div>
       </div>
     </div>
@@ -14352,11 +14510,11 @@
         : '';
       return `
         <div class="m-attr-row" style="display:flex; justify-content:space-between; align-items:center; padding:10px 14px; background:var(--card2); border-left:3px solid ${r.color}; margin-bottom:7px;">
-          <span style="color:${r.color}; font-family:'Rajdhani',sans-serif; font-weight:700; font-size:15px; letter-spacing:2px; text-transform:uppercase;">${r.attr}</span>
+          <span class="m-attr-name" style="color:${r.color}; font-family:'Rajdhani',sans-serif; font-weight:700; font-size:15px; letter-spacing:2px; text-transform:uppercase;">${r.attr}</span>
           <div style="display:flex; align-items:baseline; gap:7px;">
-            <span style="font-family:'Bebas Neue',sans-serif; font-size:23px; letter-spacing:1px; color:var(--text); line-height:1;">${r.count}</span>
+            <span class="m-attr-count" style="font-family:'Bebas Neue',sans-serif; font-size:23px; letter-spacing:1px; color:var(--text); line-height:1;">${r.count}</span>
             ${addedHtml}
-            <span style="font-family:'Rajdhani',sans-serif; font-size:13px; color:var(--text-dim); font-weight:600; min-width:44px; text-align:right;">${pct}%</span>
+            <span class="m-attr-pct" style="font-family:'Rajdhani',sans-serif; font-size:13px; color:var(--text-dim); font-weight:600; min-width:44px; text-align:right;">${pct}%</span>
           </div>
         </div>`;
     }).join('');
@@ -14365,10 +14523,10 @@
       : '';
     container.innerHTML = `
       ${itemsHtml}
-      <div style="margin-top:12px; padding-top:12px; border-top:1px solid var(--border); display:flex; justify-content:space-between; align-items:baseline;">
-        <span style="font-family:'Rajdhani',sans-serif; font-size:14px; font-weight:700; color:var(--text-dim); letter-spacing:2px; text-transform:uppercase;">TOTAL</span>
+      <div class="m-attr-total" style="margin-top:12px; padding-top:12px; border-top:1px solid var(--border); display:flex; justify-content:space-between; align-items:baseline;">
+        <span class="m-attr-total-label" style="font-family:'Rajdhani',sans-serif; font-size:14px; font-weight:700; color:var(--text-dim); letter-spacing:2px; text-transform:uppercase;">TOTAL</span>
         <div>
-          <span style="font-family:'Bebas Neue',sans-serif; font-size:25px; letter-spacing:1px; color:var(--accent); line-height:1;">${grandTotal}<span style="font-size:15px; color:var(--text-dim); margin-left:3px;">타</span></span>
+          <span class="m-attr-total-val" style="font-family:'Bebas Neue',sans-serif; font-size:25px; letter-spacing:1px; color:var(--accent); line-height:1;">${grandTotal}<span style="font-size:15px; color:var(--text-dim); margin-left:3px;">타</span></span>
           ${addedSuffix}
         </div>
       </div>`;
@@ -14494,13 +14652,13 @@
       });
 
       container.innerHTML += `
-        <div class="strike-card" style="border-top: 3px solid ${c};">
+        <div class="strike-card" style="border-top: 3px solid ${c}; --c:${c};">
           <div style="position:relative;">
             <img src="${bossImgRow ? bossImgRow[IMG_COL.boss.img] : ''}" class="strike-boss-img">
-            <div style="position:absolute; top:10px; left:10px; background:rgba(0,0,0,0.75); color:#fff; font-family:'Rajdhani',sans-serif; font-size:12px; font-weight:700; letter-spacing:2px; padding:3px 10px; border-left:2px solid ${c};">${phaseLabel}</div>
-            ${tier ? `<div style="position:absolute; top:10px; right:10px; background:${c}22; color:${c}; font-family:'Rajdhani',sans-serif; font-size:12px; font-weight:700; letter-spacing:2px; padding:3px 10px; border:1px solid ${c}66;">${tier}</div>` : ''}
+            <div class="strike-tag strike-phase" style="position:absolute; top:10px; left:10px; background:rgba(0,0,0,0.75); color:#fff; font-family:'Rajdhani',sans-serif; font-size:12px; font-weight:700; letter-spacing:2px; padding:3px 10px; border-left:2px solid ${c};">${phaseLabel}</div>
+            ${tier ? `<div class="strike-tag strike-tier" style="position:absolute; top:10px; right:10px; background:${c}22; color:${c}; font-family:'Rajdhani',sans-serif; font-size:12px; font-weight:700; letter-spacing:2px; padding:3px 10px; border:1px solid ${c}66;">${tier}</div>` : ''}
             ${bossDifficulty[bossName] !== undefined ? `
-              <div style="position:absolute; bottom:10px; right:10px; background:rgba(0,0,0,0.75); color:${diffColor(bossDifficulty[bossName])}; font-family:'Rajdhani',sans-serif; font-size:12px; font-weight:700; letter-spacing:2px; padding:3px 10px; border-left:2px solid ${diffColor(bossDifficulty[bossName])}; cursor:default;"
+              <div class="strike-tag strike-diff" style="position:absolute; bottom:10px; right:10px; background:rgba(0,0,0,0.75); color:${diffColor(bossDifficulty[bossName])}; font-family:'Rajdhani',sans-serif; font-size:12px; font-weight:700; letter-spacing:2px; padding:3px 10px; border-left:2px solid ${diffColor(bossDifficulty[bossName])}; cursor:default;"
               onmouseenter="showDiffTooltip(this, ${bossDifficulty[bossName]}, ${bossRatioCount[bossName]})"
               onmouseleave="hideDiffTooltip()">
                 ⚔ ${bossDifficulty[bossName].toFixed(2)}%
@@ -14508,14 +14666,14 @@
           </div>
 
           <div class="strike-info" style="background-color: ${c}0D;">
-            <div style="font-family:'Rajdhani',sans-serif; font-size:15px; font-weight:700; letter-spacing:2px; color:${c}; text-transform:uppercase; margin-bottom:1px;">${attr}</div>
+            <div class="strike-attr" style="font-family:'Rajdhani',sans-serif; font-size:15px; font-weight:700; letter-spacing:2px; color:${c}; text-transform:uppercase; margin-bottom:1px;">${attr}</div>
             <span class="boss-name-lg" style="margin:2px 0;">${bossName}</span>
             <div style="text-align:center; margin-top:8px;">
-              <div style="font-family:'Bebas Neue',sans-serif; font-size:30px; letter-spacing:1px; color:var(--text); display:flex; align-items:center; justify-content:center; gap:8px;">
+              <div class="strike-dmg" style="font-family:'Bebas Neue',sans-serif; font-size:30px; letter-spacing:1px; color:var(--text); display:flex; align-items:center; justify-content:center; gap:8px;">
                 ${dmg.toLocaleString()}
                 ${isLast ? '<span class="kill-badge-l">막타</span>' : ''}
               </div>
-              <div style="font-family:'Rajdhani',sans-serif; font-size:18px; font-weight:700; color:var(--text-dim); letter-spacing:1px;">
+              <div class="strike-dmg-sub" style="font-family:'Rajdhani',sans-serif; font-size:18px; font-weight:700; color:var(--text-dim); letter-spacing:1px;">
                 ${formatDmg(dmg)}
               </div>
             </div>
@@ -14625,7 +14783,7 @@
     });
   })();
 </script>
-<!-- 261102 싱크로 통계 — 멤버 펼친 패널 표는 최근 회차부터 · 레벨/상승량 분포 막대에 마우스 올리면 그 구간 멤버 목록(레벨 분포는 레벨 순 · 상승량 분포는 상승량 순) / 261021 싱크로 통계 — 강조/하락/라벨 색 테마 변수 · 펼친 패널 클래스(md-panel) -->
+<!-- 261113 싱크로 통계 — 펼친 패널 요약 수치(md-kpi-*) · 회차 표(md-history) 클래스 / 261102 싱크로 통계 — 멤버 펼친 패널 표는 최근 회차부터 · 레벨/상승량 분포 막대에 마우스 올리면 그 구간 멤버 목록(레벨 분포는 레벨 순 · 상승량 분포는 상승량 순) / 261021 싱크로 통계 — 강조/하락/라벨 색 테마 변수 · 펼친 패널 클래스(md-panel) -->
 <script>
   // 전체 멤버 레벨 변화 차트
   function renderFullChart() {
@@ -14757,29 +14915,29 @@
           
           <!-- 좌: 통계 + 차트 -->
           <div>
-            <div style="display:flex; gap:24px; margin-bottom:16px; flex-wrap:wrap;">
+            <div class="md-kpis" style="display:flex; gap:24px; margin-bottom:16px; flex-wrap:wrap;">
               <div>
-                <div style="font-family:'Rajdhani',sans-serif; font-size:13px; font-weight:700; letter-spacing:2px; color:var(--text-dim); text-transform:uppercase;">현재 레벨</div>
-                <div style="font-family:'Bebas Neue',sans-serif; font-size:28px; color:var(--accent); line-height:1;">${m.levels.filter(l=>l&&Number(l)>0).slice(-1)[0] || '-'}</div>
+                <div class="md-kpi-label" style="font-family:'Rajdhani',sans-serif; font-size:13px; font-weight:700; letter-spacing:2px; color:var(--text-dim); text-transform:uppercase;">현재 레벨</div>
+                <div class="md-kpi-value" style="font-family:'Bebas Neue',sans-serif; font-size:28px; color:var(--accent); line-height:1;">${m.levels.filter(l=>l&&Number(l)>0).slice(-1)[0] || '-'}</div>
               </div>
               <div>
-                <div style="font-family:'Rajdhani',sans-serif; font-size:13px; font-weight:700; letter-spacing:2px; color:var(--text-dim); text-transform:uppercase;">평균 상승량</div>
-                <div style="font-family:'Bebas Neue',sans-serif; font-size:28px; color:#ff9800; line-height:1;">+${avgGrowth}</div>
+                <div class="md-kpi-label" style="font-family:'Rajdhani',sans-serif; font-size:13px; font-weight:700; letter-spacing:2px; color:var(--text-dim); text-transform:uppercase;">평균 상승량</div>
+                <div class="md-kpi-value" style="font-family:'Bebas Neue',sans-serif; font-size:28px; color:#ff9800; line-height:1;">+${avgGrowth}</div>
               </div>
               <div>
-                <div style="font-family:'Rajdhani',sans-serif; font-size:13px; font-weight:700; letter-spacing:2px; color:var(--text-dim); text-transform:uppercase;">최대 상승량</div>
-                <div style="font-family:'Bebas Neue',sans-serif; font-size:28px; color:#60cf58; line-height:1;">+${maxGrowth}</div>
+                <div class="md-kpi-label" style="font-family:'Rajdhani',sans-serif; font-size:13px; font-weight:700; letter-spacing:2px; color:var(--text-dim); text-transform:uppercase;">최대 상승량</div>
+                <div class="md-kpi-value" style="font-family:'Bebas Neue',sans-serif; font-size:28px; color:#60cf58; line-height:1;">+${maxGrowth}</div>
               </div>
               <div>
-                <div style="font-family:'Rajdhani',sans-serif; font-size:13px; font-weight:700; letter-spacing:2px; color:var(--text-dim); text-transform:uppercase;">최소 상승량</div>
-                <div style="font-family:'Bebas Neue',sans-serif; font-size:28px; color:var(--c-down, #4a9eff); line-height:1;">${minGrowth >= 0 ? '+' : ''}${minGrowth}</div>
+                <div class="md-kpi-label" style="font-family:'Rajdhani',sans-serif; font-size:13px; font-weight:700; letter-spacing:2px; color:var(--text-dim); text-transform:uppercase;">최소 상승량</div>
+                <div class="md-kpi-value" style="font-family:'Bebas Neue',sans-serif; font-size:28px; color:var(--c-down, #4a9eff); line-height:1;">${minGrowth >= 0 ? '+' : ''}${minGrowth}</div>
               </div>
             </div>
             <div id="member-inline-chart-${name}" style="width:100%; height:330px;"></div>
           </div>
 
           <!-- 우: 전체 회차 기록 표 (세로, 스크롤 · 최근 회차가 맨 위) -->
-          <div style="max-height:450px; overflow-y:auto; overflow-x:hidden; border:1px solid var(--border-bright);">
+          <div class="md-history" style="max-height:450px; overflow-y:auto; overflow-x:hidden; border:1px solid var(--border-bright);">
             <table style="width:100%; border-collapse:collapse; table-layout:auto;">
               <thead style="position:sticky; top:0; z-index:1;">
                 <tr style="background:var(--card);">
