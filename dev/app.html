@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <script>window.APP_BUILD = '261113-0409'; window.APP_CHANNEL = 'dev';</script>
+  <script>window.APP_BUILD = '261113-1324'; window.APP_CHANNEL = 'dev';</script>
   <script>window.CURRENT_SHEET_VERSION = '{{SHEET_VERSION}}'; window.__perf = { appStart: performance.now() };</script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
@@ -6410,10 +6410,19 @@
     body[data-skin="marian"] .union-info-container { padding: 14px 0 16px; }
     body[data-skin="marian"] .union-name-display { font-size: 32px; }
     body[data-skin="marian"] .sub-title { font-size: 9.5px; letter-spacing: 0.2em !important; }
-    body[data-skin="marian"] .union-server { display: table; margin: 0 0 8px auto; font-size: 10.5px; padding: 4px 10px; }
-    body[data-skin="marian"] .anon-toggle { position: static; display: table; margin: -2px 0 10px auto; padding: 3px 10px; font-size: 10.5px; }
+    /* 서버 · 익명 — 제목 아래 한 줄에 나란히 */
+    body[data-skin="marian"] .union-server,
+    body[data-skin="marian"] .anon-toggle { position: static; display: inline-flex; align-items: center; vertical-align: middle; margin: 12px 6px 0 0; padding: 4px 10px; font-size: 10.5px; }
     body[data-skin="marian"] .anon-toggle i { margin-right: 5px; }
-    body[data-skin="marian"] .tab-btn { padding: 10px 12px 10px 0; font-size: 12.5px; }
+    /* 목차 — 한 줄 가로 스크롤 */
+    body[data-skin="marian"] .header { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
+    body[data-skin="marian"] .header::-webkit-scrollbar { display: none; }
+    body[data-skin="marian"] .tabs { flex-wrap: nowrap; }
+    body[data-skin="marian"] .tab-btn { padding: 10px 14px 10px 0; font-size: 12.5px; white-space: nowrap; flex-shrink: 0; }
+    /* 정렬 버튼 · 표 머리 — 글자 안 쪼개지게 */
+    body[data-skin="marian"] .btn-sort { white-space: nowrap; margin-right: 2px; font-size: 12.5px; }
+    body[data-skin="marian"] #raid-specific-content .card > div:first-child > div:first-child { flex-wrap: wrap; gap: 2px 10px !important; }
+    body[data-skin="marian"] th { white-space: nowrap; letter-spacing: 0.05em !important; }
     body[data-skin="marian"] .tab-btn::before { font-size: 12px; margin-right: 6px; }
     body[data-skin="marian"] .raid-num-btn { font-size: 18px; }
     body[data-skin="marian"] .card { padding: 16px; }
