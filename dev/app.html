@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <script>window.APP_BUILD = '261113-1600'; window.APP_CHANNEL = 'dev';</script>
+  <script>window.APP_BUILD = '261113-1611'; window.APP_CHANNEL = 'dev';</script>
   <script>window.CURRENT_SHEET_VERSION = '{{SHEET_VERSION}}'; window.__perf = { appStart: performance.now() };</script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
@@ -5671,7 +5671,8 @@
   }
 </style>
 
-  <!-- 261113 마리안 스킨 4차 — 개인 기록 닉네임 카드(좌석 카드: 이중 테두리 + 위 보석 + 세리프 이름) · 개인 보스 팝업 · growth 팝업 · 싱크로 개인 상세 · 종합 회차 순위 카드(가는 선 격자) · 보스 그림 어둡게 하던 필터 제거
+  <!-- 261113 마리안 스킨 5차 — 속성 표 막대 뒤 기준선 삭제(비중 글자와 겹침) · 개인 종합 결산(Most Deployed 가는 선 목록 · 아이콘 넘침 해결 · Boss Report 가는 선 목록) · 보스 타격 기록(회차 줄 · 타격 칸 위쪽 속성선 · 보스 그림 밤하늘 바탕) · 개인 선택 카드 안쪽 선
+     261113 마리안 스킨 4차 — 개인 기록 닉네임 카드(좌석 카드: 이중 테두리 + 위 보석 + 세리프 이름) · 개인 보스 팝업 · growth 팝업 · 싱크로 개인 상세 · 종합 회차 순위 카드(가는 선 격자) · 보스 그림 어둡게 하던 필터 제거
      261113 마리안 스킨 3차 — 왼쪽 목차 브랜드 Marian → Union Raid(테마 이름은 테마 메뉴에만) · 니케 통계 아이콘/속성 칸/머리 · 필터창 · 막대(속성 표 가는 막대 + 비중 밖으로 · 개인 속성 막대 겹침) · 차트 글자 · 명예의 전당 받침대
      261113 마리안 스킨 2차 — 숫자/영문 글꼴 Source Serif 4(가는 획이 덜 가늘게) · LOOKBOOK/the looks 문구 삭제 · 순위 마름모 삭제 · 보스 속성 아이콘 · CLEAR 원형 인장 · 모든 탭 표/카드 통일
      261113 마리안 스킨(기본 테마) — body[data-skin="marian"] 일 때만 style.html 을 덮어씀 (세이렌은 영향 없음)
@@ -6447,10 +6448,7 @@
   /* 막대 — 게임식 모서리 깎기 없앰 */
   body[data-skin="marian"] :is(.td-attr-bar, .ps-attr-bar-fill, .ps-boss-fill, .td-phase-tile-bar > span) { clip-path: none !important; }
   /* 종합 · 속성 표: 가는 막대 + 비중은 막대 바로 오른쪽 (좁은 막대에서 '.9%' 처럼 잘리던 문제) */
-  body[data-skin="marian"] .td-attr-bar-wrap {
-    position: relative; height: 10px; padding-right: 50px; box-sizing: border-box;
-    background: linear-gradient(var(--border), var(--border)) left center / calc(100% - 50px) 1px no-repeat;
-  }
+  body[data-skin="marian"] .td-attr-bar-wrap { position: relative; height: 10px; padding-right: 50px; box-sizing: border-box; } /* 뒤 기준선은 비중 글자와 겹쳐서 뺌 */
   body[data-skin="marian"] .td-attr-bar { height: 100%; padding: 0; overflow: visible; }
   body[data-skin="marian"] .td-attr-bar-pct {
     position: absolute; left: calc(100% + 8px); top: 50%; transform: translateY(-50%);
@@ -6825,6 +6823,85 @@
   body[data-skin="marian"] .skin-menu { border-radius: 0; }
   body[data-skin="marian"] :is(.skin-opt, .skin-mode, .skin-swatch) { border-radius: 0; }
   body[data-skin="marian"] .skin-swatch { transform: rotate(45deg) scale(0.78); }
+  /* 맨 끝에 둠 — 앞의 '모든 탭 통일' 묶음(:is 목록, 같은 우선순위)보다 나중이어야 덮어씀 */
+  /* ═════════ 5차 — 개인 종합 결산 · 보스 타격 기록 ═════════ */
+  /* 선택 화면(개인 종합 결산 / 보스 타격 기록) — 닉네임 카드와 같은 안쪽 라벤더 선 */
+  body[data-skin="marian"] .personal-choice-btn { position: relative; }
+  body[data-skin="marian"] .personal-choice-btn::before {
+    content: ''; position: absolute; inset: 5px; border: 1px solid var(--lav-line); opacity: .55; pointer-events: none; transition: opacity .15s;
+  }
+  body[data-skin="marian"] .personal-choice-btn:hover::before { opacity: 1; }
+  body[data-skin="marian"] .personal-choice-btn .pcb-label {
+    font-family: var(--f-display) !important; font-style: italic; font-size: 16px !important; font-weight: 500 !important;
+    letter-spacing: 0.02em !important; text-transform: none; color: var(--lav) !important;
+  }
+  body[data-skin="marian"] .personal-choice-btn .pcb-title { font-family: var(--f-title); font-weight: 900; }
+
+  /* 보스 그림 칸(작은 썸네일 포함) — 밤하늘 바탕 · 색 바꾸지 않음 */
+  body[data-skin="marian"] :is(.msh-img, .ps-boss-thumb, .ps-hl-thumb) { background-color: var(--night) !important; filter: none !important; }
+
+  /* Most Deployed — 소속 칸은 상자 없이 머리 밑줄, 니케는 가는 선 목록 (좁은 칸에서 아이콘이 밖으로 넘치던 문제) */
+  body[data-skin="marian"] .ps-nikke-top { gap: 10px 18px; }
+  body[data-skin="marian"] .ps-nikke-col { background: transparent !important; border: none !important; padding: 0; gap: 0; overflow: visible; }
+  body[data-skin="marian"] .ps-nikke-col-head {
+    font-family: var(--f-title); font-weight: 900; font-size: 15px; letter-spacing: 0;
+    padding-bottom: 8px; margin-bottom: 0; border-bottom: 2px solid var(--text);
+  }
+  body[data-skin="marian"] .ps-nikke-row {
+    grid-template-columns: 16px 50px minmax(0, 1fr); gap: 9px;
+    background: transparent !important; border: none !important; border-bottom: 1px solid var(--border) !important; padding: 9px 0;
+  }
+  body[data-skin="marian"] .ps-nikke-rank { font-size: 17px !important; }
+  body[data-skin="marian"] .ps-nikke-row:nth-of-type(2) .ps-nikke-rank { color: var(--rk1); }
+  body[data-skin="marian"] .ps-nikke-row:nth-of-type(3) .ps-nikke-rank { color: var(--rk2); }
+  body[data-skin="marian"] .ps-nikke-row:nth-of-type(4) .ps-nikke-rank { color: var(--rk3); }
+  body[data-skin="marian"] .ps-nikke-portrait { width: 50px; height: 50px; border: 1px solid var(--border-bright); }
+  body[data-skin="marian"] .ps-nikke-info { gap: 5px; }
+  body[data-skin="marian"] .ps-nikke-name { font-size: 14px; }
+  body[data-skin="marian"] .ps-nikke-meta { flex-wrap: wrap; gap: 4px; }
+  body[data-skin="marian"] .ps-nikke-icons-2x2 { grid-template-columns: repeat(4, 18px); grid-template-rows: 18px; gap: 3px; }
+  body[data-skin="marian"] .ps-nikke-icons-2x2 > :is(.nikke-icon, .nikke-icon-dual, .nikke-icon-empty) { width: 18px !important; height: 18px !important; clip-path: none; }
+  body[data-skin="marian"] .ps-nikke-icons-2x2 > img.nikke-icon:first-child { padding: 1px; }
+  body[data-skin="marian"] .ps-nikke-count { font-size: 17px !important; font-weight: 600 !important; margin-left: auto; }
+  body[data-skin="marian"] .ps-nikke-count .ps-kpi-unit { font-size: 11px; margin-left: 2px; }
+
+  /* Boss Report — 줄마다 상자 → 가는 선 목록 */
+  body[data-skin="marian"] .ps-boss-list { gap: 0; border-top: 2px solid var(--text); }
+  body[data-skin="marian"] .ps-boss-row {
+    background: transparent !important; border: none !important; border-bottom: 1px solid var(--border) !important; padding: 14px 4px;
+    grid-template-columns: 64px 1fr auto;
+  }
+  body[data-skin="marian"] .ps-boss-thumb { width: 64px; height: 64px; }
+  body[data-skin="marian"] .ps-boss-name { font-family: var(--f-title); font-weight: 900; font-size: 18px; }
+  body[data-skin="marian"] .ps-boss-attr { font-family: 'Noto Sans KR', sans-serif !important; font-size: 12px !important; letter-spacing: 0.12em !important; }
+  body[data-skin="marian"] .ps-boss-bar { height: 6px; background: var(--card2); }
+  body[data-skin="marian"] .ps-boss-stats b { font-size: 21px !important; font-weight: 500 !important; }
+
+  /* 보스 타격 기록 — 회차 줄은 상자 없이 가는 선으로 나누고, 왼쪽은 회차(이탤릭) · 레벨 · 합계 */
+  body[data-skin="marian"] #personal-strikes-view .m-raid-row,
+  body[data-skin="marian"] .m-raid-row {
+    background: transparent !important; border: none !important; border-bottom: 1px solid var(--border) !important; padding: 20px 2px; gap: 22px;
+  }
+  body[data-skin="marian"] .m-raid-row:hover { border-color: var(--border) !important; }
+  body[data-skin="marian"] .m-raid-title {
+    font-family: var(--f-display) !important; font-style: italic; font-size: 24px !important; font-weight: 500 !important; letter-spacing: 0 !important; color: var(--lav) !important;
+  }
+  body[data-skin="marian"] .m-raid-lv { font-family: var(--f-num) !important; font-size: 16px !important; font-weight: 600 !important; letter-spacing: 0 !important; color: var(--text-dim) !important; }
+  body[data-skin="marian"] .m-raid-total { font-size: 26px !important; font-weight: 500 !important; letter-spacing: 0 !important; margin-top: 10px; padding-top: 10px; }
+  /* 타격 칸 — 흰 바탕 + 가는 선, 속성은 위쪽 선 */
+  body[data-skin="marian"] .msh-strike {
+    background: var(--card) !important; border: 1px solid var(--border) !important; border-top: 2px solid var(--c, var(--lav)) !important;
+  }
+  body[data-skin="marian"] .msh-strike.msh-empty { background: transparent !important; border: 1px dashed var(--border-bright) !important; }
+  body[data-skin="marian"] .msh-clickable:hover { border-color: var(--lav) !important; border-top-color: var(--c, var(--lav)) !important; transform: translateY(-2px); }
+  body[data-skin="marian"] .msh-img { outline: none !important; border: 1px solid var(--border); }
+  body[data-skin="marian"] :is(.msh-phase, .msh-phase-inline) {
+    border: none !important; padding: 0 !important; font-family: 'Noto Sans KR', sans-serif !important; font-size: 11.5px !important; letter-spacing: 0.08em !important; color: var(--text-dim);
+  }
+  body[data-skin="marian"] .msh-boss { font-family: var(--f-title); font-weight: 900; font-size: 16px; }
+  body[data-skin="marian"] .msh-attr { font-family: 'Noto Sans KR', sans-serif !important; font-size: 11.5px !important; letter-spacing: 0.12em !important; }
+  body[data-skin="marian"] .msh-dmg { font-size: 25px !important; font-weight: 500 !important; letter-spacing: 0 !important; }
+  body[data-skin="marian"] .msh-empty-dash { font-family: var(--f-display) !important; font-style: italic; font-size: 26px !important; color: var(--border-bright); opacity: 1; }
 </style>
 
 </head>
@@ -15415,7 +15492,7 @@
   }
 </script>
 
-<!-- 261102 개인 기록 — Most Deployed 긴 이름 자동 왕복 스크롤 · 속성/버스트 작은 아이콘 위치를 괄호 위치로 · Damage Trend 는 기록 있는 회차 범위만 / 261021 개인 기록 — 증감 색 테마 변수 · Damage Trend 빈 회차 포함 · Most Deployed 이름 표기 -->
+<!-- 261113 개인 기록 — 보스 타격 기록 타격 칸에 속성색 변수(--c, 마리안 위쪽 선용) / 261102 개인 기록 — Most Deployed 긴 이름 자동 왕복 스크롤 · 속성/버스트 작은 아이콘 위치를 괄호 위치로 · Damage Trend 는 기록 있는 회차 범위만 / 261021 개인 기록 — 증감 색 테마 변수 · Damage Trend 빈 회차 포함 · Most Deployed 이름 표기 -->
 <script>
   let _personalCtx = null;
   let _personalSort = 'no';      // 'no' | 'name' | 'level'
@@ -16353,7 +16430,7 @@
         const phaseLabel = s.phase >= 4 ? '∞' : `${s.phase}단계`;
         const key = `strike|${s.title}|${s.boss}|${s.phase}|${s.dmg}|${s.isLast ? '1' : '0'}`;
         return `
-          <div class="msh-strike msh-strike-with-raid msh-clickable" data-key="${key}" style="border-left:3px solid ${c};" onclick="openMemberDetailFromPersonal('${String(s.title).replace(/'/g, "\\'")}')">
+          <div class="msh-strike msh-strike-with-raid msh-clickable" data-key="${key}" style="border-left:3px solid ${c}; --c:${c};" onclick="openMemberDetailFromPersonal('${String(s.title).replace(/'/g, "\\'")}')">
             <div class="msh-left">
               <div class="msh-img" style="background-image:url('${imgUrl}'); background-size:cover; background-position:center;"></div>
               <div class="msh-raid-line">
@@ -16399,7 +16476,7 @@
           const imgUrl = bossImgRow ? bossImgRow[IMG_COL.boss.img] : '';
           const phaseLabel = s.phase >= 4 ? '∞' : `${s.phase}단계`;
           return `
-            <div class="msh-strike msh-clickable" style="border-left:3px solid ${c};" onclick="openMemberDetailFromPersonal('${String(s.title).replace(/'/g, "\\'")}')">
+            <div class="msh-strike msh-clickable" style="border-left:3px solid ${c}; --c:${c};" onclick="openMemberDetailFromPersonal('${String(s.title).replace(/'/g, "\\'")}')">
               <div class="msh-img" style="background-image:url('${imgUrl}'); background-size:cover; background-position:center;"></div>
               <span class="msh-phase">${phaseLabel}</span>
               <div class="msh-bottom-left">
