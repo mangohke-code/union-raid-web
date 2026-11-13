@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <script>window.APP_BUILD = '261113-1430'; window.APP_CHANNEL = 'dev';</script>
+  <script>window.APP_BUILD = '261113-1545'; window.APP_CHANNEL = 'dev';</script>
   <script>window.CURRENT_SHEET_VERSION = '{{SHEET_VERSION}}'; window.__perf = { appStart: performance.now() };</script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
@@ -5671,7 +5671,8 @@
   }
 </style>
 
-  <!-- 261113 마리안 스킨 2차 — 숫자/영문 글꼴 Source Serif 4(가는 획이 덜 가늘게) · LOOKBOOK/the looks 문구 삭제 · 순위 마름모 삭제 · 보스 속성 아이콘 · CLEAR 원형 인장 · 모든 탭 표/카드 통일
+  <!-- 261113 마리안 스킨 3차 — 왼쪽 목차 브랜드 Marian → Union Raid(테마 이름은 테마 메뉴에만) · 니케 통계 아이콘/속성 칸/머리 · 필터창 · 막대(속성 표 가는 막대 + 비중 밖으로 · 개인 속성 막대 겹침) · 차트 글자 · 명예의 전당 받침대
+     261113 마리안 스킨 2차 — 숫자/영문 글꼴 Source Serif 4(가는 획이 덜 가늘게) · LOOKBOOK/the looks 문구 삭제 · 순위 마름모 삭제 · 보스 속성 아이콘 · CLEAR 원형 인장 · 모든 탭 표/카드 통일
      261113 마리안 스킨(기본 테마) — body[data-skin="marian"] 일 때만 style.html 을 덮어씀 (세이렌은 영향 없음)
      진주 종이 · 사파이어 먹색 · 라벤더 · 머리색 그라데이션 선 / 직각 모서리 · 가는 선 · 보도니 숫자 · 왼쪽 번호 목차(1101px 이상)
      보스 카드 = 액자 매트 + 오목 이중선(R2): 바깥 선 · 안쪽 선 · 그림 귀가 모두 액자 귀를 중심으로 한 동심 반원 (script_raid 의 .bdeco 요소)
@@ -5925,17 +5926,17 @@
       background: var(--bg); border-bottom: none; border-right: 1px solid var(--border);
       z-index: 40; overflow-y: auto; counter-reset: mtab;
     }
-    /* 브랜드: 보석 + Marian + UNION RAID REPORT + 그라데이션 선 */
+    /* 브랜드: 보석 + Union Raid + SETTLEMENT REPORT + 그라데이션 선 ('Marian' 은 테마 메뉴에만) */
     body[data-skin="marian"] .hero-wrap .header::before {
       content: ''; position: absolute; left: 30px; top: 38px; width: 18px; height: 18px;
       transform: rotate(45deg); background: var(--gem);
     }
     body[data-skin="marian"] .hero-wrap .header::after {
-      content: 'Marian'; display: block; position: absolute; left: 60px; top: 28px; bottom: auto; width: auto; height: auto;
-      background: none; font-family: var(--f-display); font-size: 31px; line-height: 1.2; color: var(--text);
+      content: 'Union Raid'; display: block; position: absolute; left: 58px; top: 30px; white-space: nowrap; bottom: auto; width: auto; height: auto;
+      background: none; font-family: var(--f-display); font-size: 27px; font-weight: 500; letter-spacing: -0.01em; line-height: 1.2; color: var(--text);
     }
     body[data-skin="marian"] .hero-wrap .tabs::before {
-      content: 'UNION RAID REPORT'; display: block; margin: -40px 0 30px; padding-bottom: 14px;
+      content: 'SETTLEMENT REPORT'; display: block; margin: -40px 0 30px; padding-bottom: 14px;
       font: 500 9.5px/1 'Noto Sans KR', sans-serif; letter-spacing: 0.28em; white-space: nowrap; color: var(--text-dim);
       background: var(--grad) left bottom / 100% 2px no-repeat;
     }
@@ -6403,6 +6404,95 @@
   body[data-skin="marian"] .growth-title { font-family: 'Noto Sans KR', sans-serif !important; font-size: 12px; letter-spacing: 0.2em !important; }
   body[data-skin="marian"] .gstat { border-left: 2px solid var(--lav); }
   body[data-skin="marian"] .popup-member-name { font-family: var(--f-title) !important; font-weight: 900 !important; letter-spacing: -0.01em !important; }
+
+  /* ═════════ 3차 — 니케 통계 · 필터 · 막대 · 차트 글자 · 명예의 전당 ═════════ */
+  /* 니케 분류 아이콘 — 둥근 검정 테두리 → 직각 가는 선 */
+  body[data-skin="marian"] :is(.nikke-icon, .nikke-icon-empty) { border-radius: 0; border: 1px solid var(--border-bright); background: var(--card); }
+  body[data-skin="marian"] .nikke-icon-empty { border-style: dashed; }
+  /* 흑백 아이콘은 반전(invert)으로 그리므로 테두리도 반전 색으로 줘야 화면에서 가는 회색 선이 됨 */
+  body[data-skin="marian"] .nikke-icon.nikke-icon-invert { background: #000; border-color: #272a19; }
+  body[data-skin="marian"][data-theme="dark"] :is(.nikke-icon, .nikke-icon-empty) { background: var(--card2); border-color: var(--border-bright); }
+  body[data-skin="marian"][data-theme="dark"] .nikke-icon.nikke-icon-invert { background: var(--card2); border-color: var(--border-bright); filter: none; }
+  body[data-skin="marian"] .nikke-portrait { border: 1px solid var(--border-bright); }
+  body[data-skin="marian"][data-theme="dark"] .nikke-portrait { border-color: var(--border-bright); }
+  /* 머리 — 점선 묶음선 → 가는 실선 */
+  body[data-skin="marian"] :is(.nsh-icons-super, .nsh-attr-super) { border-bottom: 1px solid var(--border) !important; padding-bottom: 4px; }
+  /* 속성별 타수 — 칸 상자 없이 숫자만 (속성은 머리 글자색으로 구분) */
+  body[data-skin="marian"] .nikke-attr-cell { border: none !important; background: transparent !important; }
+  body[data-skin="marian"] .nikke-attr-cell.nikke-attr-zero { opacity: 1; }
+  body[data-skin="marian"] .nikke-attr-cell.nikke-attr-zero .naa-val { color: var(--border-bright); }
+  body[data-skin="marian"] .naa-val { font-size: 19px !important; font-weight: 500 !important; }
+  body[data-skin="marian"] .nikke-count { font-size: 26px !important; font-weight: 500 !important; }
+  /* 휴대폰은 머리(속성 이름)가 없으므로 칸 아래에 속성색 가는 밑줄로 구분 */
+  @media (max-width: 768px) {
+    body[data-skin="marian"] .nikke-attr-cell { border-bottom: 2px solid var(--ac, var(--border)) !important; height: 30px; }
+  }
+
+  /* 필터창 */
+  body[data-skin="marian"] .nikke-filter-panel { background: var(--card); }
+  body[data-skin="marian"] .nikke-filter-head { border-bottom-color: var(--border); }
+  body[data-skin="marian"] .nf-row-label { font-size: 12px !important; letter-spacing: 0.08em !important; font-weight: 700; }
+  body[data-skin="marian"] .nikke-filter-option { border-color: var(--border); background: var(--card); color: var(--text); font-weight: 500; }
+  body[data-skin="marian"] .nikke-filter-option:hover { border-color: var(--lav); }
+  body[data-skin="marian"] .nikke-filter-option.checked { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); font-weight: 700; }
+  body[data-skin="marian"] .nikke-filter-option.overspec { background: rgba(179, 138, 53, 0.12); border-color: var(--rk1); color: var(--rk1); box-shadow: none; }
+  body[data-skin="marian"] .nf-attr-title { border-bottom: 1px solid var(--border) !important; font-size: 11px !important; letter-spacing: 0.1em !important; }
+  body[data-skin="marian"] .nf-attr-sort { border-color: var(--border); background: var(--card); font-size: 13px !important; font-weight: 700; }
+  body[data-skin="marian"] .nf-attr-sort:hover { border-color: var(--lav); }
+  body[data-skin="marian"] .nf-attr-sort.active { background: var(--accent); border-color: var(--accent); }
+  body[data-skin="marian"][data-theme="dark"] .nf-attr-sort.active { color: #0d1028 !important; }
+  body[data-skin="marian"] :is(.boss-filter-reset) { border-radius: 0; }
+
+  /* 막대 — 게임식 모서리 깎기 없앰 */
+  body[data-skin="marian"] :is(.td-attr-bar, .ps-attr-bar-fill, .ps-boss-fill, .td-phase-tile-bar > span) { clip-path: none !important; }
+  /* 종합 · 속성 표: 가는 막대 + 비중은 막대 바로 오른쪽 (좁은 막대에서 '.9%' 처럼 잘리던 문제) */
+  body[data-skin="marian"] .td-attr-bar-wrap {
+    position: relative; height: 10px; padding-right: 50px; box-sizing: border-box;
+    background: linear-gradient(var(--border), var(--border)) left center / calc(100% - 50px) 1px no-repeat;
+  }
+  body[data-skin="marian"] .td-attr-bar { height: 100%; padding: 0; overflow: visible; }
+  body[data-skin="marian"] .td-attr-bar-pct {
+    position: absolute; left: calc(100% + 8px); top: 50%; transform: translateY(-50%);
+    font-family: var(--f-num) !important; font-size: 13px !important; font-weight: 500 !important; letter-spacing: 0 !important;
+    color: var(--text-dim); text-shadow: none;
+  }
+  /* 개인 기록 · 속성 막대: 숫자 칸이 좁아 옆 막대와 겹치던 문제 — 딜량 두 칸을 넓게, 타수 칸은 좁게 / 좁은 화면은 세로로 */
+  body[data-skin="marian"] .ps-attr-triple-charts { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1.25fr) minmax(0, 0.7fr); }
+  body[data-skin="marian"] .ps-attr-bar-col { width: 28px; }
+  @media (max-width: 1300px) {
+    body[data-skin="marian"] .ps-attr-triple { grid-template-columns: 1fr; gap: 16px; }
+    body[data-skin="marian"] .ps-attr-triple-charts { grid-template-columns: 1fr; gap: 20px; }
+    body[data-skin="marian"] .ps-attr-triple-cell:not(:last-child)::after { top: auto; bottom: -10px; left: 4px; right: 4px; width: auto; height: 1px; }
+    body[data-skin="marian"] .ps-attr-triple-legend {
+      flex-direction: row; flex-wrap: wrap; justify-content: center; padding-left: 0; padding-top: 12px;
+      border-left: none; border-top: 1px solid var(--border); gap: 16px;
+    }
+    body[data-skin="marian"] .ps-attr-bar-col { height: 170px; }
+  }
+  body[data-skin="marian"] .ps-attr-legend-swatch { border: none; }
+  body[data-skin="marian"] .ps-attr-legend-name { font-size: 14px !important; letter-spacing: 0.06em !important; font-weight: 700; }
+  body[data-skin="marian"] .ps-attr-triple-title { font-size: 13px; letter-spacing: 0.1em; border-bottom-color: var(--border); }
+
+  /* 구글 차트 글자 — 옛 글꼴(Bebas · Rajdhani) 지정을 테마 글꼴로 (숫자 라벨은 세리프, 축 · 범례는 고딕) */
+  body[data-skin="marian"] svg text[font-family="Bebas Neue"] { font-family: 'Source Serif 4', 'Noto Serif KR', serif !important; font-weight: 600 !important; }
+  body[data-skin="marian"] svg text[font-family="Rajdhani"] { font-family: 'Noto Sans KR', sans-serif !important; font-weight: 500 !important; }
+
+  /* 명예의 전당 — 원색 덩어리 받침대 → 옅은 금 · 은 · 동 바탕 + 위쪽 순위색 선 + 세리프 이탤릭 순위 */
+  body[data-skin="marian"] .td-hof-head { padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+  body[data-skin="marian"] .td-hof-icon { width: 30px; height: 30px; }
+  body[data-skin="marian"] .td-hof-desc { font-size: 13px; }
+  body[data-skin="marian"] .td-podium { gap: 10px; padding-top: 12px; }
+  body[data-skin="marian"] .td-pod-name { font-size: 15px !important; }
+  body[data-skin="marian"] .td-pod.pod-1 .td-pod-name { font-size: 17px !important; }
+  body[data-skin="marian"] .td-pod-value { font-size: 26px !important; font-weight: 500 !important; }
+  body[data-skin="marian"] .td-pod.pod-1 .td-pod-value { font-size: 32px !important; }
+  body[data-skin="marian"] .td-pod-sub { font-size: 12px !important; letter-spacing: 0.02em !important; font-weight: 500; }
+  body[data-skin="marian"] .td-pod-step { border-top: 2px solid currentColor; box-shadow: none !important; }
+  body[data-skin="marian"] .td-pod-step.step-1 { height: 124px; background: linear-gradient(180deg, rgba(179, 138, 53, 0.20), rgba(179, 138, 53, 0.04)); color: var(--rk1); }
+  body[data-skin="marian"] .td-pod-step.step-2 { height: 98px;  background: linear-gradient(180deg, rgba(138, 147, 178, 0.22), rgba(138, 147, 178, 0.04)); color: var(--rk2); }
+  body[data-skin="marian"] .td-pod-step.step-3 { height: 78px;  background: linear-gradient(180deg, rgba(173, 115, 86, 0.20), rgba(173, 115, 86, 0.04)); color: var(--rk3); }
+  body[data-skin="marian"] .td-pod-step .td-pod-step-num { font-size: 34px !important; font-weight: 600 !important; }
+  body[data-skin="marian"] .td-pod.pod-1 .td-pod-step-num { font-size: 44px !important; }
 
   /* 보스 상세 Phase Distribution 링 (style_siren 의 .pd-* 를 같이 씀) */
   body[data-skin="marian"] .pd-center b { font-family: var(--f-display); font-weight: 500; }
@@ -16182,7 +16272,7 @@
   }
 </script>
 
-<!-- 261102 니케 통계 — 속성/버스트 작은 아이콘 위치를 괄호 위치로: 주(부)=우상단 · (부)주=좌상단 / 260714 니케 통계 — 속성 정렬 3-state 토글 + tiebreak 안정화 -->
+<!-- 261113 니케 통계 — 속성별 타수 칸에 속성색 변수(--ac, 마리안 휴대폰 밑줄용) / 261102 니케 통계 — 속성/버스트 작은 아이콘 위치를 괄호 위치로: 주(부)=우상단 · (부)주=좌상단 / 260714 니케 통계 — 속성 정렬 3-state 토글 + tiebreak 안정화 -->
 <script>
   // 정렬/검색/필터 상태
   let _nikkeSort = 'count';
@@ -16641,7 +16731,7 @@
         const c = colors[ac.attr] || 'var(--text-dim)';
         const zeroCls = ac.count === 0 ? 'nikke-attr-zero' : '';
         return `
-          <div class="nikke-attr-cell ${zeroCls}" style="border-left-color:${c};">
+          <div class="nikke-attr-cell ${zeroCls}" style="border-left-color:${c}; --ac:${c};">
             <span class="naa-val">${ac.count}</span>
           </div>`;
       }).join('');
