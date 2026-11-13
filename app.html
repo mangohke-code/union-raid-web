@@ -1,17 +1,17 @@
-<!-- 261112 화면 원본 — 서버 표기 바로 아래 익명 버튼(멤버 이름 익명화 · 눈 아이콘) / 261102 화면 원본 (배포.py 로 GitHub Pages 에 올림 · Apps Script 에는 안 올라감) — 보스 통계 탭(레이드 통계와 니케 통계 사이) · 구버전 테마 저장값 무시(세이렌 고정) · 정보 창 로딩 시간 칸 · 제목 구역 우상단 서버 표기('유니온 정보' 탭) · 세이렌 스킨(style_siren) · 저장된 테마/모드 선적용 · 테마 메뉴(라이트/다크 포함) · 상단 패널 틀(hero-wrap) -->
+<!-- 261113 화면 원본 — 마리안 테마(style_marian · 기본) · 숫자/영문 Source Serif 4 글꼴 · 고른 테마(skinSel) 선적용 / 261112 화면 원본 — 서버 표기 바로 아래 익명 버튼(멤버 이름 익명화 · 눈 아이콘) / 261102 화면 원본 (배포.py 로 GitHub Pages 에 올림 · Apps Script 에는 안 올라감) — 보스 통계 탭(레이드 통계와 니케 통계 사이) · 구버전 테마 저장값 무시(세이렌 고정) · 정보 창 로딩 시간 칸 · 제목 구역 우상단 서버 표기('유니온 정보' 탭) · 세이렌 스킨(style_siren) · 저장된 테마/모드 선적용 · 테마 메뉴(라이트/다크 포함) · 상단 패널 틀(hero-wrap) -->
 <!DOCTYPE html>
 <html>
 <head>
-  <script>window.APP_BUILD = '261112-0428'; window.APP_CHANNEL = 'live';</script>
+  <script>window.APP_BUILD = '261113-1616'; window.APP_CHANNEL = 'live';</script>
   <script>window.CURRENT_SHEET_VERSION = '{{SHEET_VERSION}}'; window.__perf = { appStart: performance.now() };</script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
   <script src="https://www.gstatic.com/charts/loader.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Bebas+Neue&family=Rajdhani:wght@600;700&family=Outfit:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,600;1,500;1,600&family=Noto+Serif+KR:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Bebas+Neue&family=Rajdhani:wght@600;700&family=Outfit:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,600;1,500;1,600&family=Noto+Serif+KR:wght@500;600;700;900&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;0,8..60,700;1,8..60,400;1,8..60,500;1,8..60,600&display=swap" rel="stylesheet">
 
-  <!-- 261102 — 개인 기록 니케 이름 왕복 스크롤 · 보스 통계 타일 클릭 · 이스터에그 이모티콘 사각형 유지 + 젤리 질감 · 니케 속성/버스트 작은 아이콘 위치 = 괄호 위치(dual-left/right) · 보스 통계 탭(.bs-* · 순위 타일) · 싱크로 분포 막대 툴팁(#uls-tip) · 작은 도로 무리 캔버스(맨 앞) / 261028 — 최신 버전 알림 타이머 3초 · 정보 창 로딩 시간 · 제목 우상단 서버 표기 · 회차 선택 전체 회차 버튼/패널 · 폭 1760px · 테마 색 변수 · Most Deployed 배치 · 토스트 · 코멘트 링크 -->
+  <!-- 261113 공용 스타일 — 보스 통계 타일 액자 장식도 기본 숨김 / 261113 공용 스타일 — 보스 속성 아이콘(.boss-attr-ico) 기본 숨김 / 261113 공용 스타일 — 보스 카드 그림 액자 장식(.bdeco)은 기본 숨김(마리안만 씀) · 모바일 무한 보스 그림 칸이 .boss-ring 안에 있어도 전체 폭 / 261102 — 개인 기록 니케 이름 왕복 스크롤 · 보스 통계 타일 클릭 · 이스터에그 이모티콘 사각형 유지 + 젤리 질감 · 니케 속성/버스트 작은 아이콘 위치 = 괄호 위치(dual-left/right) · 보스 통계 탭(.bs-* · 순위 타일) · 싱크로 분포 막대 툴팁(#uls-tip) · 작은 도로 무리 캔버스(맨 앞) / 261028 — 최신 버전 알림 타이머 3초 · 정보 창 로딩 시간 · 제목 우상단 서버 표기 · 회차 선택 전체 회차 버튼/패널 · 폭 1760px · 테마 색 변수 · Most Deployed 배치 · 토스트 · 코멘트 링크 -->
 <style>
   /* ===== CSS 변수 (테마) ===== */
   :root {
@@ -519,6 +519,10 @@
     border-color: var(--attr-color, var(--accent));
     box-shadow: 0 8px 30px rgba(0,0,0,0.5), 0 0 0 1px var(--attr-color, var(--accent));
   }
+
+  /* 보스 카드 그림 액자 장식 (마리안 R2 오목 이중선 전용 — 다른 스킨에선 숨김) */
+  .boss-card .bdeco, .bs-tile .bdeco { display: none; }
+  .boss-attr-ico { display: none; } /* 보스 속성 아이콘 — 마리안만 보임 */
 
   /* HP 바 */
   .hp-bar-bg {
@@ -1649,10 +1653,12 @@
       height: auto !important;
     }
     /* 이미지 영역 */
-    .boss-card[style*="flex-direction: row"] > div:first-child {
+    .boss-card[style*="flex-direction: row"] > div:first-child:not(.boss-ring),
+    .boss-card[style*="flex-direction: row"] > .boss-ring > .boss-img {
       width: 100% !important;
       height: 200px !important;
     }
+    .boss-card[style*="flex-direction: row"] > .boss-ring { width: 100%; }
     /* 정보 영역: 가로 정렬→세로 정렬, 딜량을 보스명 아래로 */
     .boss-card[style*="flex-direction: row"] > div:last-child {
       flex-direction: column !important;
@@ -5665,13 +5671,1249 @@
   }
 </style>
 
+  <!-- 261113 마리안 스킨 5차 — 속성 표 막대 뒤 기준선 삭제(비중 글자와 겹침) · 개인 종합 결산(Most Deployed 가는 선 목록 · 아이콘 넘침 해결 · Boss Report 가는 선 목록) · 보스 타격 기록(회차 줄 · 타격 칸 위쪽 속성선 · 보스 그림 밤하늘 바탕) · 개인 선택 카드 안쪽 선
+     261113 마리안 스킨 4차 — 개인 기록 닉네임 카드(좌석 카드: 이중 테두리 + 위 보석 + 세리프 이름) · 개인 보스 팝업 · growth 팝업 · 싱크로 개인 상세 · 종합 회차 순위 카드(가는 선 격자) · 보스 그림 어둡게 하던 필터 제거
+     261113 마리안 스킨 3차 — 왼쪽 목차 브랜드 Marian → Union Raid(테마 이름은 테마 메뉴에만) · 니케 통계 아이콘/속성 칸/머리 · 필터창 · 막대(속성 표 가는 막대 + 비중 밖으로 · 개인 속성 막대 겹침) · 차트 글자 · 명예의 전당 받침대
+     261113 마리안 스킨 2차 — 숫자/영문 글꼴 Source Serif 4(가는 획이 덜 가늘게) · LOOKBOOK/the looks 문구 삭제 · 순위 마름모 삭제 · 보스 속성 아이콘 · CLEAR 원형 인장 · 모든 탭 표/카드 통일
+     261113 마리안 스킨(기본 테마) — body[data-skin="marian"] 일 때만 style.html 을 덮어씀 (세이렌은 영향 없음)
+     진주 종이 · 사파이어 먹색 · 라벤더 · 머리색 그라데이션 선 / 직각 모서리 · 가는 선 · 보도니 숫자 · 왼쪽 번호 목차(1101px 이상)
+     보스 카드 = 액자 매트 + 오목 이중선(R2): 바깥 선 · 안쪽 선 · 그림 귀가 모두 액자 귀를 중심으로 한 동심 반원 (script_raid 의 .bdeco 요소)
+     캡처(html2canvas) 호환: color-mix() · conic-gradient() · backdrop-filter · 글자 그라데이션 안 씀, 오목 귀는 원을 덮어서 만듦 -->
+<style>
+  /* ───────── 토큰: 진주 종이 (라이트) ───────── */
+  body[data-skin="marian"] {
+    --bg: #fbfaff;
+    --panel: #f4f2fb;
+    --card: #ffffff;
+    --card2: #faf9fd;
+    --text: #1a1c3a;
+    --text-dim: #77768f;
+    --accent: #2d47c4;
+    --border: #e6e4f0;
+    --border-bright: #d8d5e6;
+    --row-even: transparent;
+    --row-odd: transparent;
+    --glow-blue: none;
+    --rk1: #b38a35; --rk2: #8a93b2; --rk3: #ad7356;   /* 순위 금 · 은 · 동 */
+
+    --accent-soft: #e7ebfb;
+    --accent-mid: #b9c4f0;
+    --accent-tint-1: rgba(45, 71, 196, 0.07);
+    --accent-tint-2: rgba(45, 71, 196, 0.16);
+    --row-hl: rgba(143, 122, 224, 0.12);
+    --ph-1: #d9d6e8; --ph-2: #a9b8ee; --ph-3: #2d47c4; --ph-inf: #8f7ae0;
+    --c-up: #c25c78; --c-dn: #3567d4;
+    --chart-line: #dcd9ea; --chart-line-muted: #efedf6; --chart-highlight: #2d47c4; --chart-trend: #a99be6;
+    --row-hl-strong: rgba(143, 122, 224, 0.22);
+    --row-hl-soft: rgba(143, 122, 224, 0.06);
+    --c-down: #3567d4;
+    --gold: #b08a3e;
+    --coral: #c25c78;
+    --shadow: 0 10px 28px rgba(30, 36, 100, 0.07);
+    --shadow-sm: 0 3px 10px rgba(30, 36, 100, 0.06);
+
+    /* 마리안 전용 */
+    --lav: #8f7ae0;
+    --lav-soft: #eeeafc;
+    --lav-line: #c7bcf0;           /* 안쪽 선 (라벤더 60%) */
+    --mat: #f4f2fb;                /* 액자 매트 */
+    --ink: #1a1c3a;
+    --night: #0f1748; --night2: #2a3a9e;   /* 보스 그림 창 바탕 */
+    --grad: linear-gradient(90deg, #6a4636 0%, #2d47c4 55%, #8f7ae0 100%);  /* 머리색 그라데이션 */
+    --gem: linear-gradient(135deg, #a9bfff 0%, #3553d6 50%, #17287f 100%);
+    --side-w: 220px;
+
+    --chart-text: #77768f;
+    --chart-grid: #ebe9f3;
+    --chart-label: #1a1c3a;
+
+    --f-num: 'Source Serif 4', 'Noto Serif KR', serif;
+    --f-display: 'Source Serif 4', 'Noto Serif KR', serif;
+    --f-title: 'Noto Serif KR', 'Noto Sans KR', serif;
+    --f-label: 'Noto Sans KR', sans-serif;
+    --r-lg: 0px;
+    --r-md: 0px;
+    --r-sm: 0px;
+  }
+  /* ───────── 토큰: 밤하늘 (다크) ───────── */
+  body[data-skin="marian"][data-theme="dark"] {
+    --bg: #0d1028;
+    --panel: #11142f;
+    --card: #12163a;
+    --card2: #151a40;
+    --text: #eeedff;
+    --text-dim: #a3a2c4;
+    --accent: #9cb0ff;
+    --border: #232a5c;
+    --border-bright: #2f376f;
+    --row-even: transparent;
+    --row-odd: transparent;
+    --rk1: #e0c27e; --rk2: #c3cae2; --rk3: #e2a98b;
+
+    --accent-soft: #1e2862;
+    --accent-mid: #3c4d9e;
+    --accent-tint-1: rgba(156, 176, 255, 0.08);
+    --accent-tint-2: rgba(156, 176, 255, 0.18);
+    --row-hl: rgba(196, 180, 255, 0.14);
+    --ph-1: #3a3f6e; --ph-2: #4c5fb0; --ph-3: #9cb0ff; --ph-inf: #c4b4ff;
+    --c-up: #f2a0b5; --c-dn: #83a9ff;
+    --chart-line: #2d3466; --chart-line-muted: #1a1f48; --chart-highlight: #9cb0ff; --chart-trend: #6f63b8;
+    --row-hl-strong: rgba(196, 180, 255, 0.24);
+    --row-hl-soft: rgba(196, 180, 255, 0.06);
+    --c-down: #83a9ff;
+    --gold: #d9bf86;
+    --coral: #f2a0b5;
+    --shadow: 0 14px 36px rgba(0, 0, 0, 0.42);
+    --shadow-sm: 0 5px 16px rgba(0, 0, 0, 0.32);
+
+    --lav: #c4b4ff;
+    --lav-soft: #2a2758;
+    --lav-line: #6d64a8;
+    --mat: #181d46;
+    --ink: #eeedff;
+    --night: #080c2c; --night2: #1f2d86;
+    --grad: linear-gradient(90deg, #b98a72 0%, #8aa2ff 55%, #c4b4ff 100%);
+
+    --chart-text: #a3a2c4;
+    --chart-grid: #1d2350;
+    --chart-label: #eeedff;
+  }
+
+  /* ───────── 바탕 ───────── */
+  body[data-skin="marian"] {
+    background: var(--bg) !important;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-variant-numeric: lining-nums tabular-nums;
+  }
+  body[data-skin="marian"][data-theme="dark"] { background-image: none !important; }
+
+  /* ───────── 글꼴 ─────────
+     구버전의 Bebas Neue(큰 숫자 · 이름) → Source Serif 4(한글은 Noto Serif KR), Rajdhani(라벨 · 작은 숫자) → Noto Sans KR */
+  body[data-skin="marian"] [style*="Bebas Neue"],
+  body[data-skin="marian"] :where(.rank-nodata-mark, .rank-value, .popup-member-name, .member-nav-btn, .boss-name-lg, .tour-bubble-title, .gstat-current, .gstat-pct, .gtile-rank, .gtile-pct, .gtile-cur, .gtile-prev, .nsq-row-count, .nikke-rank, .naa-val, .nikke-count, .gd-hero-boss, .gd-diff-pct, .gd-diff-abs, .gd-chart-value, .gd-col-title, .gd-strike-dmg, .m-raid-total, .msh-dmg, .msh-empty-dash, .ps-kpi-value, .ps-hl-value, .ps-attr-slot-value, .ps-boss-stats b, .ps-nikke-rank, .ps-nikke-count, .td-kpi-value, .td-phase-tile-num, .td-attr-val, .td-striker-rank, .td-striker-val, .td-pod-value, .td-pod-step, .uls-kpi-value, .uls-bin-value) {
+    font-family: var(--f-num) !important;
+    letter-spacing: 0 !important;
+    font-weight: 500 !important;
+    font-variant-numeric: lining-nums tabular-nums;
+  }
+  body[data-skin="marian"] [style*="Rajdhani"],
+  body[data-skin="marian"] :where(.tab-btn, .btn-sort, #raid-detail-content .btn-toggle, #personal-detail-view .btn-toggle, th, .raid-num-btn, .sub-title, .rank-nodata-sub, .rank-title, .member-chip, .popup-raid-badge, .popup-info-bar, .kill-badge-l, .loading-text, .tour-step-label, .tour-btn, .tour-skip, .info-modal-version, .info-modal-label, .loading-version-note, .metrics-tab, .metrics-formula, .metrics-legend .chip, .growth-title, .growth-sub, .gstat-label, .gstat-meta, .gtile-bottom, .boss-filter-count, .boss-filter-title, .boss-filter-item .bf-attr, .bf-check, .bf-check-empty, .boss-filter-reset, .nikke-filter-title, .nf-row-label, .nf-attr-title, .nf-attr-sort, .nikke-squad-raid, .nikke-squad-count, .nsq-boss-attr, .nsq-row-count-unit, .nsq-boss-count, .nikke-stat-header, .nikke-count-unit, .gd-hero-attr-badge, .gd-hero-tier-badge, .gd-chart-label, .gd-col-label, .gd-col-lv, .gd-col-lv-diff, .gd-strike-phase, .gd-strike-kill, .personal-choice-btn .pcb-label, .personal-card-lv, .m-raid-title, .m-raid-lv, .msh-phase, .msh-attr, .msh-empty-label, .msh-raid-tag, .msh-phase-inline, .msh-lv-big, .ps-section-meta, .ps-kpi-unit, .ps-hl-sub, .ps-attr-legend-name, .ps-boss-attr, .ps-boss-stats, .ps-nikke-empty, .total-view-btn, .td-kpi-unit, .td-phase-tile-title, .td-phase-tile-unit, .td-phase-tile-pct, .td-trend-sub, .td-attr-head, .td-attr-name, .td-attr-bar-pct, .td-strikers-head, .td-pod-unit, .td-pod-sub, .uls-kpi-sub, .uls-dist-sub, .uls-bin-label) {
+    font-family: var(--f-label) !important;
+    letter-spacing: 0.04em !important;
+  }
+  /* Google Charts 축 · 범례 · 라벨 글자 */
+  body[data-skin="marian"] svg text { font-family: var(--f-label) !important; }
+
+  /* 섹션 제목 (RAID HISTORY 같은 대문자 라벨) → 세리프 이탤릭 라벤더 */
+  body[data-skin="marian"] [style*="font-size:16px; font-weight:700; letter-spacing:3px; color:var(--text-dim"],
+  body[data-skin="marian"] .ps-section-label {
+    font-family: var(--f-display) !important;
+    font-style: italic !important;
+    font-synthesis: none;
+    font-weight: 500 !important;
+    font-size: 24px !important;
+    letter-spacing: 0.01em !important;
+    text-transform: none !important;
+    color: var(--lav) !important;
+  }
+  body[data-skin="marian"] [style*="font-size:13px; font-weight:700; letter-spacing:3px; color:var(--text-dim"] {
+    font-family: var(--f-display) !important;
+    font-style: italic !important;
+    font-synthesis: none;
+    font-weight: 500 !important;
+    font-size: 19px !important;
+    letter-spacing: 0.01em !important;
+    text-transform: none !important;
+    color: var(--lav) !important;
+  }
+  /* 제목 앞 세로 막대 → 사파이어 보석 */
+  body[data-skin="marian"] [style*="width:3px; height:16px; background:var(--accent)"],
+  body[data-skin="marian"] [style*="width:3px; height:14px; background:var(--accent)"],
+  body[data-skin="marian"] [style*="width:3px; height:12px; background:var(--accent)"],
+  body[data-skin="marian"] [style*="width:3px; height:18px; background:var(--accent)"],
+  body[data-skin="marian"] .ps-section-bar,
+  body[data-skin="marian"] .growth-head .accent-bar {
+    width: 9px !important; height: 9px !important;
+    transform: rotate(45deg);
+    background: var(--gem) !important;
+    box-shadow: none !important;
+    align-self: center;
+    flex-shrink: 0;
+  }
+
+  /* ───────── 모양: 잘린 모서리 → 직각 ───────── */
+  /* SVG(Google 차트)는 그래프 영역 자르기에 clip-path 를 쓰므로 제외 */
+  body[data-skin="marian"] :not(svg, svg *),
+  body[data-skin="marian"] :not(svg, svg *)::before,
+  body[data-skin="marian"] :not(svg, svg *)::after { clip-path: none !important; }
+
+  /* ───────── 제목 구역 (마스트헤드) ───────── */
+  body[data-skin="marian"] .hero-wrap { position: relative; margin: 10px 0 18px; padding: 0; background: none; border: none; box-shadow: none; overflow: visible; }
+  body[data-skin="marian"] .union-info-container { padding: 22px 0 20px; overflow: visible; }
+  body[data-skin="marian"] .union-info-container::before,
+  body[data-skin="marian"] .header-deco,
+  body[data-skin="marian"] .union-name-display::after { display: none !important; }
+  body[data-skin="marian"] .union-info-container::after {
+    content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: var(--grad);
+  }
+  body[data-skin="marian"] .header-inner { border-left: none; padding-left: 0; gap: 10px; }
+  body[data-skin="marian"] .header-inner::before,
+  body[data-skin="marian"] .header-inner::after { display: none !important; }
+  body[data-skin="marian"] .sub-title {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: 'Noto Sans KR', sans-serif !important; font-size: 11px; font-weight: 500;
+    letter-spacing: 0.35em !important; text-transform: uppercase; color: var(--text-dim); opacity: 1;
+  }
+  body[data-skin="marian"] .sub-title::before { content: ''; width: 9px; height: 9px; transform: rotate(45deg); background: var(--gem); flex-shrink: 0; }
+  body[data-skin="marian"] .union-name-display {
+    font-family: var(--f-title) !important; font-weight: 900 !important;
+    font-size: 54px; letter-spacing: -0.03em !important; line-height: 1.08;
+    text-shadow: none !important; color: var(--text);
+  }
+  body[data-skin="marian"] .union-name-em { color: var(--accent); }
+  body[data-skin="marian"] .title-break { display: inline !important; }
+
+  /* 서버 · 익명 (목차가 없을 때는 제목 오른쪽 위) */
+  body[data-skin="marian"] .union-server {
+    top: 22px; font-family: 'Noto Sans KR', sans-serif !important; font-size: 12px; font-weight: 500;
+    letter-spacing: 0.15em !important; color: var(--text-dim); text-transform: uppercase;
+    padding: 7px 12px; border: 1px solid var(--border-bright); background: var(--card);
+  }
+  body[data-skin="marian"] .union-server b { color: var(--text); font-family: var(--f-display); letter-spacing: 0.15em; font-weight: 500; }
+  body[data-skin="marian"] .anon-toggle {
+    position: absolute; top: 60px; right: 0;
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 7px 12px; border: 1px solid var(--border-bright); background: var(--card); color: var(--text-dim); cursor: pointer;
+    font-family: 'Noto Sans KR', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0; line-height: 1.5;
+    transition: color 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+  }
+  body[data-skin="marian"] .anon-toggle i { color: var(--lav); }
+  body[data-skin="marian"] .anon-toggle:hover { color: var(--text); border-color: var(--lav); }
+  body[data-skin="marian"] .anon-toggle.on { background: var(--accent); border-color: var(--accent); color: #fff; }
+  body[data-skin="marian"] .anon-toggle.on i { color: #fff; }
+  body[data-skin="marian"][data-theme="dark"] .anon-toggle.on,
+  body[data-skin="marian"][data-theme="dark"] .anon-toggle.on i { color: #0d1028; }
+
+  /* 탭 — 번호 목차 (넓은 화면은 위 왼쪽 목차, 좁은 화면은 제목 아래 가로줄) */
+  body[data-skin="marian"] .header { border-bottom: 1px solid var(--border); margin-bottom: 0; padding-top: 0; gap: 0; counter-reset: mtab; flex-wrap: wrap; justify-content: flex-start; }
+  body[data-skin="marian"] .header::after { display: none; }
+  body[data-skin="marian"] .tabs { gap: 0; flex-wrap: wrap; }
+  body[data-skin="marian"] .tab-btn {
+    counter-increment: mtab;
+    padding: 12px 18px 12px 0; margin: 0; border: none; background: transparent; box-shadow: none;
+    color: var(--text-dim); font-family: 'Noto Sans KR', sans-serif !important; font-size: 14px; font-weight: 500;
+    letter-spacing: 0 !important; text-transform: none; transition: color .15s;
+  }
+  body[data-skin="marian"] .tab-btn::before {
+    content: counter(mtab, decimal-leading-zero); position: static; inset: auto; display: inline-block;
+    background: none; opacity: 1; z-index: auto; margin-right: 10px;
+    font-family: var(--f-display); font-size: 15px; color: var(--text-dim); transition: color .15s;
+  }
+  body[data-skin="marian"] .tab-btn::after { display: none; }
+  body[data-skin="marian"] .tab-btn:hover { color: var(--text); }
+  body[data-skin="marian"] .tab-btn:hover::before { opacity: 1; }
+  body[data-skin="marian"] .tab-btn.active { color: var(--text); font-weight: 700; }
+  body[data-skin="marian"] .tab-btn.active::before { color: var(--accent); }
+  @media (max-width: 1100px) {
+    body[data-skin="marian"] .tab-btn.active { box-shadow: inset 0 -2px 0 var(--lav); }
+  }
+
+  /* ═════════ 왼쪽 번호 목차 (1101px 이상) — .header 를 화면 왼쪽에 고정 ═════════ */
+  @media (min-width: 1101px) {
+    body[data-skin="marian"] { padding-left: calc(var(--side-w) + 34px); }
+    body[data-skin="marian"] .hero-wrap .header {
+      position: fixed; left: 0; top: 0; bottom: 0; width: var(--side-w); box-sizing: border-box;
+      display: flex; flex-direction: column; align-items: stretch; justify-content: flex-start;
+      margin: 0; padding: 112px 26px 120px; gap: 0;
+      background: var(--bg); border-bottom: none; border-right: 1px solid var(--border);
+      z-index: 40; overflow-y: auto; counter-reset: mtab;
+    }
+    /* 브랜드: 보석 + Union Raid + SETTLEMENT REPORT + 그라데이션 선 ('Marian' 은 테마 메뉴에만) */
+    body[data-skin="marian"] .hero-wrap .header::before {
+      content: ''; position: absolute; left: 30px; top: 38px; width: 18px; height: 18px;
+      transform: rotate(45deg); background: var(--gem);
+    }
+    body[data-skin="marian"] .hero-wrap .header::after {
+      content: 'Union Raid'; display: block; position: absolute; left: 58px; top: 30px; white-space: nowrap; bottom: auto; width: auto; height: auto;
+      background: none; font-family: var(--f-display); font-size: 27px; font-weight: 500; letter-spacing: -0.01em; line-height: 1.2; color: var(--text);
+    }
+    body[data-skin="marian"] .hero-wrap .tabs::before {
+      content: 'SETTLEMENT REPORT'; display: block; margin: -40px 0 30px; padding-bottom: 14px;
+      font: 500 9.5px/1 'Noto Sans KR', sans-serif; letter-spacing: 0.28em; white-space: nowrap; color: var(--text-dim);
+      background: var(--grad) left bottom / 100% 2px no-repeat;
+    }
+    body[data-skin="marian"] .hero-wrap .tabs { flex-direction: column; gap: 0; }
+    body[data-skin="marian"] .hero-wrap .header .tab-btn {
+      display: grid; grid-template-columns: 34px 1fr 12px; align-items: center; text-align: left;
+      width: 100%; padding: 13px 0; border-top: 1px solid var(--border);
+    }
+    body[data-skin="marian"] .hero-wrap .header > .tab-btn { border-bottom: 1px solid var(--border); }
+    body[data-skin="marian"] .hero-wrap .header .tab-btn.active::after {
+      content: ''; display: block; position: static; width: 9px; height: 9px; transform: rotate(45deg);
+      background: var(--gem); opacity: 1; justify-self: end;
+    }
+    /* 서버 · 익명 — 목차 바로 아래에 고정 (맨 아래 동작 메뉴가 펼쳐지는 자리와 안 겹치게) */
+    body[data-skin="marian"] .union-server,
+    body[data-skin="marian"] .anon-toggle {
+      position: fixed; left: 26px; right: auto; top: auto; width: calc(var(--side-w) - 52px); box-sizing: border-box; z-index: 41;
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+    }
+    body[data-skin="marian"] .union-server { top: 462px; bottom: auto; }
+    body[data-skin="marian"] .anon-toggle { top: 504px; bottom: auto; }
+    /* 동작 메뉴 · 맨 위/아래 버튼이 목차를 가리지 않게 */
+    body[data-skin="marian"] .scroll-buttons-left { left: 26px; }
+  }
+
+  /* 회차 — 세리프 숫자 + 라벤더 밑줄 */
+  body[data-skin="marian"] .raid-selector { margin: 14px 0 18px; }
+  body[data-skin="marian"] .raid-num-wrapper { gap: 4px 18px; align-items: baseline; }
+  body[data-skin="marian"] .raid-num-btn {
+    padding: 4px 1px 5px; border: none; border-bottom: 2px solid transparent; background: transparent; box-shadow: none;
+    font-family: var(--f-display) !important; font-size: 22px; font-weight: 500; letter-spacing: 0 !important;
+    color: var(--text-dim); font-variant-numeric: lining-nums tabular-nums;
+  }
+  body[data-skin="marian"] .raid-num-btn:hover { color: var(--text); background: transparent; border-bottom-color: var(--border-bright); }
+  body[data-skin="marian"] .raid-num-btn.active { background: transparent; color: var(--text); border-bottom-color: var(--lav); box-shadow: none; }
+  body[data-skin="marian"] .raid-num-btn.active::after { display: none; }
+  body[data-skin="marian"] .raid-num-temp:not(.active) { border-bottom: 2px dashed var(--border-bright); }
+  body[data-skin="marian"] .raid-more-btn {
+    padding: 4px 2px; border: none; background: transparent; color: var(--text-dim);
+    font-family: 'Noto Sans KR', sans-serif !important; font-size: 13px; font-weight: 500; letter-spacing: 0 !important;
+  }
+  body[data-skin="marian"] .raid-more-btn:hover { color: var(--text); }
+  body[data-skin="marian"] .raid-all-panel { border: 1px solid var(--border-bright); box-shadow: var(--shadow); padding: 16px 18px 18px; background: var(--card); }
+  body[data-skin="marian"] .raid-all-head b { font-family: var(--f-display); font-style: italic; font-weight: 500; font-size: 21px; font-synthesis: none; color: var(--lav); }
+  body[data-skin="marian"] .raid-all-label { font-family: 'Noto Sans KR', sans-serif !important; font-size: 11px; font-weight: 700; letter-spacing: 0.2em !important; color: var(--text-dim); }
+  body[data-skin="marian"] .raid-all-chip {
+    border-color: var(--border); padding: 7px 0; background: var(--card);
+    font-family: var(--f-display) !important; font-size: 15px; font-weight: 500; letter-spacing: 0 !important;
+  }
+  body[data-skin="marian"] .raid-all-chip.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+  body[data-skin="marian"][data-theme="dark"] .raid-all-chip.active { color: #0d1028; }
+
+  /* ───────── 카드 ───────── */
+  body[data-skin="marian"] .card {
+    background: var(--card); border: 1px solid var(--border); border-top: 1px solid var(--border);
+    box-shadow: none; padding: 22px 24px;
+  }
+  body[data-skin="marian"] .card::after { display: none; }
+  /* 인라인으로 박힌 강조 윗선/아랫모서리 장식 → 가는 선 */
+  body[data-skin="marian"] [style*="border-top: 2px solid var(--accent)"],
+  body[data-skin="marian"] [style*="border-top:2px solid var(--accent)"] {
+    border-top: 1px solid var(--border) !important;
+    overflow: hidden;
+  }
+  body[data-skin="marian"] [style*="border-bottom:2px solid var(--accent); border-right:2px solid var(--accent)"] { display: none !important; }
+  /* 배경 장식 대형 글자 ("DMG", 따옴표, ∞ 등) */
+  body[data-skin="marian"] [style*="font-size:120px"][style*="opacity:0.0"],
+  body[data-skin="marian"] [style*="font-size:180px"][style*="opacity:0.0"] { display: none !important; }
+
+  /* ═════════ 레이드 통계 — 요약 (순위 | 한마디 | 총 딜량) : 상자 없이 세로 가는 선으로 세 칸 ═════════ */
+  body[data-skin="marian"] #boss-container > .rv-top {
+    display: flex !important; flex-wrap: wrap; gap: 0; grid-column: 1 / -1; align-items: stretch;
+    border-bottom: 1px solid var(--border); margin-bottom: 6px;
+  }
+  body[data-skin="marian"] .rv-top > .rv-summary { order: 1; flex: 1 1 640px; min-width: 0; }
+  body[data-skin="marian"] .rv-top > .union-dmg-box { order: 2; flex: 1 1 480px; min-width: 0; }
+  body[data-skin="marian"] .rv-top > .rv-unit-row { order: 3; flex-basis: 100%; }
+  body[data-skin="marian"] :is(.rv-summary, .union-dmg-box) {
+    background: transparent !important; border: none !important; box-shadow: none !important; margin-bottom: 0 !important;
+  }
+  body[data-skin="marian"] .union-dmg-box { border-left: 1px solid var(--border) !important; flex-direction: column !important; }
+  body[data-skin="marian"] .rv-rank {
+    border-right: 1px solid var(--border) !important; min-width: 250px !important;
+    align-items: flex-start !important; justify-content: flex-start !important; gap: 12px !important;
+    padding: 26px 30px 28px 0 !important;
+  }
+  body[data-skin="marian"] .rv-rank > div[style*="position:absolute"],
+  body[data-skin="marian"] .rv-comment > div[style*="position:absolute"],
+  body[data-skin="marian"] .rv-total-main > div[style*="position:absolute"] { display: none !important; }
+  /* 작은 라벨 (FINAL RANK · COMMANDER'S NOTE · UNION TOTAL DMG) */
+  body[data-skin="marian"] :is(.rv-rank, .rv-comment, .rv-total-main) > [style*="letter-spacing:3px"] {
+    font-family: 'Noto Sans KR', sans-serif !important; font-style: normal !important; font-size: 11px !important;
+    font-weight: 700 !important; letter-spacing: 0.25em !important; text-transform: uppercase !important;
+    color: var(--text-dim) !important;
+  }
+  body[data-skin="marian"] :is(.rv-comment, .rv-total-main) > [style*="letter-spacing:3px"] > span { display: none !important; }
+  body[data-skin="marian"] .rv-rank [style*="font-size:42px"] {
+    font-family: var(--f-display) !important; font-size: 124px !important; font-weight: 400 !important;
+    color: var(--accent) !important; text-shadow: none !important; line-height: 0.9 !important; letter-spacing: -0.01em !important;
+  }
+  body[data-skin="marian"] .rv-rank-unit { font-size: 0.21em; font-weight: 500; color: var(--text-dim); margin-left: 6px; font-family: 'Noto Sans KR', sans-serif; }
+  body[data-skin="marian"] .rv-rank > div:last-child {
+    display: inline-flex; align-items: center; padding: 4px 12px;
+    background: var(--lav-soft); color: var(--lav) !important; opacity: 1 !important;
+    font-family: 'Noto Sans KR', sans-serif !important; font-size: 12px !important; font-weight: 700 !important; letter-spacing: 0.04em !important;
+  }
+  body[data-skin="marian"] .rv-comment { padding: 26px 30px 28px !important; justify-content: flex-start !important; gap: 14px !important; }
+  body[data-skin="marian"] .rv-comment [style*="font-size:22px"] {
+    font-family: var(--f-title) !important; font-style: normal !important;
+    font-size: 21px !important; font-weight: 500 !important; line-height: 1.7 !important;
+  }
+  body[data-skin="marian"] .rv-comment [style*="font-size:22px"]::before {
+    content: '\201C'; display: block; height: 30px; margin-bottom: 2px;
+    font-family: 'Noto Serif KR', serif; font-weight: 900; font-size: 54px; line-height: 1; color: var(--lav);
+  }
+  body[data-skin="marian"] .rv-total-main { border-right: none !important; padding: 26px 30px 14px !important; gap: 12px !important; }
+  body[data-skin="marian"] .rv-total-main [style*="font-size:64px"] {
+    font-family: var(--f-display) !important; font-size: 58px !important; font-weight: 400 !important;
+    color: var(--text) !important; text-shadow: none !important;
+  }
+  body[data-skin="marian"] .rv-phase-split {
+    min-width: 0 !important; flex-direction: row !important; flex-wrap: wrap; gap: 0 18px; padding: 0 30px 24px;
+  }
+  body[data-skin="marian"] .rv-phase-cell {
+    flex: 1 1 0 !important; min-width: 96px; flex-direction: column !important;
+    align-items: flex-start !important; justify-content: flex-start !important; gap: 6px;
+    padding: 10px 0 0 !important; border: none !important; border-top: 1px solid var(--border) !important; background: transparent;
+  }
+  body[data-skin="marian"] .rv-phase-cell > div:first-child {
+    color: var(--text-dim) !important; font-family: 'Noto Sans KR', sans-serif !important;
+    font-size: 11px !important; letter-spacing: 0.12em !important;
+  }
+  body[data-skin="marian"] .rv-phase-cell > div:first-child[style*="#ff4b4b"] { color: var(--lav) !important; }
+  body[data-skin="marian"] .rv-phase-cell > div:last-child { font-family: var(--f-display) !important; font-size: 19px !important; font-weight: 500 !important; }
+  /* 단위 버튼 줄 — 왼쪽에 보스 구역 제목 */
+  body[data-skin="marian"] .rv-unit-row { align-items: baseline; padding: 30px 0 10px !important; }
+  body[data-skin="marian"] .rv-unit-row::before {
+    content: 'Boss Status'; margin-right: auto;
+    font-family: var(--f-display); font-style: italic; font-size: 22px; color: var(--lav);
+  }
+  body[data-skin="marian"] .rv-unit-row button {
+    padding: 6px 14px !important; border: 1px solid var(--border-bright) !important; background: var(--card) !important;
+    font-family: 'Noto Sans KR', sans-serif !important; font-size: 12px !important; font-weight: 500 !important; letter-spacing: 0 !important;
+    color: var(--text-dim) !important;
+  }
+  body[data-skin="marian"] .rv-unit-row button:hover { border-color: var(--lav) !important; color: var(--text) !important; }
+
+  /* ═════════ 보스 카드 — 액자 매트 + 오목 이중선 (R2) ═════════ */
+  body[data-skin="marian"] #boss-container { gap: 22px 20px; }
+  body[data-skin="marian"] .boss-card {
+    background: var(--card); border: 1px solid var(--border); padding: 14px 14px 0;
+    box-shadow: none; transition: transform .25s, border-color .25s;
+  }
+  body[data-skin="marian"] .boss-card::before,
+  body[data-skin="marian"] .boss-card::after { display: none; }
+  body[data-skin="marian"] .boss-card:hover { transform: translateY(-3px); border-color: var(--lav); box-shadow: none; }
+  /* 액자 — 매트(padding = --p) · 바깥 선(반지름 --R) · 안쪽 선(--R + --g1) · 그림 귀(--R + --p). 셋 다 액자 귀가 중심 */
+  body[data-skin="marian"] .boss-ring { position: relative; overflow: hidden; padding: var(--p); background: var(--mat); --R: 18px; --g1: 4px; --p: 8px; }
+  body[data-skin="marian"] :is(.boss-card, .bs-tile) .bdeco { display: block; position: absolute; pointer-events: none; }
+  body[data-skin="marian"] .boss-ring > .bl1 { inset: 0; border: 1px solid var(--lav); z-index: 3; }
+  body[data-skin="marian"] .boss-ring > .bc { width: calc(var(--R) * 2); height: calc(var(--R) * 2); border-radius: 50%; background: var(--card); border: 1px solid var(--lav); z-index: 4; }
+  body[data-skin="marian"] .boss-ring > .bc1 { left: calc(var(--R) * -1); top: calc(var(--R) * -1); }
+  body[data-skin="marian"] .boss-ring > .bc2 { right: calc(var(--R) * -1); top: calc(var(--R) * -1); }
+  body[data-skin="marian"] .boss-ring > .bc3 { left: calc(var(--R) * -1); bottom: calc(var(--R) * -1); }
+  body[data-skin="marian"] .boss-ring > .bc4 { right: calc(var(--R) * -1); bottom: calc(var(--R) * -1); }
+  body[data-skin="marian"] .boss-ring > .bl2 { inset: var(--g1); border: 1px solid var(--lav-line); z-index: 1; }
+  body[data-skin="marian"] .boss-ring > .bd { --R2: calc(var(--R) + var(--g1)); width: calc(var(--R2) * 2); height: calc(var(--R2) * 2); border-radius: 50%; background: var(--mat); border: 1px solid var(--lav-line); z-index: 2; }
+  body[data-skin="marian"] .boss-ring > .bd1 { left: calc(var(--R2) * -1); top: calc(var(--R2) * -1); }
+  body[data-skin="marian"] .boss-ring > .bd2 { right: calc(var(--R2) * -1); top: calc(var(--R2) * -1); }
+  body[data-skin="marian"] .boss-ring > .bd3 { left: calc(var(--R2) * -1); bottom: calc(var(--R2) * -1); }
+  body[data-skin="marian"] .boss-ring > .bd4 { right: calc(var(--R2) * -1); bottom: calc(var(--R2) * -1); }
+  /* 그림 창 — 짙은 사파이어 바탕, 그림 귀는 매트색 원으로 파냄 */
+  body[data-skin="marian"] .boss-img {
+    aspect-ratio: 4 / 3.5 !important; background: radial-gradient(ellipse 70% 70% at 50% 40%, var(--night2) 0%, var(--night) 78%) !important;
+  }
+  body[data-skin="marian"] .boss-img > .bn { --r: calc(var(--R) + var(--p)); width: calc(var(--r) * 2); height: calc(var(--r) * 2); border-radius: 50%; background: var(--mat); z-index: 1; } /* 그림 위 · 액자 곡선(.bd z2 · .bc z4) 아래 — 곡선이 가려지면 직선 끝만 남아 모서리처럼 보임 */
+  body[data-skin="marian"] .boss-img > .bn1 { left: calc(var(--p) * -1 - var(--r)); top: calc(var(--p) * -1 - var(--r)); }
+  body[data-skin="marian"] .boss-img > .bn2 { right: calc(var(--p) * -1 - var(--r)); top: calc(var(--p) * -1 - var(--r)); }
+  body[data-skin="marian"] .boss-img > .bn3 { left: calc(var(--p) * -1 - var(--r)); bottom: calc(var(--p) * -1 - var(--r)); }
+  body[data-skin="marian"] .boss-img > .bn4 { right: calc(var(--p) * -1 - var(--r)); bottom: calc(var(--p) * -1 - var(--r)); }
+  body[data-skin="marian"] .boss-img img { filter: none !important; }
+  body[data-skin="marian"] .boss-img > div:not(.boss-clear-overlay)[style*="background:linear-gradient(to right"] { display: none !important; }
+  /* 그림 위 라벨 — 오목 귀를 피해 안쪽으로 */
+  body[data-skin="marian"] #boss-container .boss-img > div[style*="top:10px; left:10px"] {
+    top: auto !important; bottom: 12px !important; left: calc(var(--R) + 10px) !important;
+    background: none !important; border: none !important; padding: 0 !important;
+    font-family: var(--f-title) !important; font-size: 13px !important; font-weight: 600 !important; letter-spacing: 0.08em !important;
+    color: #fff !important; text-shadow: 0 1px 6px rgba(0, 0, 0, 0.6);
+  }
+  body[data-skin="marian"] #boss-container .boss-img > div[style*="top:10px; right:10px"] {
+    top: 12px !important; right: calc(var(--R) + 10px) !important;
+    background: rgba(13, 18, 60, 0.72) !important; border: none !important; border-left: 2px solid var(--attr-color) !important;
+    color: #fff !important; padding: 3px 9px !important;
+    font-family: 'Noto Sans KR', sans-serif !important; font-size: 11px !important; font-weight: 700 !important; letter-spacing: 0.1em !important;
+  }
+  body[data-skin="marian"] #boss-container .boss-img > div[style*="bottom:10px; right:10px"],
+  body[data-skin="marian"] #boss-container .boss-img > div[style*="bottom:10px; left:10px"] {
+    bottom: 12px !important; background: rgba(13, 18, 60, 0.72) !important; border-left: none !important;
+    padding: 3px 9px !important; font-family: var(--f-display) !important; font-size: 13px !important; letter-spacing: 0.02em !important;
+  }
+  body[data-skin="marian"] #boss-container .boss-img > div[style*="bottom:10px; right:10px"] { right: calc(var(--R) + 10px) !important; }
+  body[data-skin="marian"] #boss-container .boss-img > div[style*="bottom:10px; left:10px"] { left: calc(var(--R) + 10px) !important; }
+  /* 속성 — 글자 대신 속성 아이콘 (아이콘이 없으면 글자 그대로) */
+  body[data-skin="marian"] #boss-container .boss-img > div.boss-attr {
+    top: 12px !important; right: calc(var(--R) + 8px) !important;
+    background: none !important; border: none !important; padding: 0 !important; line-height: 0;
+  }
+  body[data-skin="marian"] .boss-attr-ico { display: inline-block; width: 26px; height: 26px; object-fit: contain; }
+  body[data-skin="marian"] .boss-attr:has(.boss-attr-ico) .boss-attr-txt,
+  body[data-skin="marian"] .boss-body-inf .boss-attr-ico + .boss-attr-txt { display: none; }
+  body[data-skin="marian"] .boss-body-inf .boss-attr-ico { width: 22px; height: 22px; vertical-align: -5px; margin-right: 8px; }
+  /* 처치 — 살짝 어둡게 + 원형 인장 (가운데 CLEAR · 바깥 라벤더 고리 · 위 보석) */
+  body[data-skin="marian"] .boss-clear-overlay { background: rgba(8, 12, 44, 0.38) !important; z-index: auto; overflow: visible !important; }
+  body[data-skin="marian"] .boss-clear-stamp {
+    position: relative; width: 78px; height: 78px; box-sizing: border-box; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Noto Sans KR', sans-serif !important; font-weight: 700 !important; font-style: normal;
+    font-size: 11px !important; letter-spacing: 0.24em !important; color: #fff !important; text-shadow: none !important;
+    border: 1px solid rgba(255, 255, 255, 0.9) !important; background: rgba(23, 31, 92, 0.86) !important;
+    transform: none !important; padding: 0 0 0 0.24em !important; white-space: nowrap;
+  }
+  body[data-skin="marian"] .boss-clear-stamp::before {
+    content: ''; position: absolute; inset: -6px; border-radius: 50%; border: 1px solid var(--lav-line);
+  }
+  body[data-skin="marian"] .boss-clear-stamp::after {
+    content: ''; position: absolute; left: 50%; top: -5px; width: 9px; height: 9px; margin-left: -4.5px;
+    transform: rotate(45deg); background: var(--gem); border: 1px solid #fff;
+  }
+  /* 카드 본문 — 이름(세리프) · 가는 게이지(4칸 눈금) · 큰 % (보도니) */
+  body[data-skin="marian"] .boss-body { padding: 14px 2px 16px !important; }
+  body[data-skin="marian"] .boss-body:not(.boss-body-inf) > [style*="Bebas Neue"] {
+    font-family: var(--f-title) !important; font-weight: 900 !important; font-size: 19px !important; letter-spacing: -0.01em !important;
+  }
+  body[data-skin="marian"] .hp-bar-bg { position: relative; height: 4px; margin-top: 14px; background: var(--border); border: none; overflow: hidden; }
+  body[data-skin="marian"] .hp-bar-bg::after {
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(to right, transparent 24.6%, var(--card) 24.6%, var(--card) 25.2%, transparent 25.2%, transparent 49.7%, var(--card) 49.7%, var(--card) 50.3%, transparent 50.3%, transparent 74.8%, var(--card) 74.8%, var(--card) 75.4%, transparent 75.4%);
+  }
+  body[data-skin="marian"] .hp-bar-fill { box-shadow: none; background: var(--attr-color, var(--accent)); }
+  body[data-skin="marian"] .hp-bar-fill::after { display: none; }
+  body[data-skin="marian"] #boss-container .boss-body [style*="font-size:20px; font-weight:700"] {
+    font-family: var(--f-display) !important; font-size: clamp(22px, 1.8vw, 30px) !important; font-weight: 500 !important; color: var(--text) !important;
+  }
+  body[data-skin="marian"] #boss-container .boss-body [style*="font-size:20px; font-weight:700"] > span {
+    font-family: 'Noto Sans KR', sans-serif !important; font-size: 12px !important; font-weight: 700; letter-spacing: 0.3em !important; color: var(--lav);
+  }
+  body[data-skin="marian"] #boss-container .boss-body [style*="font-size:11px"] { font-family: var(--f-display) !important; font-size: 12.5px !important; text-align: right; }
+  body[data-skin="marian"] .boss-body > div[style*="margin-top:6px"] { margin-top: 10px !important; }
+  /* 무한 보스 — 넓은 액자 + 오른쪽 기사 칸 */
+  body[data-skin="marian"] .boss-card[style*="flex-direction: row"] { height: auto !important; padding: 14px; gap: 0; }
+  body[data-skin="marian"] .boss-card[style*="flex-direction: row"] .boss-ring { --R: 24px; }
+  body[data-skin="marian"] .boss-img-inf { width: clamp(320px, 34vw, 560px) !important; height: clamp(220px, 19vw, 300px) !important; aspect-ratio: auto !important; }
+  body[data-skin="marian"] .boss-body-inf { padding: 6px 20px 6px 34px !important; gap: 26px !important; }
+  body[data-skin="marian"] .boss-body-inf > div[style*="font-size:64px"] {
+    font-family: var(--f-display) !important; font-style: italic; font-size: 60px !important; color: var(--lav) !important; text-shadow: none !important;
+  }
+  body[data-skin="marian"] #boss-container .boss-body-inf [style*="font-size:20px; font-weight:700; letter-spacing:3px"] {
+    font-family: 'Noto Sans KR', sans-serif !important; font-size: 12px !important; letter-spacing: 0.25em !important;
+  }
+  body[data-skin="marian"] #boss-container .boss-body-inf [style*="font-size:20px; font-weight:700; letter-spacing:3px"] > span { display: none; }
+  body[data-skin="marian"] .boss-body-inf [style*="font-size:36px"] {
+    font-family: var(--f-title) !important; font-weight: 900 !important; font-size: clamp(28px, 2.5vw, 44px) !important; letter-spacing: -0.02em !important; white-space: nowrap;
+  }
+  body[data-skin="marian"] #boss-container .boss-body-inf [style*="font-size:16px; letter-spacing:3px"] {
+    font-family: 'Noto Sans KR', sans-serif !important; font-size: 11px !important; font-weight: 700; letter-spacing: 0.25em !important;
+  }
+  body[data-skin="marian"] .boss-body-inf [style*="font-size:90px"] {
+    font-family: var(--f-display) !important; font-size: clamp(40px, 3.8vw, 68px) !important; font-weight: 500 !important; color: var(--accent) !important; text-shadow: none !important; white-space: nowrap;
+    padding-top: 12px; background: var(--grad) left top / 100% 2px no-repeat;
+  }
+  body[data-skin="marian"] .boss-section-divider {
+    font-family: var(--f-display) !important; font-style: italic; font-size: 20px; font-weight: 500;
+    letter-spacing: 0.01em !important; text-transform: none; color: var(--lav); margin: 18px 0 2px;
+  }
+  body[data-skin="marian"] .boss-section-divider::before { width: 9px; height: 9px; transform: rotate(45deg); background: var(--gem); }
+  body[data-skin="marian"] .boss-section-divider::after { background: var(--border); height: 1px; }
+  body[data-skin="marian"] .kill-badge { border-color: var(--coral); color: var(--coral); background: transparent; padding: 0 5px; font-size: 10px; line-height: 1.45; margin-left: 4px; vertical-align: 1px; white-space: nowrap; }
+
+  /* 레이드 상세 보스 머리 그림 — 매트 이중선 */
+  body[data-skin="marian"] .boss-detail-header { border: 1px solid var(--border); }
+  body[data-skin="marian"] .boss-detail-header::before,
+  body[data-skin="marian"] .boss-detail-header::after { content: ''; position: absolute; pointer-events: none; z-index: 4; }
+  body[data-skin="marian"] .boss-detail-header::before { inset: 8px; border: 1px solid rgba(199, 188, 240, 0.75); }
+  body[data-skin="marian"] .boss-detail-header::after { inset: 12px; border: 1px solid rgba(199, 188, 240, 0.4); }
+  /* 아래 HP 블록 — 높이 고정(130px)이면 글꼴 줄 높이 때문에 아래로 넘쳐 액자 선과 겹침 → 내용 높이대로, 액자 선 위로 */
+  @media (min-width: 601px) {
+    body[data-skin="marian"] .boss-detail-header { height: 380px !important; }
+    body[data-skin="marian"] .boss-detail-header .boss-header-hp { height: auto !important; bottom: 22px !important; padding: 0 32px !important; }
+  }
+  @media (max-width: 600px) {
+    body[data-skin="marian"] .boss-detail-header .boss-header-hp { padding-bottom: 22px !important; }
+  }
+
+  /* ───────── 버튼 · 입력 ───────── */
+  /* 정렬 버튼 — 글자 + 라벤더 밑줄 */
+  body[data-skin="marian"] .btn-sort {
+    padding: 6px 2px; margin-right: 12px; border: none; border-bottom: 2px solid transparent; background: transparent;
+    font-family: 'Noto Sans KR', sans-serif !important; font-size: 13.5px; font-weight: 500; letter-spacing: 0 !important; color: var(--text-dim);
+  }
+  body[data-skin="marian"] .btn-sort:hover { background: transparent; color: var(--text); border-color: transparent; border-bottom-color: var(--border-bright); }
+  body[data-skin="marian"] .btn-sort.active { background: transparent !important; color: var(--text) !important; font-weight: 700; border-color: transparent !important; border-bottom-color: var(--lav) !important; }
+  body[data-skin="marian"] .btn-sort.active::after { display: none; }
+  body[data-skin="marian"] .btn-sort.btn-boss-filter { border: 1px solid var(--border-bright); padding: 6px 12px; margin-right: 0; }
+  /* 나머지 토글 · 칩 — 직각 가는 선, 고르면 사파이어 */
+  body[data-skin="marian"] :is(#raid-detail-content .btn-toggle, #personal-detail-view .btn-toggle, .total-view-btn, .member-chip, .metrics-tab, .boss-filter-reset, .tour-btn, .info-modal-link) {
+    border-radius: 0; font-family: 'Noto Sans KR', sans-serif !important; letter-spacing: 0 !important;
+  }
+  body[data-skin="marian"] :is(.total-view-btn.active, .member-chip.active, #raid-detail-content .btn-toggle.active, #personal-detail-view .btn-toggle.active) {
+    background: var(--accent) !important; border-color: var(--accent) !important; color: #fff !important;
+  }
+  body[data-skin="marian"][data-theme="dark"] :is(.total-view-btn.active, .member-chip.active, #raid-detail-content .btn-toggle.active, #personal-detail-view .btn-toggle.active) { color: #0d1028 !important; }
+  body[data-skin="marian"] input[type="search"], body[data-skin="marian"] input[type="text"] {
+    border: none !important; border-bottom: 1px solid var(--border-bright) !important; background: transparent !important;
+    border-radius: 0 !important; padding-left: 2px !important;
+    font-family: 'Noto Sans KR', sans-serif !important; font-weight: 400 !important; letter-spacing: 0 !important;
+  }
+  body[data-skin="marian"] input[type="search"]:focus, body[data-skin="marian"] input[type="text"]:focus { border-bottom-color: var(--lav) !important; }
+
+  /* ───────── 표 ───────── */
+  body[data-skin="marian"] th {
+    background: transparent; border-bottom: 1px solid var(--border-bright);
+    font-family: 'Noto Sans KR', sans-serif !important; font-size: 11px; letter-spacing: 0.15em !important; font-weight: 700; color: var(--text-dim);
+  }
+  body[data-skin="marian"] td { border-bottom-color: var(--border); }
+  body[data-skin="marian"] .table-wrapper { border: none; }
+  body[data-skin="marian"] #raid-ranking-table th { padding: 12px 8px; border-bottom: 2px solid var(--text); }
+  body[data-skin="marian"] #raid-ranking-body tr { background: transparent !important; }
+  body[data-skin="marian"] #raid-ranking-body td { background: transparent; border-bottom: 1px solid var(--border); padding: 12px 8px; transition: background .15s; }
+  body[data-skin="marian"] #raid-ranking-body tr:hover td { background: var(--card2); }
+  body[data-skin="marian"] #raid-ranking-body tr[style*="rgba(255, 77, 77"] td { background: rgba(194, 92, 120, 0.08); }
+  body[data-skin="marian"] #raid-ranking-body td[style*="Rajdhani"] { font-family: var(--f-display) !important; font-weight: 500 !important; letter-spacing: 0 !important; font-size: 16px !important; }
+  body[data-skin="marian"] #raid-ranking-body td[style*="Bebas Neue"] { font-size: 15px !important; letter-spacing: -0.01em !important; }
+  body[data-skin="marian"] .rank-cell .rank-num { font-family: var(--f-display); font-size: 22px; font-weight: 400; color: var(--text-dim); }
+  body[data-skin="marian"] .rank-cell.r1 .rank-num { color: var(--rk1); font-weight: 600; }
+  body[data-skin="marian"] .rank-cell.r2 .rank-num { color: var(--rk2); font-weight: 600; }
+  body[data-skin="marian"] .rank-cell.r3 .rank-num { color: var(--rk3); font-weight: 600; }
+  body[data-skin="marian"] .hit-col {
+    border-right: none !important; align-items: flex-start !important; padding-left: 10px; margin-right: 6px;
+    border-left: 1px solid var(--border) !important; overflow: visible !important;
+  }
+  body[data-skin="marian"] .hit-col > span:first-child { font-family: 'Noto Sans KR', sans-serif !important; font-size: 12px !important; font-weight: 500 !important; letter-spacing: 0 !important; }
+  body[data-skin="marian"] .hit-col > span:first-child::before { content: ''; display: inline-block; width: 6px; height: 6px; margin-right: 6px; transform: rotate(45deg) translateY(-2px); background: var(--hc, var(--lav)); }
+  body[data-skin="marian"] .hit-col > span:last-child { font-family: var(--f-display) !important; font-size: 15px !important; }
+
+  /* 동작 메뉴 · 스크롤 버튼 — 직각 가는 선 */
+  body[data-skin="marian"] .scroll-buttons button,
+  body[data-skin="marian"] .scroll-buttons-left button {
+    border-radius: 0; opacity: .92; box-shadow: none; border: 1px solid var(--border-bright); background: var(--card);
+  }
+  body[data-skin="marian"] .scroll-buttons button:hover,
+  body[data-skin="marian"] .scroll-buttons-left button:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
+  body[data-skin="marian"] .scroll-buttons-left .sbl-trigger { color: var(--accent); border-color: var(--accent); }
+
+  /* 모달 · 팝업 — 직각, 가는 테두리, 위쪽 사파이어 선 */
+  body[data-skin="marian"] :is(.member-modal-content, .metrics-modal-content, .nikke-squad-modal, .growth-detail-modal, .info-modal, #tour-bubble, .boss-filter-panel, .nikke-filter-panel, #sheet-version-popup) {
+    border-radius: 0; border: 1px solid var(--border-bright); border-top: 2px solid var(--accent) !important; box-shadow: var(--shadow);
+  }
+  body[data-skin="marian"] #sheet-version-popup { overflow: hidden; }
+
+  /* ───────── 툴팁 ───────── */
+  body[data-skin="marian"] .google-visualization-tooltip {
+    border-radius: 0 !important;
+    border: 1px solid var(--border-bright) !important;
+    border-top: 2px solid var(--accent) !important;
+    box-shadow: var(--shadow) !important;
+    overflow: hidden;
+  }
+  body[data-skin="marian"] .google-visualization-tooltip:has(> .google-visualization-tooltip) { border: none !important; }
+  body[data-skin="marian"] .bs-section { border-top-width: 1px; box-shadow: inset 0 2px 0 var(--accent); }
+  body[data-skin="marian"] .bs-tile { border-radius: 0; }
+  body[data-skin="marian"] .bs-toggle button { border-radius: 0; }
+  body[data-skin="marian"] #uls-tip { border-radius: 0; border: 1px solid var(--border-bright); border-top: 2px solid var(--accent); box-shadow: var(--shadow); }
+
+  /* ═════════ 종합 ═════════ */
+  body[data-skin="marian"] .rank-badge-card { border: 1px solid var(--border); box-shadow: none; }
+  body[data-skin="marian"] .td-kpi { border: 1px solid var(--border); background: var(--card2); }
+  body[data-skin="marian"] .td-kpi-value { font-weight: 400 !important; }
+  /* Phase Progress 타일 */
+  body[data-skin="marian"] .td-phase-tile { flex-basis: 84px; max-width: 112px; }
+  body[data-skin="marian"] .td-phase-tile.ph-1 { background: var(--card2); border-color: var(--border); }
+  body[data-skin="marian"] .td-phase-tile.ph-2 { background: linear-gradient(180deg, var(--accent-tint-1), var(--card2) 85%); border-color: var(--accent-mid); }
+  body[data-skin="marian"] .td-phase-tile.ph-3 { background: linear-gradient(180deg, var(--accent-tint-2), var(--card2) 85%); border-color: var(--accent); }
+  body[data-skin="marian"] .td-phase-tile.ph-3 .td-phase-tile-num,
+  body[data-skin="marian"] .td-phase-tile.ph-3 .td-phase-tile-pct { color: var(--text); }
+  body[data-skin="marian"] .td-phase-tile.ph-3 .td-phase-tile-title,
+  body[data-skin="marian"] .td-phase-tile.ph-3 .td-phase-tile-unit { color: var(--text-dim); }
+  body[data-skin="marian"] .td-phase-tile.ph-3 .td-phase-tile-bar { background: rgba(128, 128, 128, 0.25); }
+  body[data-skin="marian"] .td-phase-tile.ph-3 .td-phase-tile-bar > span { background: var(--accent); }
+  body[data-skin="marian"] .td-phase-tile.ph-inf { background: var(--lav-soft); border-color: var(--lav); box-shadow: none; }
+  body[data-skin="marian"] .td-phase-tile.ph-inf .td-phase-tile-num { color: var(--lav); font-family: var(--f-display) !important; font-style: italic; font-weight: 500 !important; }
+  body[data-skin="marian"] .td-phase-tile.ph-inf .td-phase-tile-bar > span { background: var(--lav); }
+  /* 속성 표 막대 */
+  body[data-skin="marian"] :is(.td-attr-bar, .ps-attr-bar-fill, .uls-bin-bar-fill) { border-radius: 0; }
+  /* 명예의 전당 — 액자 매트 느낌 */
+  body[data-skin="marian"] .td-hof-card { border: 1px solid var(--border); background: var(--card); gap: 0; }
+  body[data-skin="marian"] .td-hof-card::before { display: none; }
+  body[data-skin="marian"] .td-hof-head { margin-bottom: 20px; }
+  body[data-skin="marian"] .td-hof-icon { color: var(--lav); }
+  body[data-skin="marian"] .td-hof-title { font-family: var(--f-title) !important; font-weight: 900; }
+  body[data-skin="marian"] .td-pod-step { align-items: flex-start; padding-top: 16px; }
+  body[data-skin="marian"] .td-pod-step::before { display: none; }
+  body[data-skin="marian"] .td-pod-step.step-1 { height: 150px; background: linear-gradient(180deg, #f2e6c6, #c4a15c); color: #3d2c08; box-shadow: none; }
+  body[data-skin="marian"] .td-pod-step.step-2 { height: 118px; background: linear-gradient(180deg, #eef0f7, #a9b0c8); color: #262c45; }
+  body[data-skin="marian"] .td-pod-step.step-3 { height: 92px; background: linear-gradient(180deg, #f2dccf, #c08b70); color: #3d200f; }
+  body[data-skin="marian"] .td-pod-step .td-pod-step-num {
+    color: inherit !important; font-family: var(--f-display) !important; font-style: italic; font-weight: 500 !important;
+    font-size: 36px !important; line-height: 1;
+  }
+
+  /* ═════════ 개인 기록 / 싱크로 / 니케 ═════════ */
+  body[data-skin="marian"] :is(.ps-kpi, .ps-highlight, .uls-kpi, .personal-card, .personal-choice-btn, .gstat, .nikke-stat-card) {
+    border: 1px solid var(--border); box-shadow: none;
+  }
+  body[data-skin="marian"] .ps-kpi-group-title { border: none !important; }
+  body[data-skin="marian"] .uls-dist { border-radius: 0; }
+  body[data-skin="marian"] .md-panel { border: 1px solid var(--border) !important; margin: 8px 0 14px; box-shadow: none; }
+  body[data-skin="marian"] .ps-nikke-col { overflow: hidden; }
+  body[data-skin="marian"] :is(.ps-boss-thumb, .ps-nikke-portrait, .msh-img, .nikke-portrait) { overflow: hidden; }
+  body[data-skin="marian"] :is(.ps-boss-thumb, .msh-img) { outline: 1px solid var(--lav-line); outline-offset: 2px; }
+  body[data-skin="marian"] .msh-strike { border: 1px solid var(--border); border-left-width: 2px !important; background: var(--card2); }
+  body[data-skin="marian"] #personal-strikes-view h4 { font-family: var(--f-title); font-size: 19px; font-weight: 900; }
+  body[data-skin="marian"] .nikke-attr-cell { border-left-width: 2px !important; }
+
+  /* ═════════ 팝업 · 필터 ═════════ */
+  body[data-skin="marian"] .nikke-squad-section { border-left: 1px solid var(--border) !important; background: var(--card2); overflow: hidden; }
+  body[data-skin="marian"] .gd-hero-imgwrap { overflow: hidden; outline: 1px solid var(--lav-line); outline-offset: 3px; }
+  body[data-skin="marian"] .gd-col { overflow: hidden; }
+  body[data-skin="marian"] .gd-col-current { border: 1px solid var(--accent-mid) !important; background: linear-gradient(180deg, var(--accent-tint-1), transparent 45%); }
+  body[data-skin="marian"] .gd-col-prev { border-left: 1px solid var(--border) !important; }
+  body[data-skin="marian"] .gd-strike-header { border-left: 1px solid var(--border-bright) !important; }
+  body[data-skin="marian"] .gd-diff-bar { border-top: 1px solid var(--border-bright) !important; }
+  body[data-skin="marian"] .metrics-formula { border-left: 1px solid var(--border) !important; background: var(--card2); }
+  body[data-skin="marian"] .msh-strike.msh-empty { border-left: 1px solid var(--border) !important; }
+  body[data-skin="marian"] .nsq-unit.focused { border: 2px solid var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+  body[data-skin="marian"] :is(.popup-raid-badge, .gd-hero-tier-badge, .gd-hero-attr-badge, .gd-strike-kill, .nf-attr-sort, .metrics-legend .chip, .bf-attr, .nsq-boss-attr) { border-radius: 0 !important; }
+  body[data-skin="marian"] :is(.bf-attr, .nsq-boss-attr, .gd-hero-attr-badge) { text-shadow: none; letter-spacing: 0.04em !important; }
+  body[data-skin="marian"] .gd-hero-attr-badge { border-left: none; }
+  body[data-skin="marian"] .metrics-tab.active { background: var(--accent) !important; border-color: var(--accent) !important; color: #fff !important; }
+  body[data-skin="marian"][data-theme="dark"] .metrics-tab.active { color: #0d1028 !important; }
+  body[data-skin="marian"] .info-modal-desc { border-left: none; border: 1px solid var(--border); }
+  body[data-skin="marian"] .strike-card { border-top-width: 1px !important; }
+  body[data-skin="marian"] .m-attr-row { border-left-width: 2px !important; }
+  body[data-skin="marian"] :is(.gd-diff-pct, .gd-diff-abs) { text-shadow: none; }
+  /* 체크 표시 · 닫기 · 좌우 이동 */
+  body[data-skin="marian"] :is(.bf-check, .bf-check-empty) { border-radius: 0; }
+  body[data-skin="marian"] :is(.nikke-squad-close, .metrics-close-btn, .info-modal-close, .growth-detail-close) {
+    width: 36px; height: 36px; padding: 0; border-radius: 0;
+    display: inline-flex; align-items: center; justify-content: center; font-size: 22px;
+    transition: background .15s, color .15s;
+  }
+  body[data-skin="marian"] :is(.nikke-squad-close, .metrics-close-btn, .info-modal-close, .growth-detail-close):hover { background: var(--card2); color: var(--text); }
+  body[data-skin="marian"] .member-nav-btn {
+    width: 52px; height: 52px; border-radius: 0; border: 1px solid var(--border-bright); background: var(--card);
+    font-family: var(--f-display) !important; font-size: 26px; font-weight: 400 !important; box-shadow: none;
+  }
+  body[data-skin="marian"] .member-nav-btn:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
+  /* 필터 항목 */
+  body[data-skin="marian"] .boss-filter-item { background: var(--card2); transition: border-color .15s, transform .15s; }
+  body[data-skin="marian"] .boss-filter-item:hover { border-color: var(--lav-line); transform: translateY(-1px); }
+  body[data-skin="marian"] .boss-filter-item.checked { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+  body[data-skin="marian"] .boss-filter-title,
+  body[data-skin="marian"] .nikke-filter-title { font-family: var(--f-display) !important; font-style: italic; font-size: 17px; letter-spacing: 0.02em !important; color: var(--lav); text-transform: none; }
+  body[data-skin="marian"] .nikke-filter-option { border-radius: 0; padding-left: 12px; padding-right: 12px; }
+  body[data-skin="marian"] .nikke-filter-option.checked { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
+  body[data-skin="marian"] .growth-title { font-family: 'Noto Sans KR', sans-serif !important; font-size: 12px; letter-spacing: 0.2em !important; }
+  body[data-skin="marian"] .gstat { border-left: 2px solid var(--lav); }
+  body[data-skin="marian"] .popup-member-name { font-family: var(--f-title) !important; font-weight: 900 !important; letter-spacing: -0.01em !important; }
+
+  /* ═════════ 3차 — 니케 통계 · 필터 · 막대 · 차트 글자 · 명예의 전당 ═════════ */
+  /* 니케 분류 아이콘 — 둥근 검정 테두리 → 직각 가는 선 */
+  body[data-skin="marian"] :is(.nikke-icon, .nikke-icon-empty) { border-radius: 0; border: 1px solid var(--border-bright); background: var(--card); }
+  body[data-skin="marian"] .nikke-icon-empty { border-style: dashed; }
+  /* 흑백 아이콘은 반전(invert)으로 그리므로 테두리도 반전 색으로 줘야 화면에서 가는 회색 선이 됨 */
+  body[data-skin="marian"] .nikke-icon.nikke-icon-invert { background: #000; border-color: #272a19; }
+  body[data-skin="marian"][data-theme="dark"] :is(.nikke-icon, .nikke-icon-empty) { background: var(--card2); border-color: var(--border-bright); }
+  body[data-skin="marian"][data-theme="dark"] .nikke-icon.nikke-icon-invert { background: var(--card2); border-color: var(--border-bright); filter: none; }
+  body[data-skin="marian"] .nikke-portrait { border: 1px solid var(--border-bright); }
+  body[data-skin="marian"][data-theme="dark"] .nikke-portrait { border-color: var(--border-bright); }
+  /* 머리 — 점선 묶음선 → 가는 실선 */
+  body[data-skin="marian"] :is(.nsh-icons-super, .nsh-attr-super) { border-bottom: 1px solid var(--border) !important; padding-bottom: 4px; }
+  /* 속성별 타수 — 칸 상자 없이 숫자만 (속성은 머리 글자색으로 구분) */
+  body[data-skin="marian"] .nikke-attr-cell { border: none !important; background: transparent !important; }
+  body[data-skin="marian"] .nikke-attr-cell.nikke-attr-zero { opacity: 1; }
+  body[data-skin="marian"] .nikke-attr-cell.nikke-attr-zero .naa-val { color: var(--border-bright); }
+  body[data-skin="marian"] .naa-val { font-size: 19px !important; font-weight: 500 !important; }
+  body[data-skin="marian"] .nikke-count { font-size: 26px !important; font-weight: 500 !important; }
+  /* 휴대폰은 머리(속성 이름)가 없으므로 칸 아래에 속성색 가는 밑줄로 구분 */
+  @media (max-width: 768px) {
+    body[data-skin="marian"] .nikke-attr-cell { border-bottom: 2px solid var(--ac, var(--border)) !important; height: 30px; }
+  }
+
+  /* 필터창 */
+  body[data-skin="marian"] .nikke-filter-panel { background: var(--card); }
+  body[data-skin="marian"] .nikke-filter-head { border-bottom-color: var(--border); }
+  body[data-skin="marian"] .nf-row-label { font-size: 12px !important; letter-spacing: 0.08em !important; font-weight: 700; }
+  body[data-skin="marian"] .nikke-filter-option { border-color: var(--border); background: var(--card); color: var(--text); font-weight: 500; }
+  body[data-skin="marian"] .nikke-filter-option:hover { border-color: var(--lav); }
+  body[data-skin="marian"] .nikke-filter-option.checked { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); font-weight: 700; }
+  body[data-skin="marian"] .nikke-filter-option.overspec { background: rgba(179, 138, 53, 0.12); border-color: var(--rk1); color: var(--rk1); box-shadow: none; }
+  body[data-skin="marian"] .nf-attr-title { border-bottom: 1px solid var(--border) !important; font-size: 11px !important; letter-spacing: 0.1em !important; }
+  body[data-skin="marian"] .nf-attr-sort { border-color: var(--border); background: var(--card); font-size: 13px !important; font-weight: 700; }
+  body[data-skin="marian"] .nf-attr-sort:hover { border-color: var(--lav); }
+  body[data-skin="marian"] .nf-attr-sort.active { background: var(--accent); border-color: var(--accent); }
+  body[data-skin="marian"][data-theme="dark"] .nf-attr-sort.active { color: #0d1028 !important; }
+  body[data-skin="marian"] :is(.boss-filter-reset) { border-radius: 0; }
+
+  /* 막대 — 게임식 모서리 깎기 없앰 */
+  body[data-skin="marian"] :is(.td-attr-bar, .ps-attr-bar-fill, .ps-boss-fill, .td-phase-tile-bar > span) { clip-path: none !important; }
+  /* 종합 · 속성 표: 가는 막대 + 비중은 막대 바로 오른쪽 (좁은 막대에서 '.9%' 처럼 잘리던 문제) */
+  body[data-skin="marian"] .td-attr-bar-wrap { position: relative; height: 10px; padding-right: 50px; box-sizing: border-box; } /* 뒤 기준선은 비중 글자와 겹쳐서 뺌 */
+  body[data-skin="marian"] .td-attr-bar { height: 100%; padding: 0; overflow: visible; }
+  body[data-skin="marian"] .td-attr-bar-pct {
+    position: absolute; left: calc(100% + 8px); top: 50%; transform: translateY(-50%);
+    font-family: var(--f-num) !important; font-size: 13px !important; font-weight: 500 !important; letter-spacing: 0 !important;
+    color: var(--text-dim); text-shadow: none;
+  }
+  /* 개인 기록 · 속성 막대: 숫자 칸이 좁아 옆 막대와 겹치던 문제 — 딜량 두 칸을 넓게, 타수 칸은 좁게 / 좁은 화면은 세로로 */
+  body[data-skin="marian"] .ps-attr-triple-charts { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1.25fr) minmax(0, 0.7fr); }
+  body[data-skin="marian"] .ps-attr-bar-col { width: 28px; }
+  @media (max-width: 1300px) {
+    body[data-skin="marian"] .ps-attr-triple { grid-template-columns: 1fr; gap: 16px; }
+    body[data-skin="marian"] .ps-attr-triple-charts { grid-template-columns: 1fr; gap: 20px; }
+    body[data-skin="marian"] .ps-attr-triple-cell:not(:last-child)::after { top: auto; bottom: -10px; left: 4px; right: 4px; width: auto; height: 1px; }
+    body[data-skin="marian"] .ps-attr-triple-legend {
+      flex-direction: row; flex-wrap: wrap; justify-content: center; padding-left: 0; padding-top: 12px;
+      border-left: none; border-top: 1px solid var(--border); gap: 16px;
+    }
+    body[data-skin="marian"] .ps-attr-bar-col { height: 170px; }
+  }
+  body[data-skin="marian"] .ps-attr-legend-swatch { border: none; }
+  body[data-skin="marian"] .ps-attr-legend-name { font-size: 14px !important; letter-spacing: 0.06em !important; font-weight: 700; }
+  body[data-skin="marian"] .ps-attr-triple-title { font-size: 13px; letter-spacing: 0.1em; border-bottom-color: var(--border); }
+
+  /* 구글 차트 글자 — 옛 글꼴(Bebas · Rajdhani) 지정을 테마 글꼴로 (숫자 라벨은 세리프, 축 · 범례는 고딕) */
+  body[data-skin="marian"] svg text[font-family="Bebas Neue"] { font-family: 'Source Serif 4', 'Noto Serif KR', serif !important; font-weight: 600 !important; }
+  body[data-skin="marian"] svg text[font-family="Rajdhani"] { font-family: 'Noto Sans KR', sans-serif !important; font-weight: 500 !important; }
+  /* 글꼴 지정 없는 차트(기본 Arial) — 굵은 숫자 라벨은 세리프, 나머지는 고딕 */
+  body[data-skin="marian"] svg text[font-family="Arial"] { font-family: 'Noto Sans KR', sans-serif !important; }
+  body[data-skin="marian"] svg text[font-family="Arial"][font-weight="bold"] { font-family: 'Source Serif 4', 'Noto Serif KR', serif !important; font-weight: 600 !important; }
+
+  /* 명예의 전당 — 원색 덩어리 받침대 → 옅은 금 · 은 · 동 바탕 + 위쪽 순위색 선 + 세리프 이탤릭 순위 */
+  body[data-skin="marian"] .td-hof-head { padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+  body[data-skin="marian"] .td-hof-icon { width: 30px; height: 30px; }
+  body[data-skin="marian"] .td-hof-desc { font-size: 13px; }
+  body[data-skin="marian"] .td-podium { gap: 10px; padding-top: 12px; }
+  body[data-skin="marian"] .td-pod-name { font-size: 15px !important; }
+  body[data-skin="marian"] .td-pod.pod-1 .td-pod-name { font-size: 17px !important; }
+  body[data-skin="marian"] .td-pod-value { font-size: 26px !important; font-weight: 500 !important; }
+  body[data-skin="marian"] .td-pod.pod-1 .td-pod-value { font-size: 32px !important; }
+  body[data-skin="marian"] .td-pod-sub { font-size: 12px !important; letter-spacing: 0.02em !important; font-weight: 500; }
+  body[data-skin="marian"] .td-pod-step { border-top: 2px solid currentColor; box-shadow: none !important; }
+  body[data-skin="marian"] .td-pod-step.step-1 { height: 124px; background: linear-gradient(180deg, rgba(179, 138, 53, 0.20), rgba(179, 138, 53, 0.04)); color: var(--rk1); }
+  body[data-skin="marian"] .td-pod-step.step-2 { height: 98px;  background: linear-gradient(180deg, rgba(138, 147, 178, 0.22), rgba(138, 147, 178, 0.04)); color: var(--rk2); }
+  body[data-skin="marian"] .td-pod-step.step-3 { height: 78px;  background: linear-gradient(180deg, rgba(173, 115, 86, 0.20), rgba(173, 115, 86, 0.04)); color: var(--rk3); }
+  body[data-skin="marian"] .td-pod-step .td-pod-step-num { font-size: 34px !important; font-weight: 600 !important; }
+  body[data-skin="marian"] .td-pod.pod-1 .td-pod-step-num { font-size: 44px !important; }
+
+  /* ═════════ 4차 — 닉네임 카드 · 개인 보스 팝업 · growth 팝업 · 싱크로 개인 상세 · 회차 순위 카드 ═════════ */
+  /* 개인 기록 닉네임 — 좌석 카드: 바깥 가는 선 + 안쪽 라벤더 선, 위 가운데 작은 보석, 세리프 이름, 레벨은 짧은 선 아래 이탤릭 */
+  body[data-skin="marian"] #personal-member-grid { grid-template-columns: repeat(auto-fill, minmax(176px, 1fr)); gap: 18px 14px; padding-top: 6px; }
+  body[data-skin="marian"] .personal-card { position: relative; padding: 22px 12px 16px; overflow: visible; }
+  body[data-skin="marian"] .personal-card::before {
+    content: ''; position: absolute; inset: 4px; border: 1px solid var(--lav-line); opacity: .6; pointer-events: none; transition: opacity .15s;
+  }
+  body[data-skin="marian"] .personal-card::after {
+    content: ''; position: absolute; left: 50%; top: -5px; width: 8px; height: 8px; margin-left: -4px; transform: rotate(45deg);
+    background: var(--card); border: 1px solid var(--lav-line); transition: background .15s, border-color .15s;
+  }
+  body[data-skin="marian"] .personal-card:hover::before { opacity: 1; }
+  body[data-skin="marian"] .personal-card:hover::after { background: var(--gem); border-color: transparent; }
+  body[data-skin="marian"] .personal-card-name { font-family: var(--f-title) !important; font-weight: 700 !important; font-size: 16px; margin-bottom: 9px; }
+  body[data-skin="marian"] .personal-card-lv {
+    display: inline-block; padding-top: 7px; border-top: 1px solid var(--lav-line);
+    font-family: var(--f-num) !important; font-style: italic; font-weight: 500; font-size: 13.5px !important; color: var(--text-dim) !important;
+  }
+  @media (max-width: 600px) {
+    body[data-skin="marian"] #personal-member-grid { grid-template-columns: repeat(2, 1fr); gap: 14px 10px; }
+    body[data-skin="marian"] .personal-card { padding: 18px 8px 13px; }
+    body[data-skin="marian"] .personal-card-name { font-size: 14px; }
+  }
+
+  /* 팝업 공통 — 회차 표시: 평행사변형 테두리 → 세리프 이탤릭 + 라벤더 밑줄 */
+  body[data-skin="marian"] .popup-raid-badge {
+    clip-path: none; border: none; border-bottom: 1px solid var(--lav-line); padding: 0 6px 5px;
+    font-family: var(--f-display) !important; font-style: italic; font-size: 19px !important; font-weight: 500; letter-spacing: 0.02em !important; color: var(--lav);
+    text-transform: none;
+  }
+  body[data-skin="marian"] .popup-member-name { font-size: 46px; }
+  /* 보스 그림 — 사이트 전체 기준대로 색을 바꾸지 않음(예전 어둡게 필터 제거), 빈 곳은 밤하늘색 */
+  body[data-skin="marian"] :is(.strike-boss-img, .gd-hero-img) { filter: none !important; background-color: var(--night) !important; }
+  body[data-skin="marian"] .gd-hero-imgwrap { background: var(--night); clip-path: none; }
+
+  /* 개인 보스 팝업 — 타격 카드 */
+  body[data-skin="marian"] :is(.strike-card, .nikke-icon-w, .kill-badge-l, .gd-strike-kill) { clip-path: none !important; }
+  body[data-skin="marian"] .strike-card { background: var(--card); }
+  body[data-skin="marian"] .strike-tag {
+    background: rgba(13, 16, 40, 0.74) !important; border: none !important; color: #fff;
+    font-family: 'Noto Sans KR', sans-serif !important; font-size: 11px !important; font-weight: 700 !important; letter-spacing: 0.08em !important; padding: 3px 9px !important;
+  }
+  body[data-skin="marian"] .strike-tier { color: #fff !important; }
+  body[data-skin="marian"] .strike-info { background: transparent !important; border-bottom: 1px solid var(--border); padding: 16px 16px 14px; }
+  body[data-skin="marian"] .strike-attr { font-family: 'Noto Sans KR', sans-serif !important; font-size: 12px !important; letter-spacing: 0.14em !important; }
+  body[data-skin="marian"] .strike-info .boss-name-lg { font-family: var(--f-title) !important; font-weight: 900 !important; font-size: 24px; letter-spacing: -0.01em !important; }
+  body[data-skin="marian"] .strike-dmg { font-family: var(--f-num) !important; font-size: 27px !important; font-weight: 500; letter-spacing: 0 !important; }
+  body[data-skin="marian"] .strike-dmg-sub { font-family: var(--f-num) !important; font-size: 15px !important; font-weight: 500 !important; letter-spacing: 0 !important; }
+  body[data-skin="marian"] .strike-deck-w { background: var(--card); }
+  body[data-skin="marian"] .nikke-icon-w { border-color: var(--border-bright); background: var(--card2); }
+  body[data-skin="marian"] :is(.kill-badge-l, .gd-strike-kill) {
+    border-color: var(--coral) !important; color: var(--coral) !important; font-family: 'Noto Sans KR', sans-serif !important; font-size: 10.5px !important; letter-spacing: 0.04em !important; padding: 1px 6px !important;
+  }
+  /* 아래 두 칸 — 한글 제목은 세리프(기울이지 않음) + 보석, 속성 줄은 가는 선 표 */
+  body[data-skin="marian"] .m-bottom-grid > .card { border: 1px solid var(--border); box-shadow: none; }
+  body[data-skin="marian"] .m-sec-title {
+    display: flex; align-items: center; gap: 10px; font-family: var(--f-title) !important; font-weight: 700 !important;
+    font-size: 17px !important; color: var(--text); letter-spacing: -0.01em !important;
+  }
+  body[data-skin="marian"] .m-sec-title::before { content: ''; width: 8px; height: 8px; transform: rotate(45deg); background: var(--gem); flex-shrink: 0; }
+  body[data-skin="marian"] .m-sec-sub { font-style: normal; font-family: 'Noto Sans KR', sans-serif; }
+  body[data-skin="marian"] .m-attr-row {
+    background: transparent !important; border: none !important; border-bottom: 1px solid var(--border) !important; margin-bottom: 0 !important; padding: 11px 4px !important;
+  }
+  body[data-skin="marian"] .m-attr-name { font-family: 'Noto Sans KR', sans-serif !important; font-size: 13px !important; letter-spacing: 0.1em !important; }
+  body[data-skin="marian"] .m-attr-count { font-family: var(--f-num) !important; font-size: 21px !important; font-weight: 500; letter-spacing: 0 !important; }
+  body[data-skin="marian"] .m-attr-pct { font-family: var(--f-num) !important; font-size: 13px !important; font-weight: 500 !important; }
+  body[data-skin="marian"] .m-attr-total { border-top: 2px solid var(--text) !important; margin-top: 0 !important; }
+  body[data-skin="marian"] .m-attr-total-label { font-family: 'Noto Sans KR', sans-serif !important; font-size: 11px !important; letter-spacing: 0.16em !important; }
+  body[data-skin="marian"] .m-attr-total-val { font-family: var(--f-num) !important; font-size: 24px !important; font-weight: 600; letter-spacing: 0 !important; }
+
+  /* growth 팝업 */
+  body[data-skin="marian"] .gd-hero-attr-badge { font-family: 'Noto Sans KR', sans-serif !important; font-size: 12px !important; padding: 4px 11px; }
+  body[data-skin="marian"] .gd-hero-tier-badge {
+    background: rgba(13, 16, 40, 0.74); border: none; color: #fff !important; font-family: 'Noto Sans KR', sans-serif !important; font-size: 12px !important; letter-spacing: 0.08em !important; padding: 4px 11px;
+  }
+  body[data-skin="marian"] .gd-hero-boss { font-family: var(--f-title) !important; font-weight: 900 !important; font-size: 40px; letter-spacing: -0.01em !important; }
+  body[data-skin="marian"] .gd-hero-member-name { font-family: var(--f-title); font-weight: 700; font-size: 26px; }
+  body[data-skin="marian"] .gd-diff-bar {
+    background: transparent; border: none !important; border-top: 1px solid var(--border) !important; border-bottom: 1px solid var(--border) !important;
+    padding: 22px 0; gap: 28px;
+  }
+  body[data-skin="marian"] .gd-diff-pct { font-size: 68px !important; font-weight: 400 !important; letter-spacing: -0.01em !important; }
+  body[data-skin="marian"] .gd-diff-abs { font-size: 30px !important; font-weight: 400 !important; letter-spacing: 0 !important; }
+  body[data-skin="marian"] .gd-chart { background: transparent; border: none; padding: 0 0 6px; }
+  body[data-skin="marian"] .gd-chart-row { padding: 9px 0; }
+  body[data-skin="marian"] .gd-chart-label { min-width: 64px; font-family: var(--f-display) !important; font-style: italic; font-size: 16px !important; font-weight: 500; letter-spacing: 0 !important; color: var(--text-dim); }
+  body[data-skin="marian"] .gd-chart-bar-wrap {
+    height: 10px; border: none; background: linear-gradient(var(--border), var(--border)) left center / 100% 1px no-repeat;
+  }
+  body[data-skin="marian"] .gd-chart-bar.prev { background: var(--border-bright); }
+  body[data-skin="marian"] .gd-chart-bar.current { background: var(--accent); }
+  body[data-skin="marian"] .gd-chart-value { font-size: 22px !important; font-weight: 500; letter-spacing: 0 !important; min-width: 108px; }
+  body[data-skin="marian"] .gd-col, body[data-skin="marian"] .gd-col-current, body[data-skin="marian"] .gd-col-prev {
+    background: var(--card) !important; border: 1px solid var(--border) !important; padding: 16px 16px 18px; gap: 12px;
+  }
+  body[data-skin="marian"] .gd-col-current { border-top: 2px solid var(--accent) !important; }
+  body[data-skin="marian"] .gd-col-prev { border-top: 2px solid var(--border-bright) !important; }
+  body[data-skin="marian"] .gd-col-label { font-family: 'Noto Sans KR', sans-serif !important; font-size: 11px !important; letter-spacing: 0.14em !important; }
+  body[data-skin="marian"] .gd-col-title { font-size: 26px !important; font-weight: 500; letter-spacing: 0 !important; }
+  body[data-skin="marian"] .gd-col-lv { font-family: var(--f-num) !important; font-size: 18px !important; font-weight: 600 !important; }
+  body[data-skin="marian"] .gd-col-lv-diff { font-family: var(--f-num) !important; font-size: 13px !important; }
+  body[data-skin="marian"] .gd-strike-header {
+    background: transparent; border: none !important; border-bottom: 1px solid var(--border) !important; padding: 4px 2px 8px;
+  }
+  body[data-skin="marian"] .gd-strike-phase { font-family: 'Noto Sans KR', sans-serif !important; font-size: 13px !important; letter-spacing: 0.06em !important; }
+  body[data-skin="marian"] .gd-strike-dmg { font-size: 26px !important; font-weight: 500; letter-spacing: 0 !important; text-shadow: none !important; }
+  body[data-skin="marian"] .gd-strike { background: transparent; border: none; padding: 4px 0 0; }
+  body[data-skin="marian"] .gd-squad-slot { border-width: 1px; }
+
+  /* 싱크로 통계 · 개인 상세 — 요약 수치는 본문색 세리프(현재 레벨만 사파이어), 칸 사이 가는 세로선 */
+  body[data-skin="marian"] .md-kpis { gap: 0 !important; margin-bottom: 20px !important; }
+  body[data-skin="marian"] .md-kpis > div { padding: 0 26px; border-left: 1px solid var(--border); }
+  body[data-skin="marian"] .md-kpis > div:first-child { padding-left: 0; border-left: none; }
+  body[data-skin="marian"] .md-kpi-label { font-family: 'Noto Sans KR', sans-serif !important; font-size: 11px !important; letter-spacing: 0.12em !important; margin-bottom: 6px; }
+  body[data-skin="marian"] .md-kpi-value { font-family: var(--f-num) !important; font-size: 30px !important; font-weight: 500; color: var(--text) !important; }
+  body[data-skin="marian"] .md-kpis > div:first-child .md-kpi-value { color: var(--accent) !important; }
+  body[data-skin="marian"] .md-history { border-color: var(--border) !important; }
+  body[data-skin="marian"] .md-history thead tr { background: var(--card) !important; }
+  body[data-skin="marian"] .md-history th { font-family: 'Noto Sans KR', sans-serif !important; font-size: 11px !important; letter-spacing: 0.12em !important; }
+  body[data-skin="marian"] .md-history td { border-bottom: 1px solid var(--border); }
+  /* 상승 표시 빨강(#ff4757) → 테마 상승색 */
+  body[data-skin="marian"] #section-growth span[style*="#ff4757"] { color: var(--c-up) !important; }
+  body[data-skin="marian"] #section-growth tr[id^="member-row-"][style*="border-left"] { border-left: none !important; box-shadow: inset 2px 0 0 var(--lav); background: var(--accent-soft) !important; }
+
+  /* 종합 결과 · 회차 순위 카드 — 떨어진 상자 → 가는 선 격자 (마지막 줄 폭도 같게) */
+  body[data-skin="marian"] .timeline-container {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(112px, 1fr)); gap: 0; padding: 0;
+    border-top: 1px solid var(--border); border-left: 1px solid var(--border);
+  }
+  body[data-skin="marian"] .rank-badge-card {
+    max-width: none; min-width: 0; clip-path: none; background: var(--card) !important; opacity: 1;
+    border: none !important; border-right: 1px solid var(--border) !important; border-bottom: 1px solid var(--border) !important;
+    padding: 16px 6px 15px; display: flex; flex-direction: column; align-items: center; gap: 0;
+    transition: background .15s, box-shadow .15s;
+  }
+  body[data-skin="marian"] .rank-badge-card:hover { transform: none; background: var(--card2) !important; box-shadow: inset 0 2px 0 var(--lav); }
+  body[data-skin="marian"] .rank-title {
+    font-family: var(--f-display) !important; font-style: italic; font-size: 15px !important; font-weight: 500 !important;
+    letter-spacing: 0 !important; text-transform: none; color: var(--text-dim); margin-bottom: 10px;
+  }
+  body[data-skin="marian"] .badge-img { width: 38px; height: 38px; }
+  body[data-skin="marian"] .rank-value { font-size: 25px !important; font-weight: 500 !important; letter-spacing: 0 !important; color: var(--text) !important; margin-top: 8px; }
+  body[data-skin="marian"] .rank-tier { font-family: 'Noto Sans KR', sans-serif; font-size: 11px !important; font-weight: 700 !important; letter-spacing: 0.12em; color: var(--lav) !important; margin-top: 6px !important; }
+  body[data-skin="marian"] .rank-badge-card.no-data { background: var(--card) !important; }
+  body[data-skin="marian"] .rank-badge-card.no-data:hover { opacity: 1; }
+  body[data-skin="marian"] .rank-nodata-mark { font-family: var(--f-display) !important; font-style: italic; font-size: 30px !important; letter-spacing: 0 !important; color: var(--border-bright); }
+  body[data-skin="marian"] .rank-nodata-sub { font-size: 11px !important; letter-spacing: 0.06em !important; }
+  @media (max-width: 600px) {
+    body[data-skin="marian"] .timeline-container { grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); }
+    body[data-skin="marian"] .rank-badge-card { padding: 12px 4px 11px; }
+    body[data-skin="marian"] .rank-value { font-size: 21px !important; }
+  }
+
+  /* 보스 상세 Phase Distribution 링 (style_siren 의 .pd-* 를 같이 씀) */
+  body[data-skin="marian"] .pd-center b { font-family: var(--f-display); font-weight: 500; }
+  body[data-skin="marian"] .pd-item b { font-family: var(--f-display); font-weight: 500; }
+  body[data-skin="marian"] .pd-item i { border-radius: 0; transform: rotate(45deg) scale(0.85); }
+  body[data-skin="marian"] .pd-item { gap: 8px; }
+  body[data-skin="marian"] .pd-item .pd-label { white-space: nowrap; }
+
+  /* 로딩 화면 */
+  body[data-skin="marian"] #loading-overlay { gap: 34px; background: var(--bg); }
+  body[data-skin="marian"] .loading-spinner { width: 96px; height: 96px; }
+  body[data-skin="marian"] .loading-spinner::before { border-width: 2px; border-top-color: var(--accent); }
+  body[data-skin="marian"] .loading-spinner::after { inset: 14px; border-width: 2px; border-top-color: var(--lav); }
+  body[data-skin="marian"] .loading-text { font-family: var(--f-display) !important; font-style: italic; font-size: 22px; font-weight: 500; letter-spacing: 0.12em !important; color: var(--lav); text-transform: none; }
+  body[data-skin="marian"] .loading-version-note { font-size: 13px; letter-spacing: 0.08em !important; margin-top: 14px; }
+
+  /* ═════════ 모든 탭 통일 — 표 · 순위 · 안쪽 칸 ═════════
+     표: 머리 = 작은 고딕 대문자 + 아래 진한 선 / 줄 = 가는 선만(줄무늬 없음) / 숫자 = 세리프 / 이름 = 고딕 굵게 · 본문색
+     순위: 세리프 · 1~3위 금 · 은 · 동 / 안쪽 칸: 흰 바탕 + 가는 선 (왼쪽 굵은 강조선 없음) */
+  body[data-skin="marian"] table th { border-bottom: 2px solid var(--text) !important; }
+  body[data-skin="marian"] tbody tr:hover td { background: var(--card2); }
+  body[data-skin="marian"] .name-col { color: var(--text); font-weight: 700; }
+
+  /* 싱크로 통계 표 */
+  body[data-skin="marian"] #section-growth table th { padding: 12px 10px; }
+  body[data-skin="marian"] #section-growth table td { border-bottom: 1px solid var(--border); padding: 10px; font-family: var(--f-num); font-size: 15px; }
+  body[data-skin="marian"] #section-growth table td.name-col { font-family: 'Noto Sans KR', sans-serif; font-size: 14px; }
+  body[data-skin="marian"] #section-growth table td[style*="color:var(--accent)"] { color: var(--text) !important; font-weight: 700; }
+  body[data-skin="marian"] #section-growth table td:first-child { color: var(--text-dim); }
+
+  /* 니케 통계 — 떨어진 상자 줄 → 가는 선 표 */
+  body[data-skin="marian"] #nikke-stats-grid { gap: 0; }
+  body[data-skin="marian"] .nikke-stat-header {
+    border-bottom: 2px solid var(--text) !important; padding-bottom: 8px; margin-bottom: 0;
+    font-family: 'Noto Sans KR', sans-serif !important; font-size: 11px !important; font-weight: 700; letter-spacing: 0.15em !important; color: var(--text-dim);
+  }
+  body[data-skin="marian"] .nikke-stat-header :is(div, span) { font-family: 'Noto Sans KR', sans-serif !important; font-size: 11px !important; letter-spacing: 0.1em !important; }
+  body[data-skin="marian"] .nikke-stat-header .nsh-attr { font-weight: 700; }
+  body[data-skin="marian"] .nikke-stat-header > div:not(:last-child)::after { display: none; }
+  body[data-skin="marian"] .nikke-stat-card {
+    background: transparent !important; border: none !important; border-bottom: 1px solid var(--border) !important;
+    padding-top: 8px; padding-bottom: 8px; transition: background .15s;
+  }
+  body[data-skin="marian"] .nikke-stat-card:hover { background: var(--card2) !important; transform: none; }
+  body[data-skin="marian"] .nikke-stat-card.rank-cont { margin-top: 0; }
+  body[data-skin="marian"] .nikke-stat-card.rank-cont::before { display: none; }
+  body[data-skin="marian"] .nikke-rank { font-family: var(--f-num) !important; font-size: 24px !important; font-weight: 500 !important; color: var(--text-dim); text-shadow: none !important; }
+  body[data-skin="marian"] .nikke-rank.top-1 { color: var(--rk1); font-weight: 600 !important; }
+  body[data-skin="marian"] .nikke-rank.top-2 { color: var(--rk2); font-weight: 600 !important; }
+  body[data-skin="marian"] .nikke-rank.top-3 { color: var(--rk3); font-weight: 600 !important; }
+  body[data-skin="marian"] .nikke-name { font-family: 'Noto Sans KR', sans-serif !important; font-weight: 700 !important; }
+  body[data-skin="marian"] .nikke-attr-cell { background: transparent !important; border-left-width: 2px !important; }
+  body[data-skin="marian"] .nikke-attr-zero { opacity: 0.35; }
+  body[data-skin="marian"] .nikke-count { color: var(--text) !important; }
+
+  /* 안쪽 칸 (종합 KPI · 개인 기록 · 싱크로 요약 · 성장 비교 · 멤버 카드) — 흰 바탕 + 가는 선 */
+  body[data-skin="marian"] :is(.td-kpi, .ps-kpi, .ps-highlight, .uls-kpi, .gstat, .gtile, .personal-card, .personal-choice-btn, .uls-dist, .md-panel, .m-raid-row, .ps-boss-row, .ps-nikke-col) {
+    background: var(--card) !important; border: 1px solid var(--border) !important; box-shadow: none !important;
+  }
+  body[data-skin="marian"] .personal-card { text-align: center; transition: border-color .15s, transform .15s; }
+  body[data-skin="marian"] :is(.personal-card, .personal-choice-btn):hover { border-color: var(--lav) !important; transform: translateY(-2px); }
+  body[data-skin="marian"] .personal-card-name { font-family: 'Noto Sans KR', sans-serif; font-weight: 700; }
+  body[data-skin="marian"] .personal-card-lv { font-family: var(--f-num) !important; font-size: 14px; color: var(--text-dim); letter-spacing: 0 !important; }
+  body[data-skin="marian"] :is(.td-kpi, .ps-kpi, .uls-kpi, .gstat) :is(.td-kpi-label, .ps-kpi-label, .uls-kpi-label, .gstat-label) { letter-spacing: 0.08em !important; }
+  /* 강조선 하나만 남김 — 하이라이트 칸은 왼쪽에 가는 라벤더 선 */
+  body[data-skin="marian"] .ps-highlight { border-left: 2px solid var(--lav) !important; }
+
+  /* 성장 비교 · 개인 니케 · 명예의 전당 순위 숫자 */
+  body[data-skin="marian"] :is(.gtile-rank, .ps-nikke-rank, .td-striker-rank) { font-family: var(--f-num) !important; font-weight: 600 !important; }
+
+  /* 보스 통계 — 구역은 가는 선으로만 나누고, 타일은 레이드 통계 보스 카드와 같은 액자 */
+  body[data-skin="marian"] .bs-section { background: transparent !important; border: none !important; border-top: 1px solid var(--border) !important; box-shadow: none !important; padding: 22px 0 6px; }
+  body[data-skin="marian"] .bs-sections > .bs-section:first-child { border-top: none !important; padding-top: 4px; }
+  body[data-skin="marian"] .bs-section-title { font-family: var(--f-title); font-weight: 900; font-size: 19px; }
+  body[data-skin="marian"] .bs-tiles { gap: 16px; }
+  body[data-skin="marian"] .bs-tile {
+    height: auto; overflow: visible; padding: 12px 12px 14px; background: var(--card); border: 1px solid var(--border) !important;
+    transition: border-color .2s, transform .2s;
+  }
+  body[data-skin="marian"] .bs-tile:hover { border-color: var(--lav) !important; transform: translateY(-3px); }
+  body[data-skin="marian"] .bs-tile::after { display: none; }
+  body[data-skin="marian"] .bs-tile .bdeco { display: block; position: absolute; pointer-events: none; }
+  body[data-skin="marian"] .bs-tile-img {
+    position: relative; inset: auto; height: 180px; overflow: hidden;
+    background-color: var(--night); background-position: center 30%; background-size: cover; background-repeat: no-repeat;
+  }
+  body[data-skin="marian"] .bs-tile:hover .bs-tile-img { transform: none; }
+  body[data-skin="marian"] .bs-tile-img > .bn { --r: calc(var(--R) + var(--p)); width: calc(var(--r) * 2); height: calc(var(--r) * 2); border-radius: 50%; background: var(--mat); z-index: 1; }
+  body[data-skin="marian"] .bs-tile-img > .bn1 { left: calc(var(--p) * -1 - var(--r)); top: calc(var(--p) * -1 - var(--r)); }
+  body[data-skin="marian"] .bs-tile-img > .bn2 { right: calc(var(--p) * -1 - var(--r)); top: calc(var(--p) * -1 - var(--r)); }
+  body[data-skin="marian"] .bs-tile-img > .bn3 { left: calc(var(--p) * -1 - var(--r)); bottom: calc(var(--p) * -1 - var(--r)); }
+  body[data-skin="marian"] .bs-tile-img > .bn4 { right: calc(var(--p) * -1 - var(--r)); bottom: calc(var(--p) * -1 - var(--r)); }
+  body[data-skin="marian"] .bs-tile-rank {
+    top: 30px; left: calc(12px + 8px + 18px + 12px); z-index: 3;
+    font-family: var(--f-num) !important; font-size: 30px !important; font-weight: 600 !important; color: #fff; text-shadow: 0 1px 8px rgba(0, 0, 0, 0.7);
+  }
+  body[data-skin="marian"] .bs-tile-1 .bs-tile-rank { color: var(--rk1); font-size: 34px !important; }
+  body[data-skin="marian"] .bs-tile-info { position: static; color: var(--text); padding: 12px 2px 0; }
+  body[data-skin="marian"] .bs-tile-name { font-family: var(--f-title) !important; font-weight: 900; font-size: 16px; text-shadow: none; gap: 6px; }
+  body[data-skin="marian"] .bs-tile-sub { color: var(--text-dim); opacity: 1; }
+  body[data-skin="marian"] .bs-tile-val {
+    font-family: var(--f-num) !important; font-weight: 500 !important; font-size: 28px; color: var(--text); text-shadow: none; margin-top: 8px;
+    padding-top: 8px; border-top: 1px solid var(--border);
+  }
+  body[data-skin="marian"] .bs-tile-val small { font-family: 'Noto Sans KR', sans-serif !important; font-size: 13px; color: var(--text-dim); opacity: 1; }
+  body[data-skin="marian"] .bs-attr { background: none !important; padding: 0 !important; line-height: 0; }
+  body[data-skin="marian"] .bs-attr .boss-attr-ico { width: 20px; height: 20px; }
+  body[data-skin="marian"] .bs-attr:has(.boss-attr-ico) .boss-attr-txt { display: none; }
+  body[data-skin="marian"] .bs-attr:not(:has(.boss-attr-ico)) { background: var(--ac) !important; padding: 1px 7px !important; line-height: 1.5; color: #fff; }
+
+  /* 멤버 상세 팝업 · 성장 비교 — 강조 윗선 대신 가는 선 */
+  body[data-skin="marian"] .strike-card { border: 1px solid var(--border) !important; border-top: 2px solid var(--c, var(--lav)) !important; }
+  body[data-skin="marian"] #member-detail-overlay table th[style*="border-bottom:1px solid var(--accent)"] { border-bottom: 2px solid var(--text) !important; }
+
+  /* 개인 기록 속성 막대 아래 값 — 세리프는 폭이 넓어 옆 칸과 겹치지 않게 조금 작게 */
+  body[data-skin="marian"] .ps-attr-slot-value { font-size: 14px !important; letter-spacing: -0.01em !important; }
+
+  /* 넓어진 폭에 맞춰 작은 글자 키우기 (데스크톱) */
+  @media (min-width: 1100px) {
+    body[data-skin="marian"] :is(.container, #raid-total-content) :is([style*="font-size:10px"], [style*="font-size: 10px"]) { font-size: 11.5px !important; }
+    body[data-skin="marian"] :is(.container, #raid-total-content) :is([style*="font-size:11px"], [style*="font-size: 11px"]) { font-size: 12.5px !important; }
+    body[data-skin="marian"] :is(.container, #raid-total-content) :is([style*="font-size:12px"], [style*="font-size: 12px"]) { font-size: 13px !important; }
+    body[data-skin="marian"] .td-phase-tile-unit { font-size: 12px; }
+    body[data-skin="marian"] .td-phase-tile-pct { font-size: 14px; }
+    body[data-skin="marian"] .td-attr-head { font-size: 13px; }
+  }
+
+  /* ───────── 좁은 화면 ───────── */
+  @media (max-width: 1100px) {
+    body[data-skin="marian"] .rv-rank { padding-right: 24px !important; min-width: 210px !important; }
+    body[data-skin="marian"] .rv-rank [style*="font-size:42px"] { font-size: 96px !important; }
+    body[data-skin="marian"] .union-dmg-box { border-left: none !important; border-top: 1px solid var(--border) !important; }
+    body[data-skin="marian"] .rv-total-main { padding-left: 0 !important; }
+    body[data-skin="marian"] .rv-phase-split { padding-left: 0; }
+    body[data-skin="marian"] .boss-img-inf { width: 420px !important; }
+  }
+  @media (max-width: 600px) {
+    body[data-skin="marian"] .union-info-container { padding: 14px 0 16px; }
+    body[data-skin="marian"] .union-name-display { font-size: 32px; }
+    body[data-skin="marian"] .sub-title { font-size: 9.5px; letter-spacing: 0.2em !important; }
+    /* 서버 · 익명 — 제목 아래 한 줄에 나란히 */
+    body[data-skin="marian"] .union-server,
+    body[data-skin="marian"] .anon-toggle { position: static; display: inline-flex; align-items: center; vertical-align: middle; margin: 12px 6px 0 0; padding: 4px 10px; font-size: 10.5px; }
+    body[data-skin="marian"] .anon-toggle i { margin-right: 5px; }
+    /* 목차 — 한 줄 가로 스크롤 */
+    body[data-skin="marian"] .header { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
+    body[data-skin="marian"] .header::-webkit-scrollbar { display: none; }
+    body[data-skin="marian"] .tabs { flex-wrap: nowrap; }
+    body[data-skin="marian"] .tab-btn { padding: 10px 14px 10px 0; font-size: 12.5px; white-space: nowrap; flex-shrink: 0; }
+    /* 정렬 버튼 · 표 머리 — 글자 안 쪼개지게 */
+    body[data-skin="marian"] .btn-sort { white-space: nowrap; margin-right: 2px; font-size: 12.5px; }
+    body[data-skin="marian"] #raid-specific-content .card > div:first-child > div:first-child { flex-wrap: wrap; gap: 2px 10px !important; }
+    body[data-skin="marian"] th { white-space: nowrap; letter-spacing: 0.05em !important; }
+    body[data-skin="marian"] .tab-btn::before { font-size: 12px; margin-right: 6px; }
+    body[data-skin="marian"] .raid-num-btn { font-size: 18px; }
+    body[data-skin="marian"] .card { padding: 16px; }
+    body[data-skin="marian"] .rv-summary { flex-direction: column !important; }
+    body[data-skin="marian"] .rv-rank { border-right: none !important; border-bottom: 1px solid var(--border) !important; padding: 18px 0 !important; }
+    body[data-skin="marian"] .rv-comment { padding: 18px 0 !important; }
+    body[data-skin="marian"] .rv-rank [style*="font-size:42px"] { font-size: 80px !important; }
+    body[data-skin="marian"] .rv-total-main [style*="font-size:64px"] { font-size: 42px !important; }
+    body[data-skin="marian"] .rv-phase-cell { min-width: 40%; flex: 1 1 40% !important; padding-bottom: 8px !important; }
+    body[data-skin="marian"] .boss-img-inf { width: 100% !important; height: 200px !important; }
+    body[data-skin="marian"] .boss-body-inf { padding: 18px 4px !important; }
+    body[data-skin="marian"] [style*="font-size:16px; font-weight:700; letter-spacing:3px; color:var(--text-dim"],
+    body[data-skin="marian"] .ps-section-label { font-size: 20px !important; }
+    body[data-skin="marian"] .member-nav-btn { width: 40px; height: 40px; font-size: 20px; }
+  }
+
+  /* ───────── 테마 선택 메뉴 견본 ───────── */
+  .skin-swatch-marian { background: linear-gradient(135deg, #fbfaff 0%, #eeeafc 38%, #8f7ae0 39%, #2d47c4 68%, #0d1028 100%); }
+  body[data-skin="marian"] .skin-menu { border-radius: 0; }
+  body[data-skin="marian"] :is(.skin-opt, .skin-mode, .skin-swatch) { border-radius: 0; }
+  body[data-skin="marian"] .skin-swatch { transform: rotate(45deg) scale(0.78); }
+  /* 맨 끝에 둠 — 앞의 '모든 탭 통일' 묶음(:is 목록, 같은 우선순위)보다 나중이어야 덮어씀 */
+  /* ═════════ 5차 — 개인 종합 결산 · 보스 타격 기록 ═════════ */
+  /* 선택 화면(개인 종합 결산 / 보스 타격 기록) — 닉네임 카드와 같은 안쪽 라벤더 선 */
+  body[data-skin="marian"] .personal-choice-btn { position: relative; }
+  body[data-skin="marian"] .personal-choice-btn::before {
+    content: ''; position: absolute; inset: 5px; border: 1px solid var(--lav-line); opacity: .55; pointer-events: none; transition: opacity .15s;
+  }
+  body[data-skin="marian"] .personal-choice-btn:hover::before { opacity: 1; }
+  body[data-skin="marian"] .personal-choice-btn .pcb-label {
+    font-family: var(--f-display) !important; font-style: italic; font-size: 16px !important; font-weight: 500 !important;
+    letter-spacing: 0.02em !important; text-transform: none; color: var(--lav) !important;
+  }
+  body[data-skin="marian"] .personal-choice-btn .pcb-title { font-family: var(--f-title); font-weight: 900; }
+
+  /* 보스 그림 칸(작은 썸네일 포함) — 밤하늘 바탕 · 색 바꾸지 않음 */
+  body[data-skin="marian"] :is(.msh-img, .ps-boss-thumb, .ps-hl-thumb) { background-color: var(--night) !important; filter: none !important; }
+
+  /* Most Deployed — 소속 칸은 상자 없이 머리 밑줄, 니케는 가는 선 목록 (좁은 칸에서 아이콘이 밖으로 넘치던 문제) */
+  body[data-skin="marian"] .ps-nikke-top { gap: 10px 18px; }
+  body[data-skin="marian"] .ps-nikke-col { background: transparent !important; border: none !important; padding: 0; gap: 0; overflow: visible; }
+  body[data-skin="marian"] .ps-nikke-col-head {
+    font-family: var(--f-title); font-weight: 900; font-size: 15px; letter-spacing: 0;
+    padding-bottom: 8px; margin-bottom: 0; border-bottom: 2px solid var(--text);
+  }
+  body[data-skin="marian"] .ps-nikke-row {
+    grid-template-columns: 16px 50px minmax(0, 1fr); gap: 9px;
+    background: transparent !important; border: none !important; border-bottom: 1px solid var(--border) !important; padding: 9px 0;
+  }
+  body[data-skin="marian"] .ps-nikke-rank { font-size: 17px !important; }
+  body[data-skin="marian"] .ps-nikke-row:nth-of-type(2) .ps-nikke-rank { color: var(--rk1); }
+  body[data-skin="marian"] .ps-nikke-row:nth-of-type(3) .ps-nikke-rank { color: var(--rk2); }
+  body[data-skin="marian"] .ps-nikke-row:nth-of-type(4) .ps-nikke-rank { color: var(--rk3); }
+  body[data-skin="marian"] .ps-nikke-portrait { width: 50px; height: 50px; border: 1px solid var(--border-bright); }
+  body[data-skin="marian"] .ps-nikke-info { gap: 5px; }
+  body[data-skin="marian"] .ps-nikke-name { font-size: 14px; }
+  body[data-skin="marian"] .ps-nikke-meta { flex-wrap: wrap; gap: 4px; }
+  body[data-skin="marian"] .ps-nikke-icons-2x2 { grid-template-columns: repeat(4, 18px); grid-template-rows: 18px; gap: 3px; }
+  body[data-skin="marian"] .ps-nikke-icons-2x2 > :is(.nikke-icon, .nikke-icon-dual, .nikke-icon-empty) { width: 18px !important; height: 18px !important; clip-path: none; }
+  body[data-skin="marian"] .ps-nikke-icons-2x2 > img.nikke-icon:first-child { padding: 1px; }
+  body[data-skin="marian"] .ps-nikke-count { font-size: 17px !important; font-weight: 600 !important; margin-left: auto; }
+  body[data-skin="marian"] .ps-nikke-count .ps-kpi-unit { font-size: 11px; margin-left: 2px; }
+
+  /* Boss Report — 줄마다 상자 → 가는 선 목록 */
+  body[data-skin="marian"] .ps-boss-list { gap: 0; border-top: 2px solid var(--text); }
+  body[data-skin="marian"] .ps-boss-row {
+    background: transparent !important; border: none !important; border-bottom: 1px solid var(--border) !important; padding: 14px 4px;
+    grid-template-columns: 64px 1fr auto;
+  }
+  body[data-skin="marian"] .ps-boss-thumb { width: 64px; height: 64px; }
+  body[data-skin="marian"] .ps-boss-name { font-family: var(--f-title); font-weight: 900; font-size: 18px; }
+  body[data-skin="marian"] .ps-boss-attr { font-family: 'Noto Sans KR', sans-serif !important; font-size: 12px !important; letter-spacing: 0.12em !important; }
+  body[data-skin="marian"] .ps-boss-bar { height: 6px; background: var(--card2); }
+  body[data-skin="marian"] .ps-boss-stats b { font-size: 21px !important; font-weight: 500 !important; }
+
+  /* 보스 타격 기록 — 회차 줄은 상자 없이 가는 선으로 나누고, 왼쪽은 회차(이탤릭) · 레벨 · 합계 */
+  body[data-skin="marian"] #personal-strikes-view .m-raid-row,
+  body[data-skin="marian"] .m-raid-row {
+    background: transparent !important; border: none !important; border-bottom: 1px solid var(--border) !important; padding: 20px 2px; gap: 22px;
+  }
+  body[data-skin="marian"] .m-raid-row:hover { border-color: var(--border) !important; }
+  body[data-skin="marian"] .m-raid-title {
+    font-family: var(--f-display) !important; font-style: italic; font-size: 24px !important; font-weight: 500 !important; letter-spacing: 0 !important; color: var(--lav) !important;
+  }
+  body[data-skin="marian"] .m-raid-lv { font-family: var(--f-num) !important; font-size: 16px !important; font-weight: 600 !important; letter-spacing: 0 !important; color: var(--text-dim) !important; }
+  body[data-skin="marian"] .m-raid-total { font-size: 26px !important; font-weight: 500 !important; letter-spacing: 0 !important; margin-top: 10px; padding-top: 10px; }
+  /* 타격 칸 — 흰 바탕 + 가는 선, 속성은 위쪽 선 */
+  body[data-skin="marian"] .msh-strike {
+    background: var(--card) !important; border: 1px solid var(--border) !important; border-top: 2px solid var(--c, var(--lav)) !important;
+  }
+  body[data-skin="marian"] .msh-strike.msh-empty { background: transparent !important; border: 1px dashed var(--border-bright) !important; }
+  body[data-skin="marian"] .msh-clickable:hover { border-color: var(--lav) !important; border-top-color: var(--c, var(--lav)) !important; transform: translateY(-2px); }
+  body[data-skin="marian"] .msh-img { outline: none !important; border: 1px solid var(--border); }
+  body[data-skin="marian"] :is(.msh-phase, .msh-phase-inline) {
+    border: none !important; padding: 0 !important; font-family: 'Noto Sans KR', sans-serif !important; font-size: 11.5px !important; letter-spacing: 0.08em !important; color: var(--text-dim);
+  }
+  body[data-skin="marian"] .msh-boss { font-family: var(--f-title); font-weight: 900; font-size: 16px; }
+  body[data-skin="marian"] .msh-attr { font-family: 'Noto Sans KR', sans-serif !important; font-size: 11.5px !important; letter-spacing: 0.12em !important; }
+  body[data-skin="marian"] .msh-dmg { font-size: 25px !important; font-weight: 500 !important; letter-spacing: 0 !important; }
+  body[data-skin="marian"] .msh-empty-dash { font-family: var(--f-display) !important; font-style: italic; font-size: 26px !important; color: var(--border-bright); opacity: 1; }
+</style>
+
 </head>
 <body>
 <script>
-  // 저장된 테마(스킨)와 라이트/다크를 화면이 그려지기 전에 적용 — 기본은 세이렌 · 라이트
+  // 저장된 테마(스킨)와 라이트/다크를 화면이 그려지기 전에 적용 — 기본은 마리안 · 라이트
+  //   고른 테마는 'skinSel' (예전 'skin' 값은 세이렌 고정 시절 것이라 보지 않음 → 처음엔 모두 마리안)
   (function () {
-    var skin = 'siren', mode = 'light'; // 테마는 세이렌 하나 (예전에 고른 '구버전' 도 세이렌으로)
+    var skin = 'marian', mode = 'light';
     try {
+      var sel = localStorage.getItem('skinSel');
+      if (sel === 'siren' || sel === 'marian') skin = sel;
       if (localStorage.getItem('mode') === 'dark') mode = 'dark';
     } catch (e) {}
     document.body.setAttribute('data-skin', skin);
@@ -6353,7 +7595,7 @@
   </button>
 </div>
 
-<!-- 261112 공용 — 멤버 이름 익명화(toggleAnonymize: 레이드 기록 · 멤버 · 탈퇴 멤버 이름을 엉뚱한 '형용사 명사' 로 바꾼 사본으로 다시 그림, 화면에만 띄어쓰기 · 새로고침하면 실명) · 멤버 목록 가공을 _buildRawMembers 로 / 261103 공용 — 니케 코어 숫자 · MAX 코어 원 가운데로(위 여백 제거 · MAX 8px) / 261102 공용 — 산데비스도로 등장 정식판 약 1%(비율 0.08) · 시험판 1 · 산데비스도로 잔상 초록·파랑·빨강 2초 · 사이색(하늘·보라·노랑) 0.3초 · 산데비스도로 잔상 초록에서 시작 · 한 색 2초(12초에 한 바퀴) · 산데비스도로 잔상 한 색 1초(6초에 한 바퀴) · 산데비스도로 경로 부드럽게(목표점으로 둥글게 돌기) · 속도 들쭉날쭉(625~1625px/초) · 산데비스도로 잔상 6색(초록·하늘·파랑·보라·빨강·노랑) 같은 길이 · 한 색 0.5초 · 산데비스도로 배경 더 어두운 회색 · 잔상 색 초록→파랑→빨강 길게 · 산데비스도로(무지개 도로 속도 · 지그재그로 화면에 3~4.5초 머묾 · 나와 있으면 나머지 1/10 속도 + 화면 회색 · 무지개 한 색씩 몸 모양 잔상 · 시험 중 비율 1) · 시도로 꼬리 사이버 네트워크(노드 · 회로선 · 전기선 · 비트 조각 · 순간이동 연결선) · 시도로 경로 위아래 순간이동(잔상 · 간격 무작위 0.08~1.3초 · 거리 몸 0.3~1.2배) · 시도로/세로롱 속도 빠름으로 · 세로롱 크게 구불구불 · 무지개 도로롱 더 빠르게(1050~1450px/초 · 색 950/초) · 슈로롱 회전 속도 = 이동 속도에 비례(1.2~2.8바퀴/초) · 캐릭터 속도 4단계(매우 빠름 무지개 · 빠름 도로/슈로 · 느림 신데렐롱) · 등장 비율 도로롱 3 · 나머지(무지개 포함) 각 1 · 무지개 도로 6색 팔레트(빨강 선명) · 머리/꼬리 색 변화 초당 600 · 슈로롱 회전 초당 2바퀴 · 신데렐롱 느리게(280~330 · 뒤뚱) · 무지개 머리색 초당 420 · 꼬리 100 · 슈로롱 추가(보라 꼬리 · 빙글빙글 회전) · 날아다니는 캐릭터 속도 원래대로(300~600) · 무지개만 750~1100 · 무지개/세로롱 색 변화 끊김 수정 · 무지개 도로: doro-mask(머리카락 · 리본)에만 빛나는 무지개 · 무지개만 빠르게(나머지 180~360px/초) · 모든 캐릭터 도로처럼 좌우 뒤집기 · 날아다니는 캐릭터 4종(도로·시로·세로·신도롱, 색에 맞는 효과 · 세로롱은 세이렌 색 · 비눗방울) · 클릭하면 방향 꺾임 · 무지개 도로 몸 색 흐름 · 꼬리 무지개 흐름 방향 몸→꼬리 · 이스터에그 이모티콘 젤리(출렁임 · 잡아서 던지기, 살짝 누르면 터짐) · 도로 꼬리 끝 완전 투명 · 보스 통계 탭 전환 · 가이드 · 테마 전환 다시 그리기 · 날아다니는 도로: 더 크고 빠르게 · 머리를 날아가는 방향으로 · 꼬리는 일정한 굵기 띠 · 무지개 색 간격 넓게 · 구버전 테마 삭제(테마 메뉴는 유지) · 테마 메뉴 자동 닫힘 · 시험판 이스터에그 100% · 작은 도로 맨 앞 · 꼬리 몸의 2배 · 캡처에 작은 도로 합성 · 도로 홀로그램 뒤 작은 도로 무리(별똥별 꼬리 · 무지개) · 딜량 · HP 표기 숫자와 단위 사이 줄바꿈 금지 · 차트 회차 목록 chartRaidTitles(기록 없는 앞뒤 회차 제외) · 캡처 때 분포 툴팁 숨김 / 261030 공용 — dataBoss 시작일 + 1일(하드 오픈) 전 회차는 표시 안 함 · 가이드: 기록 없는 회차(NO RECORD)에서 시작하면 기록 있는 최근 회차로 이동 · 버전 확인: 마스터 '사용법' 탭 전체에서 버전 형식(v261030) 칸을 찾아 가장 큰 값 사용 / 261028 공용 — 최신 버전 알림 3초 · 버전 확인: 마스터 버전 칸이 비면 업데이트 있음으로 표시 · 데이터 일괄 읽기(getFullDataBatch, 실패 시 기존 방식) · 정보 창에 빌드 번호 · 로딩 구간별 시간(시트별 서버 읽기 포함) · 캡처 시 세이렌 그림자 제거(얼룩 방지) · 레벨 차트 좌우 폭 가득 · 캡처 시 유니온명 그라데이션 글자 · 줄바꿈 보정 · 최신 버전 읽는 칸 사용법!E10 → E8 · 테마 메뉴 구버전에 "삭제 예정" 표시 · 회차 선택(최신 5개 + 전체 회차 패널) · 세이렌/구버전 스킨 -->
+<!-- 261113 공용 — 마리안 순위 색(금 · 은 · 동) 표와 같게 / 261113 공용 — 마리안 설명 문구에서 룩북 뺌 · 캡처 시 보스 속성 아이콘(boss-attr-ico)도 dataURL 로 / 261113 마리안 테마(웨딩 룩북) 추가 · 기본 테마로 — SKIN_LIST 맨 앞 · 속성/순위 색 · 테마 선택은 skinSel 에 저장 · 마리안도 모드 전환 시 전체 재렌더 · 캡처에서 왼쪽 목차 고정 해제 · 그림자 제거 / 261112 공용 — 멤버 이름 익명화(toggleAnonymize: 레이드 기록 · 멤버 · 탈퇴 멤버 이름을 엉뚱한 '형용사 명사' 로 바꾼 사본으로 다시 그림, 화면에만 띄어쓰기 · 새로고침하면 실명) · 멤버 목록 가공을 _buildRawMembers 로 / 261103 공용 — 니케 코어 숫자 · MAX 코어 원 가운데로(위 여백 제거 · MAX 8px) / 261102 공용 — 산데비스도로 등장 정식판 약 1%(비율 0.08) · 시험판 1 · 산데비스도로 잔상 초록·파랑·빨강 2초 · 사이색(하늘·보라·노랑) 0.3초 · 산데비스도로 잔상 초록에서 시작 · 한 색 2초(12초에 한 바퀴) · 산데비스도로 잔상 한 색 1초(6초에 한 바퀴) · 산데비스도로 경로 부드럽게(목표점으로 둥글게 돌기) · 속도 들쭉날쭉(625~1625px/초) · 산데비스도로 잔상 6색(초록·하늘·파랑·보라·빨강·노랑) 같은 길이 · 한 색 0.5초 · 산데비스도로 배경 더 어두운 회색 · 잔상 색 초록→파랑→빨강 길게 · 산데비스도로(무지개 도로 속도 · 지그재그로 화면에 3~4.5초 머묾 · 나와 있으면 나머지 1/10 속도 + 화면 회색 · 무지개 한 색씩 몸 모양 잔상 · 시험 중 비율 1) · 시도로 꼬리 사이버 네트워크(노드 · 회로선 · 전기선 · 비트 조각 · 순간이동 연결선) · 시도로 경로 위아래 순간이동(잔상 · 간격 무작위 0.08~1.3초 · 거리 몸 0.3~1.2배) · 시도로/세로롱 속도 빠름으로 · 세로롱 크게 구불구불 · 무지개 도로롱 더 빠르게(1050~1450px/초 · 색 950/초) · 슈로롱 회전 속도 = 이동 속도에 비례(1.2~2.8바퀴/초) · 캐릭터 속도 4단계(매우 빠름 무지개 · 빠름 도로/슈로 · 느림 신데렐롱) · 등장 비율 도로롱 3 · 나머지(무지개 포함) 각 1 · 무지개 도로 6색 팔레트(빨강 선명) · 머리/꼬리 색 변화 초당 600 · 슈로롱 회전 초당 2바퀴 · 신데렐롱 느리게(280~330 · 뒤뚱) · 무지개 머리색 초당 420 · 꼬리 100 · 슈로롱 추가(보라 꼬리 · 빙글빙글 회전) · 날아다니는 캐릭터 속도 원래대로(300~600) · 무지개만 750~1100 · 무지개/세로롱 색 변화 끊김 수정 · 무지개 도로: doro-mask(머리카락 · 리본)에만 빛나는 무지개 · 무지개만 빠르게(나머지 180~360px/초) · 모든 캐릭터 도로처럼 좌우 뒤집기 · 날아다니는 캐릭터 4종(도로·시로·세로·신도롱, 색에 맞는 효과 · 세로롱은 세이렌 색 · 비눗방울) · 클릭하면 방향 꺾임 · 무지개 도로 몸 색 흐름 · 꼬리 무지개 흐름 방향 몸→꼬리 · 이스터에그 이모티콘 젤리(출렁임 · 잡아서 던지기, 살짝 누르면 터짐) · 도로 꼬리 끝 완전 투명 · 보스 통계 탭 전환 · 가이드 · 테마 전환 다시 그리기 · 날아다니는 도로: 더 크고 빠르게 · 머리를 날아가는 방향으로 · 꼬리는 일정한 굵기 띠 · 무지개 색 간격 넓게 · 구버전 테마 삭제(테마 메뉴는 유지) · 테마 메뉴 자동 닫힘 · 시험판 이스터에그 100% · 작은 도로 맨 앞 · 꼬리 몸의 2배 · 캡처에 작은 도로 합성 · 도로 홀로그램 뒤 작은 도로 무리(별똥별 꼬리 · 무지개) · 딜량 · HP 표기 숫자와 단위 사이 줄바꿈 금지 · 차트 회차 목록 chartRaidTitles(기록 없는 앞뒤 회차 제외) · 캡처 때 분포 툴팁 숨김 / 261030 공용 — dataBoss 시작일 + 1일(하드 오픈) 전 회차는 표시 안 함 · 가이드: 기록 없는 회차(NO RECORD)에서 시작하면 기록 있는 최근 회차로 이동 · 버전 확인: 마스터 '사용법' 탭 전체에서 버전 형식(v261030) 칸을 찾아 가장 큰 값 사용 / 261028 공용 — 최신 버전 알림 3초 · 버전 확인: 마스터 버전 칸이 비면 업데이트 있음으로 표시 · 데이터 일괄 읽기(getFullDataBatch, 실패 시 기존 방식) · 정보 창에 빌드 번호 · 로딩 구간별 시간(시트별 서버 읽기 포함) · 캡처 시 세이렌 그림자 제거(얼룩 방지) · 레벨 차트 좌우 폭 가득 · 캡처 시 유니온명 그라데이션 글자 · 줄바꿈 보정 · 최신 버전 읽는 칸 사용법!E10 → E8 · 테마 메뉴 구버전에 "삭제 예정" 표시 · 회차 선택(최신 5개 + 전체 회차 패널) · 세이렌/구버전 스킨 -->
 <script>
   google.charts.load('current', {'packages':['corechart', 'scatter']});
 
@@ -8174,19 +9416,25 @@
     }
   }
 
-  // ── 스킨 (테마) ──  지금은 'siren' 세이렌 하나 (구버전 'classic' 은 261102 에 없앰). 새 테마는 SKIN_LIST 에 추가
-  // 세이렌은 style_siren.html 이 색 · 글꼴 · 모양을 덮어씀. 라이트/다크(모드)는 테마 메뉴에서 선택
+  // ── 스킨 (테마) ──  마리안(기본) · 세이렌 (구버전 'classic' 은 261102 에 없앰). 새 테마는 SKIN_LIST 에 추가
+  // 각 테마는 style_마리안/세이렌.html 이 색 · 글꼴 · 모양을 덮어씀. 라이트/다크(모드)는 테마 메뉴에서 선택
   //   새 테마 추가 시: SKIN_LIST · _SKIN_ATTR_COLORS(키+Dark/Light) · _SKIN_RANK_COLORS · body[data-skin="키"] CSS · .skin-swatch-키
+  //   SKIN_LIST 맨 앞 = 기본 테마 (app.html 선적용과 맞출 것). 고른 테마는 localStorage 'skinSel' 에 저장
   const SKIN_LIST = [
+    { key: 'marian',  name: '마리안', desc: '사파이어 · 웨딩' },
     { key: 'siren',   name: '세이렌', desc: '진주 · 심해' },
   ];
   const _SKIN_ATTR_COLORS = {
     // 맑은 파스텔 — 채도는 살리고 명도만 올림 (회색빛으로 흐려지지 않게). 다크는 한 단계 더 밝게
     sirenDark:  { "작열": "#f88181", "철갑": "#fbc956", "풍압": "#5fdd94", "전격": "#d788f2", "수냉": "#74a5fb" },
     sirenLight: { "작열": "#f26868", "철갑": "#f5be3d", "풍압": "#47d181", "전격": "#ca74e6", "수냉": "#5a94f6" },
+    // 마리안 — 진주 종이 위에서 또렷한 보석 톤 (라이트), 밤하늘 위에서 한 단계 밝게 (다크)
+    marianDark:  { "작열": "#ff8a8f", "철갑": "#f2c65a", "풍압": "#5fd295", "전격": "#c493f5", "수냉": "#83a9ff" },
+    marianLight: { "작열": "#d4555a", "철갑": "#c39421", "풍압": "#2f9a62", "전격": "#8a55c6", "수냉": "#3567d4" },
   };
   const _SKIN_RANK_COLORS = {
     siren:   { 1: '#e2b14a', 2: '#a9b3c6', 3: '#c98f6a' },
+    marian:  { 1: '#c09a48', 2: '#9aa3c0', 3: '#bf8569' },
   };
   const _validSkin = (k) => SKIN_LIST.some(s => s.key === k) ? k : SKIN_LIST[0].key;
   function currentSkin() {
@@ -8209,7 +9457,7 @@
   function setSkin(skin) {
     const key = _validSkin(skin);
     document.body.setAttribute('data-skin', key);
-    try { localStorage.setItem('skin', key); } catch (_) {}
+    try { localStorage.setItem('skinSel', key); } catch (_) {} // 'skin' 은 예전 세이렌 고정 시절 값이라 새 키로
     applySkinPalette();
     _renderSkinMenu();
     _syncSirenSea();
@@ -8353,7 +9601,7 @@
     applySkinPalette();
     try { localStorage.setItem('mode', document.body.getAttribute('data-theme') === 'dark' ? 'dark' : 'light'); } catch (_) {}
     _renderSkinMenu();
-    rerenderVisibleViews(currentSkin() === 'siren'); // 세이렌은 라이트/다크마다 속성 색이 조금 달라 전체 재렌더
+    rerenderVisibleViews(['siren', 'marian'].includes(currentSkin())); // 세이렌 · 마리안은 라이트/다크마다 속성 색이 달라 전체 재렌더
   }
 
   // Google Charts 툴팁 portal — 부모 .card 의 clip-path로 잘리는 문제 회피.
@@ -8581,7 +9829,7 @@
     // 필터 패널 아이콘 등 CORS-taint 로 렌더 실패하는 img 를 dataURL 로 미리 인라인
     // 라이트모드 invert(1) CSS filter 는 html2canvas 가 적용 못하므로, invert 대상은 아예 색을 뒤집은 dataURL 을 만들어둠
     // ni-primary/ni-secondary 는 dual 아이콘의 내부 img (부모의 invert 클래스를 상속)
-    const iconImgs = Array.from(target.querySelectorAll('img.nf-opt-icon, img.nikke-icon, img.ni-primary, img.ni-secondary'));
+    const iconImgs = Array.from(target.querySelectorAll('img.nf-opt-icon, img.nikke-icon, img.ni-primary, img.ni-secondary, img.boss-attr-ico'));
     const isDarkMode = document.body.getAttribute('data-theme') === 'dark';
     const INVERT_CLS = /\b(nf-opt-icon-invert|nikke-icon-invert)\b/;
     const srcToDataUrl   = new Map();  // key: src            → 원본 dataURL
@@ -8686,10 +9934,12 @@
               try { after = origEm ? getComputedStyle(origEm, '::after').content || '' : ''; } catch (_) {}
               if (/\\a|\n/i.test(after)) el.insertAdjacentElement('afterend', clonedDoc.createElement('br'));
             });
-            // 세이렌의 넓게 번지는 그림자는 html2canvas 가 흐림 없이 네모 덩어리로 그려 얼룩처럼 보임 → 캡처에선 그림자 제거
+            // 세이렌 · 마리안의 넓게 번지는 그림자는 html2canvas 가 흐림 없이 네모 덩어리로 그려 얼룩처럼 보임 → 캡처에선 그림자 제거
+            // 마리안 왼쪽 목차(.header, 화면 고정)는 캡처에선 문서 맨 위에 붙인 채 문서 높이만큼 (고정 요소는 스크롤 위치에 따라 엉뚱한 곳에 찍힘)
             const capStyle = clonedDoc.createElement('style');
             capStyle.textContent =
-              'body[data-skin="siren"] *, body[data-skin="siren"] *::before, body[data-skin="siren"] *::after { box-shadow: none !important; }';
+              ':is(body[data-skin="siren"], body[data-skin="marian"]) *, :is(body[data-skin="siren"], body[data-skin="marian"]) *::before, :is(body[data-skin="siren"], body[data-skin="marian"]) *::after { box-shadow: none !important; }' +
+              '@media (min-width: 1101px) { body[data-skin="marian"] .hero-wrap .header { position: absolute !important; height: ' + Math.max(document.documentElement.scrollHeight, window.innerHeight) + 'px !important; } }';
             clonedDoc.head.appendChild(capStyle);
 
             // 1) 아이콘류 (nf-opt-icon / nikke-icon / ni-primary / ni-secondary) → img 원본 유지
@@ -8706,7 +9956,7 @@
 
               const hasCoverInline = /object-fit\s*:\s*cover/i.test(inline);
               const hasCoverComputed = cs && cs.objectFit === 'cover';
-              const isIconClass = /\b(nf-opt-icon|nikke-icon|ni-primary|ni-secondary)\b/.test(cls);
+              const isIconClass = /\b(nf-opt-icon|nikke-icon|ni-primary|ni-secondary|boss-attr-ico)\b/.test(cls);
 
               const origSrc = img.src;
               const needsInvert = !isDarkMode && (
@@ -9849,7 +11099,7 @@
     });
   }
 </script>
-<!-- 261112 레이드 통계 — 공격력 구간표 1400레벨까지 갱신(1001~1400 구간 20개 추가 · 1000레벨 외삽 제거) / 261102 레이드 통계 — Level × DMG 추세선을 20n+1 공격력 구간 기반 효율 100% 기준선(a × 공격력, 계단형, β 안 씀)으로 · 멤버 효율에서 막타 제외(지표 안내와 맞춤 · 기여도는 포함) / 261030 레이드 통계 — NO RECORD 덮개가 지표 안내 등 팝업 위로 올라오던 문제(z-index 9000→500) / 261023 레이드 통계 — 보스 상세 효율·기여도를 타격별로(막타 제외 평균 기준) · 요약 묶음 · Level 표기 · 코멘트 링크 · 세이렌 도넛 · 산점도 축/격자 테마 색 -->
+<!-- 261113 레이드 통계 — 보스 카드 속성에 아이콘(boss-attr-ico, 마리안은 아이콘만) / 261113 레이드 통계 — 보스 카드 그림 칸을 .boss-ring(액자 장식 i) > .boss-img(오목 귀 i.bn) 로 감쌈(마리안 R2 액자용 · 다른 스킨에선 장식 숨김) · 본문 칸 .boss-body · 단계 도넛은 마리안도 세이렌식 / 261112 레이드 통계 — 공격력 구간표 1400레벨까지 갱신(1001~1400 구간 20개 추가 · 1000레벨 외삽 제거) / 261102 레이드 통계 — Level × DMG 추세선을 20n+1 공격력 구간 기반 효율 100% 기준선(a × 공격력, 계단형, β 안 씀)으로 · 멤버 효율에서 막타 제외(지표 안내와 맞춤 · 기여도는 포함) / 261030 레이드 통계 — NO RECORD 덮개가 지표 안내 등 팝업 위로 올라오던 문제(z-index 9000→500) / 261023 레이드 통계 — 보스 상세 효율·기여도를 타격별로(막타 제외 평균 기준) · 요약 묶음 · Level 표기 · 코멘트 링크 · 세이렌 도넛 · 산점도 축/격자 테마 색 -->
 <script>
   let currentRaidSort = 'dmg';
   let currentDetailSort = 'dmg';
@@ -10470,6 +11720,18 @@
     return { prevRaidTitle, allAppearances: appearances, members, currentStats, prevStats };
   }
 
+  // 보스 카드 그림 액자 장식 — 마리안(R2 오목 이중선)에서만 보임 (style.html 기본은 숨김, style_marian.html 이 모양을 줌)
+  //   .boss-ring 안: 바깥 선(.bl1) · 안쪽 선(.bl2) · 귀마다 바깥 오목 원(.bc1~4) · 안쪽 오목 원(.bd1~4)
+  //   .boss-img 안: 그림 네 귀를 파내는 매트색 원(.bn1~4)
+  const BOSS_RING_DECO = '<i class="bdeco bl2"></i><i class="bdeco bd bd1"></i><i class="bdeco bd bd2"></i><i class="bdeco bd bd3"></i><i class="bdeco bd bd4"></i>'
+    + '<i class="bdeco bl1"></i><i class="bdeco bc bc1"></i><i class="bdeco bc bc2"></i><i class="bdeco bc bc3"></i><i class="bdeco bc bc4"></i>';
+  // 보스 속성 아이콘 (dataIMG 의 속성 그림 — 니케 통계와 같은 것). 없으면 빈 문자열 → 글자만 보임
+  function bossAttrIcon(a) {
+    const url = (typeof findImgByName === 'function' && a) ? findImgByName(a) : '';
+    return url ? `<img class="boss-attr-ico" src="${url}" alt="${a}">` : '';
+  }
+  const BOSS_NOTCH_DECO = '<i class="bdeco bn bn1"></i><i class="bdeco bn bn2"></i><i class="bdeco bn bn3"></i><i class="bdeco bn bn4"></i>';
+
   // ── 렌더링 ──
   // 레이드 메인 화면 갱신 (보스 카드 + 멤버 랭킹)
   function refreshRaidView() {
@@ -10626,7 +11888,7 @@
           clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 0 100%);
         " onclick="openRaidDetail('${n}','${a}',${colIdx})">
 
-          <div style="width:400px; height:300px; flex-shrink:0; background:#111; overflow:hidden; position:relative;">
+          <div class="boss-ring" style="flex-shrink:0;">${BOSS_RING_DECO}<div class="boss-img boss-img-inf" style="width:400px; height:300px; flex-shrink:0; background:#111; overflow:hidden; position:relative;">${BOSS_NOTCH_DECO}
             ${(() => {
               if (!imgRow || !imgRow[IMG_COL.boss.img]) return `<div style="height:100%; color:#555; display:flex; align-items:center; justify-content:center;">No Image</div>`;
               const isRord = String(imgRow[IMG_COL.boss.tier] || '').trim() === '로드';
@@ -10650,9 +11912,9 @@
               onclick="event.stopPropagation()">
                 ⚔ ${bossDifficulty[n].toFixed(2)}%
               </div>` : ''}
-          </div>
+          </div></div>
 
-          <div style="flex:1; display:flex; align-items:center; padding:0 28px; gap:24px; position:relative; overflow:hidden;">
+          <div class="boss-body boss-body-inf" style="flex:1; display:flex; align-items:center; padding:0 28px; gap:24px; position:relative; overflow:hidden;">
             <div style="position:absolute; right:20px; top:50%; transform:translateY(-50%); font-family:'Bebas Neue',sans-serif; font-size:180px; color:${c}; opacity:0.03; line-height:1; pointer-events:none; user-select:none;">∞</div>
 
             <div style="font-family:'Bebas Neue',sans-serif; font-size:64px; line-height:1; color:${c}; text-shadow:0 0 30px ${c}; flex-shrink:0;">∞</div>
@@ -10660,7 +11922,7 @@
             <div style="display:flex; flex-direction:column; gap:6px;">
               <div style="display:inline-flex; align-items:center; gap:8px; font-family:'Rajdhani',sans-serif; font-size:20px; font-weight:700; letter-spacing:3px; color:${c}; text-transform:uppercase;">
                 <span style="display:inline-block; width:16px; height:2px; background:${c};"></span>
-                ${a} · INFINITY
+                ${bossAttrIcon(a)}<span class="boss-attr-txt">${a} · </span>INFINITY
               </div>
               <div style="font-family:'Bebas Neue',sans-serif; font-size:36px; letter-spacing:3px; color:var(--text); line-height:1;">${n}</div>
             </div>
@@ -10714,7 +11976,7 @@
           ${globalPhase >= 4 ? 'opacity:0.55;' : ''}
         " onclick="openRaidDetail('${n}','${a}',${colIdx})">
 
-          <div style="width:100%; aspect-ratio:16/9; background:#0a0c10; overflow:hidden; position:relative;">
+          <div class="boss-ring">${BOSS_RING_DECO}<div class="boss-img" style="width:100%; aspect-ratio:16/9; background:#0a0c10; overflow:hidden; position:relative;">${BOSS_NOTCH_DECO}
             ${(() => {
               const imgRow = db.dataIMG ? db.dataIMG.find(row => String(row[IMG_COL.boss.name]).trim() === String(n).trim()) : null;
               if (!imgRow || !imgRow[IMG_COL.boss.img]) return `<div style="height:100%; color:#555; display:flex; align-items:center; justify-content:center;">No Image</div>`;
@@ -10725,7 +11987,7 @@
                   onmouseout="this.style.transform='scale(1)'; this.style.filter='brightness(0.75) saturate(1.1)'">`;
             })()}
             <div style="position:absolute; top:10px; left:10px; background:rgba(0,0,0,0.75); color:#fff; font-family:'Rajdhani',sans-serif; font-size:12px; font-weight:700; letter-spacing:2px; padding:3px 10px; border-left:2px solid ${c};">${targetPhase}단계</div>
-            <div style="position:absolute; top:10px; right:10px; background:${c}22; color:${c}; font-family:'Rajdhani',sans-serif; font-size:12px; font-weight:700; letter-spacing:2px; padding:3px 10px; border:1px solid ${c}66; text-transform:uppercase;">${a}</div>
+            <div class="boss-attr" title="${a}" style="position:absolute; top:10px; right:10px; background:${c}22; color:${c}; font-family:'Rajdhani',sans-serif; font-size:12px; font-weight:700; letter-spacing:2px; padding:3px 10px; border:1px solid ${c}66; text-transform:uppercase;">${bossAttrIcon(a)}<span class="boss-attr-txt">${a}</span></div>
             ${bossDifficulty[n] !== undefined ? `
               <div style="
                 position:absolute; bottom:10px; right:10px;
@@ -10746,9 +12008,9 @@
               <div class="boss-clear-overlay" style="position:absolute; inset:0; background:rgba(0,0,0,0.45); display:flex; align-items:center; justify-content:center; overflow:hidden;">
                 <div class="boss-clear-stamp" style="font-family:'Bebas Neue',sans-serif; font-size:26px; letter-spacing:8px; color:#e00400; text-shadow:0 0 20px rgba(224,4,0,0.6); border-top:1px solid #e00400; border-bottom:1px solid #e00400; padding:6px 20px; transform:rotate(-8deg) scaleX(1.1); background:rgba(224,4,0,0.08); white-space:nowrap;">CLEAR</div>
               </div>` : ''}
-          </div>
+          </div></div>
 
-          <div style="padding:12px 14px 14px;">
+          <div class="boss-body" style="padding:12px 14px 14px;">
             <div style="font-family:'Bebas Neue',sans-serif; font-size:18px; letter-spacing:2px; color:var(--text); line-height:1.2;">${n}</div>
             <div class="hp-bar-bg">
               <div class="hp-bar-fill" style="width:${hpPercent}%;"></div>
@@ -11545,7 +12807,7 @@
   function drawPhaseDonutChart(phaseCounts, phaseColors) {
     const container = document.getElementById('phase-donut-chart');
     if (!container) return;
-    if (typeof currentSkin === 'function' && currentSkin() === 'siren') { _drawPhaseDonutSiren(container, phaseCounts); return; }
+    if (typeof currentSkin === 'function' && ['siren', 'marian'].includes(currentSkin())) { _drawPhaseDonutSiren(container, phaseCounts); return; }
 
     const isDark = document.body.getAttribute('data-theme') === 'dark';
     const textColor = isDark ? '#cccccc' : '#666666';
@@ -12077,7 +13339,7 @@
     }
   }
 </script>
-<!-- 261112 종합 뷰 — 멤버 딜 차트 범례 · 말풍선 · 이름 칩을 익명 화면용 이름으로(_anonLabel) / 261102 종합 뷰 — 차트는 기록 있는 회차 범위만 · Member DMG Trend 왼쪽 눈금 잘림 수정 / 261021 종합 뷰 — Raid History 이동 시 칩 줄 갱신 · 증감/선 색 테마 변수 · ∞ 타일 4단계 딜량 · 빈 회차 표시 -->
+<!-- 261113 종합 — 회차 순위 카드 등급 이름에 rank-tier 클래스 / 261112 종합 뷰 — 멤버 딜 차트 범례 · 말풍선 · 이름 칩을 익명 화면용 이름으로(_anonLabel) / 261102 종합 뷰 — 차트는 기록 있는 회차 범위만 · Member DMG Trend 왼쪽 눈금 잘림 수정 / 261021 종합 뷰 — Raid History 이동 시 칩 줄 갱신 · 증감/선 색 테마 변수 · ∞ 타일 4단계 딜량 · 빈 회차 표시 -->
 <script>
   let totalDmgChart = null;
   let totalDmgData = null;
@@ -12793,7 +14055,7 @@
             ${tierImgUrl ? `<img src="${tierImgUrl}" class="badge-img">` : '<div style="height:44px;"></div>'}
           </div>
           <div class="rank-value">${rankStr + (rankStr.includes('%') ? '' : '위')}</div>
-          <div style="font-size: 16px; color: var(--accent); font-weight: bold; margin-top: 3px;">${tierName}</div>
+          <div class="rank-tier" style="font-size: 16px; color: var(--accent); font-weight: bold; margin-top: 3px;">${tierName}</div>
         `;
       } else {
         // 데이터 없음 — ? 만 카드 정중앙에 배치
@@ -13146,7 +14408,7 @@
     totalDmgChart.draw(totalDmgData, options);
   }
 </script>
-<!-- 261102 멤버 상세 — 딜량 추이는 기록 있는 회차 범위만 / 261021 멤버 상세 — 딜량 추이 빈 회차 표시/좌우 꽉 채움 · 증감·축 색 테마 변수 · 속성 행 클래스(m-attr-row) -->
+<!-- 261113 멤버 상세 — 칸마다 클래스 이름(m-sec-title · m-attr-* · strike-tag/attr/dmg · 타격 카드 --c 속성색) 붙임, 모양은 그대로(마리안 테마용) / 261102 멤버 상세 — 딜량 추이는 기록 있는 회차 범위만 / 261021 멤버 상세 — 딜량 추이 빈 회차 표시/좌우 꽉 채움 · 증감·축 색 테마 변수 · 속성 행 클래스(m-attr-row) -->
 <div id="member-detail-overlay" onclick="closeMemberDetail(event)">
   <button id="m-nav-prev" class="member-nav-btn left" onclick="navigateMember(-1, event)" aria-label="이전 멤버">‹</button>
   <button id="m-nav-next" class="member-nav-btn right" onclick="navigateMember(1, event)" aria-label="다음 멤버">›</button>
@@ -13174,11 +14436,11 @@
     <!-- 하단: 좌(2/3) 역대 딜량 그래프 + 우(1/3) 속성별 타수 -->
     <div class="m-bottom-grid" style="margin-top:30px; display:grid; grid-template-columns:2fr 1fr; gap:20px; align-items:stretch;">
       <div class="card" style="margin-bottom:0;">
-        <h4 style="margin-bottom:15px;">역대 레이드 딜량 추이</h4>
+        <h4 class="m-sec-title" style="margin-bottom:15px;">역대 레이드 딜량 추이</h4>
         <div id="m-history-chart" style="width:100%; height:300px;"></div>
       </div>
       <div class="card" style="margin-bottom:0;">
-        <h4 style="margin-bottom:15px;">속성별 타수 <span style="font-size:11px; color:var(--text-dim); font-weight:400; margin-left:6px;">(현재 회차까지)</span></h4>
+        <h4 class="m-sec-title" style="margin-bottom:15px;">속성별 타수 <span class="m-sec-sub" style="font-size:11px; color:var(--text-dim); font-weight:400; margin-left:6px;">(현재 회차까지)</span></h4>
         <div id="m-attr-stats"></div>
       </div>
     </div>
@@ -13325,11 +14587,11 @@
         : '';
       return `
         <div class="m-attr-row" style="display:flex; justify-content:space-between; align-items:center; padding:10px 14px; background:var(--card2); border-left:3px solid ${r.color}; margin-bottom:7px;">
-          <span style="color:${r.color}; font-family:'Rajdhani',sans-serif; font-weight:700; font-size:15px; letter-spacing:2px; text-transform:uppercase;">${r.attr}</span>
+          <span class="m-attr-name" style="color:${r.color}; font-family:'Rajdhani',sans-serif; font-weight:700; font-size:15px; letter-spacing:2px; text-transform:uppercase;">${r.attr}</span>
           <div style="display:flex; align-items:baseline; gap:7px;">
-            <span style="font-family:'Bebas Neue',sans-serif; font-size:23px; letter-spacing:1px; color:var(--text); line-height:1;">${r.count}</span>
+            <span class="m-attr-count" style="font-family:'Bebas Neue',sans-serif; font-size:23px; letter-spacing:1px; color:var(--text); line-height:1;">${r.count}</span>
             ${addedHtml}
-            <span style="font-family:'Rajdhani',sans-serif; font-size:13px; color:var(--text-dim); font-weight:600; min-width:44px; text-align:right;">${pct}%</span>
+            <span class="m-attr-pct" style="font-family:'Rajdhani',sans-serif; font-size:13px; color:var(--text-dim); font-weight:600; min-width:44px; text-align:right;">${pct}%</span>
           </div>
         </div>`;
     }).join('');
@@ -13338,10 +14600,10 @@
       : '';
     container.innerHTML = `
       ${itemsHtml}
-      <div style="margin-top:12px; padding-top:12px; border-top:1px solid var(--border); display:flex; justify-content:space-between; align-items:baseline;">
-        <span style="font-family:'Rajdhani',sans-serif; font-size:14px; font-weight:700; color:var(--text-dim); letter-spacing:2px; text-transform:uppercase;">TOTAL</span>
+      <div class="m-attr-total" style="margin-top:12px; padding-top:12px; border-top:1px solid var(--border); display:flex; justify-content:space-between; align-items:baseline;">
+        <span class="m-attr-total-label" style="font-family:'Rajdhani',sans-serif; font-size:14px; font-weight:700; color:var(--text-dim); letter-spacing:2px; text-transform:uppercase;">TOTAL</span>
         <div>
-          <span style="font-family:'Bebas Neue',sans-serif; font-size:25px; letter-spacing:1px; color:var(--accent); line-height:1;">${grandTotal}<span style="font-size:15px; color:var(--text-dim); margin-left:3px;">타</span></span>
+          <span class="m-attr-total-val" style="font-family:'Bebas Neue',sans-serif; font-size:25px; letter-spacing:1px; color:var(--accent); line-height:1;">${grandTotal}<span style="font-size:15px; color:var(--text-dim); margin-left:3px;">타</span></span>
           ${addedSuffix}
         </div>
       </div>`;
@@ -13467,13 +14729,13 @@
       });
 
       container.innerHTML += `
-        <div class="strike-card" style="border-top: 3px solid ${c};">
+        <div class="strike-card" style="border-top: 3px solid ${c}; --c:${c};">
           <div style="position:relative;">
             <img src="${bossImgRow ? bossImgRow[IMG_COL.boss.img] : ''}" class="strike-boss-img">
-            <div style="position:absolute; top:10px; left:10px; background:rgba(0,0,0,0.75); color:#fff; font-family:'Rajdhani',sans-serif; font-size:12px; font-weight:700; letter-spacing:2px; padding:3px 10px; border-left:2px solid ${c};">${phaseLabel}</div>
-            ${tier ? `<div style="position:absolute; top:10px; right:10px; background:${c}22; color:${c}; font-family:'Rajdhani',sans-serif; font-size:12px; font-weight:700; letter-spacing:2px; padding:3px 10px; border:1px solid ${c}66;">${tier}</div>` : ''}
+            <div class="strike-tag strike-phase" style="position:absolute; top:10px; left:10px; background:rgba(0,0,0,0.75); color:#fff; font-family:'Rajdhani',sans-serif; font-size:12px; font-weight:700; letter-spacing:2px; padding:3px 10px; border-left:2px solid ${c};">${phaseLabel}</div>
+            ${tier ? `<div class="strike-tag strike-tier" style="position:absolute; top:10px; right:10px; background:${c}22; color:${c}; font-family:'Rajdhani',sans-serif; font-size:12px; font-weight:700; letter-spacing:2px; padding:3px 10px; border:1px solid ${c}66;">${tier}</div>` : ''}
             ${bossDifficulty[bossName] !== undefined ? `
-              <div style="position:absolute; bottom:10px; right:10px; background:rgba(0,0,0,0.75); color:${diffColor(bossDifficulty[bossName])}; font-family:'Rajdhani',sans-serif; font-size:12px; font-weight:700; letter-spacing:2px; padding:3px 10px; border-left:2px solid ${diffColor(bossDifficulty[bossName])}; cursor:default;"
+              <div class="strike-tag strike-diff" style="position:absolute; bottom:10px; right:10px; background:rgba(0,0,0,0.75); color:${diffColor(bossDifficulty[bossName])}; font-family:'Rajdhani',sans-serif; font-size:12px; font-weight:700; letter-spacing:2px; padding:3px 10px; border-left:2px solid ${diffColor(bossDifficulty[bossName])}; cursor:default;"
               onmouseenter="showDiffTooltip(this, ${bossDifficulty[bossName]}, ${bossRatioCount[bossName]})"
               onmouseleave="hideDiffTooltip()">
                 ⚔ ${bossDifficulty[bossName].toFixed(2)}%
@@ -13481,14 +14743,14 @@
           </div>
 
           <div class="strike-info" style="background-color: ${c}0D;">
-            <div style="font-family:'Rajdhani',sans-serif; font-size:15px; font-weight:700; letter-spacing:2px; color:${c}; text-transform:uppercase; margin-bottom:1px;">${attr}</div>
+            <div class="strike-attr" style="font-family:'Rajdhani',sans-serif; font-size:15px; font-weight:700; letter-spacing:2px; color:${c}; text-transform:uppercase; margin-bottom:1px;">${attr}</div>
             <span class="boss-name-lg" style="margin:2px 0;">${bossName}</span>
             <div style="text-align:center; margin-top:8px;">
-              <div style="font-family:'Bebas Neue',sans-serif; font-size:30px; letter-spacing:1px; color:var(--text); display:flex; align-items:center; justify-content:center; gap:8px;">
+              <div class="strike-dmg" style="font-family:'Bebas Neue',sans-serif; font-size:30px; letter-spacing:1px; color:var(--text); display:flex; align-items:center; justify-content:center; gap:8px;">
                 ${dmg.toLocaleString()}
                 ${isLast ? '<span class="kill-badge-l">막타</span>' : ''}
               </div>
-              <div style="font-family:'Rajdhani',sans-serif; font-size:18px; font-weight:700; color:var(--text-dim); letter-spacing:1px;">
+              <div class="strike-dmg-sub" style="font-family:'Rajdhani',sans-serif; font-size:18px; font-weight:700; color:var(--text-dim); letter-spacing:1px;">
                 ${formatDmg(dmg)}
               </div>
             </div>
@@ -13598,7 +14860,7 @@
     });
   })();
 </script>
-<!-- 261102 싱크로 통계 — 멤버 펼친 패널 표는 최근 회차부터 · 레벨/상승량 분포 막대에 마우스 올리면 그 구간 멤버 목록(레벨 분포는 레벨 순 · 상승량 분포는 상승량 순) / 261021 싱크로 통계 — 강조/하락/라벨 색 테마 변수 · 펼친 패널 클래스(md-panel) -->
+<!-- 261113 싱크로 통계 — 펼친 패널 요약 수치(md-kpi-*) · 회차 표(md-history) 클래스 / 261102 싱크로 통계 — 멤버 펼친 패널 표는 최근 회차부터 · 레벨/상승량 분포 막대에 마우스 올리면 그 구간 멤버 목록(레벨 분포는 레벨 순 · 상승량 분포는 상승량 순) / 261021 싱크로 통계 — 강조/하락/라벨 색 테마 변수 · 펼친 패널 클래스(md-panel) -->
 <script>
   // 전체 멤버 레벨 변화 차트
   function renderFullChart() {
@@ -13730,29 +14992,29 @@
           
           <!-- 좌: 통계 + 차트 -->
           <div>
-            <div style="display:flex; gap:24px; margin-bottom:16px; flex-wrap:wrap;">
+            <div class="md-kpis" style="display:flex; gap:24px; margin-bottom:16px; flex-wrap:wrap;">
               <div>
-                <div style="font-family:'Rajdhani',sans-serif; font-size:13px; font-weight:700; letter-spacing:2px; color:var(--text-dim); text-transform:uppercase;">현재 레벨</div>
-                <div style="font-family:'Bebas Neue',sans-serif; font-size:28px; color:var(--accent); line-height:1;">${m.levels.filter(l=>l&&Number(l)>0).slice(-1)[0] || '-'}</div>
+                <div class="md-kpi-label" style="font-family:'Rajdhani',sans-serif; font-size:13px; font-weight:700; letter-spacing:2px; color:var(--text-dim); text-transform:uppercase;">현재 레벨</div>
+                <div class="md-kpi-value" style="font-family:'Bebas Neue',sans-serif; font-size:28px; color:var(--accent); line-height:1;">${m.levels.filter(l=>l&&Number(l)>0).slice(-1)[0] || '-'}</div>
               </div>
               <div>
-                <div style="font-family:'Rajdhani',sans-serif; font-size:13px; font-weight:700; letter-spacing:2px; color:var(--text-dim); text-transform:uppercase;">평균 상승량</div>
-                <div style="font-family:'Bebas Neue',sans-serif; font-size:28px; color:#ff9800; line-height:1;">+${avgGrowth}</div>
+                <div class="md-kpi-label" style="font-family:'Rajdhani',sans-serif; font-size:13px; font-weight:700; letter-spacing:2px; color:var(--text-dim); text-transform:uppercase;">평균 상승량</div>
+                <div class="md-kpi-value" style="font-family:'Bebas Neue',sans-serif; font-size:28px; color:#ff9800; line-height:1;">+${avgGrowth}</div>
               </div>
               <div>
-                <div style="font-family:'Rajdhani',sans-serif; font-size:13px; font-weight:700; letter-spacing:2px; color:var(--text-dim); text-transform:uppercase;">최대 상승량</div>
-                <div style="font-family:'Bebas Neue',sans-serif; font-size:28px; color:#60cf58; line-height:1;">+${maxGrowth}</div>
+                <div class="md-kpi-label" style="font-family:'Rajdhani',sans-serif; font-size:13px; font-weight:700; letter-spacing:2px; color:var(--text-dim); text-transform:uppercase;">최대 상승량</div>
+                <div class="md-kpi-value" style="font-family:'Bebas Neue',sans-serif; font-size:28px; color:#60cf58; line-height:1;">+${maxGrowth}</div>
               </div>
               <div>
-                <div style="font-family:'Rajdhani',sans-serif; font-size:13px; font-weight:700; letter-spacing:2px; color:var(--text-dim); text-transform:uppercase;">최소 상승량</div>
-                <div style="font-family:'Bebas Neue',sans-serif; font-size:28px; color:var(--c-down, #4a9eff); line-height:1;">${minGrowth >= 0 ? '+' : ''}${minGrowth}</div>
+                <div class="md-kpi-label" style="font-family:'Rajdhani',sans-serif; font-size:13px; font-weight:700; letter-spacing:2px; color:var(--text-dim); text-transform:uppercase;">최소 상승량</div>
+                <div class="md-kpi-value" style="font-family:'Bebas Neue',sans-serif; font-size:28px; color:var(--c-down, #4a9eff); line-height:1;">${minGrowth >= 0 ? '+' : ''}${minGrowth}</div>
               </div>
             </div>
             <div id="member-inline-chart-${name}" style="width:100%; height:330px;"></div>
           </div>
 
           <!-- 우: 전체 회차 기록 표 (세로, 스크롤 · 최근 회차가 맨 위) -->
-          <div style="max-height:450px; overflow-y:auto; overflow-x:hidden; border:1px solid var(--border-bright);">
+          <div class="md-history" style="max-height:450px; overflow-y:auto; overflow-x:hidden; border:1px solid var(--border-bright);">
             <table style="width:100%; border-collapse:collapse; table-layout:auto;">
               <thead style="position:sticky; top:0; z-index:1;">
                 <tr style="background:var(--card);">
@@ -14230,7 +15492,7 @@
   }
 </script>
 
-<!-- 261102 개인 기록 — Most Deployed 긴 이름 자동 왕복 스크롤 · 속성/버스트 작은 아이콘 위치를 괄호 위치로 · Damage Trend 는 기록 있는 회차 범위만 / 261021 개인 기록 — 증감 색 테마 변수 · Damage Trend 빈 회차 포함 · Most Deployed 이름 표기 -->
+<!-- 261113 개인 기록 — 보스 타격 기록 타격 칸에 속성색 변수(--c, 마리안 위쪽 선용) / 261102 개인 기록 — Most Deployed 긴 이름 자동 왕복 스크롤 · 속성/버스트 작은 아이콘 위치를 괄호 위치로 · Damage Trend 는 기록 있는 회차 범위만 / 261021 개인 기록 — 증감 색 테마 변수 · Damage Trend 빈 회차 포함 · Most Deployed 이름 표기 -->
 <script>
   let _personalCtx = null;
   let _personalSort = 'no';      // 'no' | 'name' | 'level'
@@ -15168,7 +16430,7 @@
         const phaseLabel = s.phase >= 4 ? '∞' : `${s.phase}단계`;
         const key = `strike|${s.title}|${s.boss}|${s.phase}|${s.dmg}|${s.isLast ? '1' : '0'}`;
         return `
-          <div class="msh-strike msh-strike-with-raid msh-clickable" data-key="${key}" style="border-left:3px solid ${c};" onclick="openMemberDetailFromPersonal('${String(s.title).replace(/'/g, "\\'")}')">
+          <div class="msh-strike msh-strike-with-raid msh-clickable" data-key="${key}" style="border-left:3px solid ${c}; --c:${c};" onclick="openMemberDetailFromPersonal('${String(s.title).replace(/'/g, "\\'")}')">
             <div class="msh-left">
               <div class="msh-img" style="background-image:url('${imgUrl}'); background-size:cover; background-position:center;"></div>
               <div class="msh-raid-line">
@@ -15214,7 +16476,7 @@
           const imgUrl = bossImgRow ? bossImgRow[IMG_COL.boss.img] : '';
           const phaseLabel = s.phase >= 4 ? '∞' : `${s.phase}단계`;
           return `
-            <div class="msh-strike msh-clickable" style="border-left:3px solid ${c};" onclick="openMemberDetailFromPersonal('${String(s.title).replace(/'/g, "\\'")}')">
+            <div class="msh-strike msh-clickable" style="border-left:3px solid ${c}; --c:${c};" onclick="openMemberDetailFromPersonal('${String(s.title).replace(/'/g, "\\'")}')">
               <div class="msh-img" style="background-image:url('${imgUrl}'); background-size:cover; background-position:center;"></div>
               <span class="msh-phase">${phaseLabel}</span>
               <div class="msh-bottom-left">
@@ -15245,7 +16507,7 @@
   }
 </script>
 
-<!-- 261102 니케 통계 — 속성/버스트 작은 아이콘 위치를 괄호 위치로: 주(부)=우상단 · (부)주=좌상단 / 260714 니케 통계 — 속성 정렬 3-state 토글 + tiebreak 안정화 -->
+<!-- 261113 니케 통계 — 속성별 타수 칸에 속성색 변수(--ac, 마리안 휴대폰 밑줄용) / 261102 니케 통계 — 속성/버스트 작은 아이콘 위치를 괄호 위치로: 주(부)=우상단 · (부)주=좌상단 / 260714 니케 통계 — 속성 정렬 3-state 토글 + tiebreak 안정화 -->
 <script>
   // 정렬/검색/필터 상태
   let _nikkeSort = 'count';
@@ -15704,7 +16966,7 @@
         const c = colors[ac.attr] || 'var(--text-dim)';
         const zeroCls = ac.count === 0 ? 'nikke-attr-zero' : '';
         return `
-          <div class="nikke-attr-cell ${zeroCls}" style="border-left-color:${c};">
+          <div class="nikke-attr-cell ${zeroCls}" style="border-left-color:${c}; --ac:${c};">
             <span class="naa-val">${ac.count}</span>
           </div>`;
       }).join('');
@@ -15927,7 +17189,7 @@
   }
 </script>
 
-<!-- 261102 보스 통계 탭 — 타일 누르면 그 회차 보스 상세로(많이/적게 맞은 보스는 마지막 등장 회차) · 회차 구분 없이 전체 기록을 보스 기준으로: 역대 난이도 높은/낮은 보스 · 많이/적게 맞은 보스 (큰 보스 이미지 타일 5칸) -->
+<!-- 261113 보스 통계 — 순위 타일 그림을 액자(.boss-ring · 마리안 R2)로 감쌈 · 속성 칩에 아이콘 / 261102 보스 통계 탭 — 타일 누르면 그 회차 보스 상세로(많이/적게 맞은 보스는 마지막 등장 회차) · 회차 구분 없이 전체 기록을 보스 기준으로: 역대 난이도 높은/낮은 보스 · 많이/적게 맞은 보스 (큰 보스 이미지 타일 5칸) -->
 <script>
   // 많이/적게 맞은 보스 기준 — 'total' 누적 타수 · 'avg' 등장 1회당 평균 타수
   let _bossHitMode = 'total';
@@ -15984,7 +17246,8 @@
   function _bsAttrChip(attr) {
     if (!attr) return '';
     const col = colors[attr] || 'var(--text-dim)';
-    return `<span class="bs-attr" style="--ac:${col};">${_bsEsc(attr)}</span>`;
+    const ico = typeof bossAttrIcon === 'function' ? bossAttrIcon(attr) : '';
+    return `<span class="bs-attr" style="--ac:${col};">${ico}<span class="boss-attr-txt">${_bsEsc(attr)}</span></span>`;
   }
 
   function setBossHitMode(mode) {
@@ -16001,7 +17264,7 @@
       return `
         <div class="bs-tile${i === 0 ? ' bs-tile-1' : ''}" style="--ac:${colors[e.attr] || 'var(--accent)'};"
              data-boss="${_bsEsc(e.name)}" data-attr="${_bsEsc(e.attr)}" data-title="${_bsEsc(e.title)}" title="${_bsEsc(e.title)} ${_bsEsc(e.name)} 상세 보기">
-          <div class="bs-tile-img"${url ? ` style="background-image:url('${_bsEsc(url)}')"` : ''}></div>
+          <div class="boss-ring bs-ring">${typeof BOSS_RING_DECO === 'string' ? BOSS_RING_DECO : ''}<div class="bs-tile-img"${url ? ` style="background-image:url('${_bsEsc(url)}')"` : ''}>${typeof BOSS_NOTCH_DECO === 'string' ? BOSS_NOTCH_DECO : ''}</div></div>
           <span class="bs-tile-rank">${i + 1}</span>
           <div class="bs-tile-info">
             <div class="bs-tile-name">${_bsEsc(e.name)} ${_bsAttrChip(e.attr)}</div>
