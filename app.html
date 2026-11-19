@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <script>window.APP_BUILD = '261113-1917'; window.APP_CHANNEL = 'live';</script>
+  <script>window.APP_BUILD = '261120-0204'; window.APP_CHANNEL = 'live';</script>
   <script>window.CURRENT_SHEET_VERSION = '{{SHEET_VERSION}}'; window.__perf = { appStart: performance.now() };</script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
@@ -7438,7 +7438,7 @@
 </div>
 
 <div id="raid-total-content" style="display:none;">
-  <!-- 261021 종합 페이지 — 폭 1760px · 상세 순서: Cumulative · Phase Progress · Attribute Breakdown · Attribute Trend · Last Hit DMG Trend · Hall of Fame -->
+  <!-- 261120 종합 페이지 — 상세 Phase Progress 바로 아래에 Level × DMG Distribution(전체 회차 · 전체 멤버 기록) 카드 / 261021 종합 페이지 — 폭 1760px · 상세 순서: Cumulative · Phase Progress · Attribute Breakdown · Attribute Trend · Last Hit DMG Trend · Hall of Fame -->
 <div id="section-raid-total" style="max-width: 1760px; margin: 0 auto; padding: 0 15px;">
 
   <!-- 결과 / 상세 뷰 선택 버튼 -->
@@ -7512,6 +7512,16 @@
         <span id="td-phase-summary" style="font-family:'Rajdhani',sans-serif; font-size:16px; color:var(--text-dim); letter-spacing:1px; margin-left:auto;"></span>
       </div>
       <div id="td-phase-strip" class="td-phase-strip"></div>
+    </div>
+
+    <div class="card">
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:16px;">
+        <span style="display:inline-block; width:3px; height:16px; background:var(--accent);"></span>
+        <span style="font-family:'Rajdhani',sans-serif; font-size:16px; font-weight:700; letter-spacing:3px; color:var(--text-dim,#6b7280); text-transform:uppercase;">Level × DMG Distribution</span>
+        <span id="td-scatter-meta" style="font-family:'Rajdhani',sans-serif; font-size:16px; color:var(--text-dim); letter-spacing:1px; margin-left:auto;"></span>
+        <span id="td-scatter-note" style="font-family:'Noto Sans KR',sans-serif; font-size:12px; color:var(--text-dim,#6b7280);"></span>
+      </div>
+      <div id="td-scatter-chart" style="width:100%; height:450px;"></div>
     </div>
 
     <div class="card">
@@ -11135,7 +11145,7 @@
     });
   }
 </script>
-<!-- 261113 레이드 통계 — 보스 카드 속성에 아이콘(boss-attr-ico, 마리안은 아이콘만) / 261113 레이드 통계 — 보스 카드 그림 칸을 .boss-ring(액자 장식 i) > .boss-img(오목 귀 i.bn) 로 감쌈(마리안 R2 액자용 · 다른 스킨에선 장식 숨김) · 본문 칸 .boss-body · 단계 도넛은 마리안도 세이렌식 / 261112 레이드 통계 — 공격력 구간표 1400레벨까지 갱신(1001~1400 구간 20개 추가 · 1000레벨 외삽 제거) / 261102 레이드 통계 — Level × DMG 추세선을 20n+1 공격력 구간 기반 효율 100% 기준선(a × 공격력, 계단형, β 안 씀)으로 · 멤버 효율에서 막타 제외(지표 안내와 맞춤 · 기여도는 포함) / 261030 레이드 통계 — NO RECORD 덮개가 지표 안내 등 팝업 위로 올라오던 문제(z-index 9000→500) / 261023 레이드 통계 — 보스 상세 효율·기여도를 타격별로(막타 제외 평균 기준) · 요약 묶음 · Level 표기 · 코멘트 링크 · 세이렌 도넛 · 산점도 축/격자 테마 색 -->
+<!-- 261120 레이드 통계 — Level × DMG 산점도 그리기를 칸 id · 안내 문구 · 점 크기/투명도 · 기준선 끄기(noTrend) 옵션으로(종합 상세 전체 기록 산점도와 같이 씀, 보스 상세는 그대로) / 261113 레이드 통계 — 보스 카드 속성에 아이콘(boss-attr-ico, 마리안은 아이콘만) / 261113 레이드 통계 — 보스 카드 그림 칸을 .boss-ring(액자 장식 i) > .boss-img(오목 귀 i.bn) 로 감쌈(마리안 R2 액자용 · 다른 스킨에선 장식 숨김) · 본문 칸 .boss-body · 단계 도넛은 마리안도 세이렌식 / 261112 레이드 통계 — 공격력 구간표 1400레벨까지 갱신(1001~1400 구간 20개 추가 · 1000레벨 외삽 제거) / 261102 레이드 통계 — Level × DMG 추세선을 20n+1 공격력 구간 기반 효율 100% 기준선(a × 공격력, 계단형, β 안 씀)으로 · 멤버 효율에서 막타 제외(지표 안내와 맞춤 · 기여도는 포함) / 261030 레이드 통계 — NO RECORD 덮개가 지표 안내 등 팝업 위로 올라오던 문제(z-index 9000→500) / 261023 레이드 통계 — 보스 상세 효율·기여도를 타격별로(막타 제외 평균 기준) · 요약 묶음 · Level 표기 · 코멘트 링크 · 세이렌 도넛 · 산점도 축/격자 테마 색 -->
 <script>
   let currentRaidSort = 'dmg';
   let currentDetailSort = 'dmg';
@@ -13056,10 +13066,11 @@
     if (typeof playFlipAnimation === 'function') playFlipAnimation(tbody, _detailPrevRects);
   }
 
-  // 레벨×딜량 산점도
-  function drawScatterChart(scatterData) {
+  // 레벨×딜량 산점도 — 기본은 보스 상세 칸. 종합 상세(전체 회차 · 전체 멤버)는 opt 로 칸 · 안내 문구 · 점 모양을 바꿔 같이 씀
+  //   opt: { chartId, noteId, noteText, noteTitle(n), pointSize, opacity }
+  function drawScatterChart(scatterData, opt = {}) {
     const isDark = document.body.getAttribute('data-theme') === 'dark';
-    const chartContainer = document.getElementById('boss_scatter_chart');
+    const chartContainer = document.getElementById(opt.chartId || 'boss_scatter_chart');
     if (!chartContainer) return;
 
     // 데이터에서 x(레벨), y(딜량) min/max 계산
@@ -13109,8 +13120,8 @@
       },
 
       chartArea: { left: 40, right: 40, top: 20, bottom: 30 },
-      pointSize: 8,
-      opacity: 0.7,
+      pointSize: opt.pointSize || 8,
+      opacity: opt.opacity || 0.7,
       colors: [themeAccent(), themeVar('--c-up', '#ff4d4d')],
       tooltip: { isHtml: true, trigger: 'both' },
 
@@ -13130,8 +13141,9 @@
     // 추세선 — 20n+1 공격력 구간표 기반 기대딜 = a × 공격력(Lv) (효율 계산과 같은 가정: 딜은 공격력에 비례)
     //   a = 막타 제외 타격의 (딜 ÷ 공격력) 평균 → 이 선 위 = 보스 표 효율 100% 초과, 아래 = 미만
     //   공격력이 20n+1 레벨에서 다음 구간으로 넘어가므로 선이 계단 모양
-    const fit = _fitAtkTrend(scatterData);
-    const note = document.getElementById('boss_scatter_note');
+    if (opt.noTrend) delete options.trendlines; // 종합 상세(여러 회차 · 보스 섞임)는 기준선 없이 점만
+    const fit = opt.noTrend ? null : _fitAtkTrend(scatterData);
+    const note = document.getElementById(opt.noteId || 'boss_scatter_note');
     let drawData = scatterData;
     if (fit) {
       drawData = scatterData.clone();
@@ -13147,8 +13159,8 @@
              visibleInLegend: false, enableInteractivity: false },
       };
       if (note) {
-        note.textContent = '선 = 효율 100% 기준';
-        note.title = '추세선: 레벨별 공격력(20n+1 레벨마다 다음 구간)에 비례한 기대딜 · 막타 제외 ' + fit.n + '타 기준\n선보다 위에 있는 타격은 보스 표 효율 100% 초과';
+        note.textContent = opt.noteText || '선 = 효율 100% 기준';
+        note.title = opt.noteTitle ? opt.noteTitle(fit.n) : '추세선: 레벨별 공격력(20n+1 레벨마다 다음 구간)에 비례한 기대딜 · 막타 제외 ' + fit.n + '타 기준\n선보다 위에 있는 타격은 보스 표 효율 100% 초과';
       }
     } else if (note) {
       note.textContent = '';
@@ -13375,7 +13387,7 @@
     }
   }
 </script>
-<!-- 261113 종합 — 회차 순위 카드 등급 이름에 rank-tier 클래스 / 261112 종합 뷰 — 멤버 딜 차트 범례 · 말풍선 · 이름 칩을 익명 화면용 이름으로(_anonLabel) / 261102 종합 뷰 — 차트는 기록 있는 회차 범위만 · Member DMG Trend 왼쪽 눈금 잘림 수정 / 261021 종합 뷰 — Raid History 이동 시 칩 줄 갱신 · 증감/선 색 테마 변수 · ∞ 타일 4단계 딜량 · 빈 회차 표시 -->
+<!-- 261120 종합 — 상세 Level × DMG Distribution: 모든 회차 · 모든 멤버 타격 산점도(보스 상세 drawScatterChart 재사용 · 점 작게/옅게 · 기준선 없음 · 툴팁에 회차 · 보스 · 레벨 · 딜량) / 261113 종합 — 회차 순위 카드 등급 이름에 rank-tier 클래스 / 261112 종합 뷰 — 멤버 딜 차트 범례 · 말풍선 · 이름 칩을 익명 화면용 이름으로(_anonLabel) / 261102 종합 뷰 — 차트는 기록 있는 회차 범위만 · Member DMG Trend 왼쪽 눈금 잘림 수정 / 261021 종합 뷰 — Raid History 이동 시 칩 줄 갱신 · 증감/선 색 테마 변수 · ∞ 타일 4단계 딜량 · 빈 회차 표시 -->
 <script>
   let totalDmgChart = null;
   let totalDmgData = null;
@@ -13912,10 +13924,59 @@
 
     if (typeof google !== 'undefined' && google.visualization) {
       const raidLabels = chartRaidTitles().map(t => String(t || '').trim()).filter(Boolean);
+      drawTotalScatterChart(attrByRaidBoss);
       drawLastHitAvgChart(raidLabels, lastByRaid);
       drawAttrTrendChart('td-attr-hits-chart', raidLabels, attrByRaid, attrByRaidBoss, 'hits');
       drawAttrTrendChart('td-attr-dmg-chart',  raidLabels, attrByRaid, attrByRaidBoss, 'dmg');
     }
+  }
+
+  // Level × DMG Distribution (종합 상세 · Phase Progress 바로 아래)
+  //   보스 상세의 산점도와 같은 차트에 모든 회차 · 모든 멤버(탈퇴자 포함)의 타격을 전부 찍음
+  //   레벨은 그 회차의 멤버 레벨(현직/탈퇴 시트), 레벨 기록이 없는 타격은 뺌. 기준선 없음(회차 · 보스가 섞여 효율 100% 선의 뜻이 없음)
+  function drawTotalScatterChart(attrByRaidBoss) {
+    const container = document.getElementById('td-scatter-chart');
+    if (!container || typeof drawScatterChart !== 'function') return;
+    const meta = document.getElementById('td-scatter-meta');
+    const data = new google.visualization.DataTable();
+    data.addColumn('number', 'Level');
+    data.addColumn('number', 'Damage');
+    data.addColumn({ type: 'string', role: 'tooltip', p: { html: true } });
+    data.addColumn({ type: 'string', role: 'style' });
+    data.addColumn('number', '막타');
+    data.addColumn({ type: 'string', role: 'tooltip', p: { html: true } });
+    data.addColumn({ type: 'string', role: 'style' });
+
+    const esc = (v) => String(v == null ? '' : v).replace(/[&<>"]/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch]));
+    let n = 0;
+    const raidSet = new Set();
+    db.raidStats.slice(1).forEach(r => {
+      const boss = String(r[RAID_COL.BOSS] || '').trim();
+      const title = String(r[RAID_COL.TITLE] || '').trim();
+      const name = r[RAID_COL.NAME];
+      const dmg = Number(r[RAID_COL.DMG]) || 0;
+      if (!boss || !title || !(dmg > 0)) return;
+      const lv = Number(getMemberLevelInfo(name, title).level) || 0;
+      if (!(lv > 0)) return;
+      const isKill = String(r[RAID_COL.LAST] || '').trim().toUpperCase() === 'O';
+      const attr = attrByRaidBoss[title]?.[boss] || '';
+      const ac = (attr && colors[attr]) || 'var(--text-dim)';
+      const tip = `
+        <div class="google-visualization-tooltip">
+          <div style="font-weight:700; color:${isKill ? 'var(--c-up, #ff4d4d)' : 'var(--accent)'}; margin-bottom:5px; border-bottom:1px solid var(--border); padding-bottom:4px;">
+            ${esc(displayName(name))}${isKill ? ' <span style="font-size:11px;">막타</span>' : ''}
+          </div>
+          <div style="font-size:12px; color:var(--text-dim);">${esc(title)} · <span style="color:${ac};">${esc(boss)}</span></div>
+          <div style="font-size:12px; color:var(--text-dim);">Lv.${lv}</div>
+          <div style="font-size:15px; font-weight:bold; margin-top:3px; color:var(--text);">${formatDmg(dmg)}</div>
+        </div>`;
+      if (isKill) data.addRow([lv, null, null, null, dmg, tip, 'point { size: 4; }']);
+      else data.addRow([lv, dmg, tip, null, null, null, null]);
+      n++; raidSet.add(title);
+    });
+    if (meta) meta.textContent = n ? `${raidSet.size}회차 · ${n.toLocaleString()}타` : '';
+    if (!n) { container.innerHTML = '<div class="td-hof-empty">데이터 없음</div>'; return; }
+    drawScatterChart(data, { chartId: 'td-scatter-chart', noteId: 'td-scatter-note', noTrend: true, pointSize: 5, opacity: 0.45 });
   }
 
   // 회차별 막타 평균 딜량 추이 (종합 상세 · Phase Progress 아래)
